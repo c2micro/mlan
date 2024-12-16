@@ -1,0 +1,29 @@
+a = 1; // int
+println(a);
+
+b = 0x1; // int in hex format (var. 1)
+println(b);
+
+c = 0X1; // int in hex format (var. 2)
+println(c);
+
+d = null; // null 
+println(d);
+
+e = true; // bool (var. 1)
+println(e);
+
+f = false; // bool (var. 2)
+println(f);
+
+g = 1.0; // float
+println(g);
+
+h = "hello world"; // str
+println(h);
+
+i = [a, b, c, d, e, f, g, h, 22, 0x31, false, null, 10.42, "abc", [1, 2, 3]]; // list
+println(i);
+
+j = {"key1": i, "key2": 1}; // dict
+println(j);

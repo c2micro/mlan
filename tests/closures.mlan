@@ -1,0 +1,5 @@
+x = fn test1(a) {
+  return a * a;
+};
+
+println(@x(2));

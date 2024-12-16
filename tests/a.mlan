@@ -1,0 +1,14 @@
+fn x() {
+  x = ["a", "b", "c", "d", "e"];
+  y = "b";
+
+  for i = 0; i < len(x); i += 1 {
+    if x[i] == y {
+      println("KUKU");
+      return;
+      println("ABAB");
+    }
+  }
+}
+
+x();
