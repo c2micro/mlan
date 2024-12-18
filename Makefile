@@ -13,13 +13,13 @@ mlan: gen-parser
 .PHONY: test-mlan
 test-mlan: mlan
 	@echo "Testing language..."
-	@${BIN_DIR}/mlan --file tests/assert.mlan
+	@${BIN_DIR}/mlan samples/assert.mlan
 	@echo "  assert: OK"
-	@${BIN_DIR}/mlan --file tests/recursion_max_depth.mlan 1>/dev/null 2>/dev/null 2>/dev/null || true
+	@${BIN_DIR}/mlan samples/recursion_max_depth.mlan 1>/dev/null 2>/dev/null || true
 	@echo "  recursion_max_depth: OK"
-	@${BIN_DIR}/mlan --file tests/cast.mlan 1>/dev/null 2>/dev/null 2>/dev/null
+	@${BIN_DIR}/mlan samples/cast.mlan 1>/dev/null 2>/dev/null
 	@echo "  cast: OK"
-	@${BIN_DIR}/mlan --file tests/files.mlan
+	@${BIN_DIR}/mlan samples/files.mlan
 	@echo "  files: OK"
 
 .PHONY: gen-parser

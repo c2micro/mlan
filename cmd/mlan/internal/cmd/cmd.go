@@ -10,22 +10,16 @@ import (
 )
 
 type App struct {
-	Globals Globals
-}
-
-type Globals struct {
-	File       string
 	CpuProfile bool
 }
 
-func (g *Globals) RegisterFlags(f *pflag.FlagSet) {
-	f.StringVar(&g.File, "file", "", "")
+func (g *App) RegisterFlags(f *pflag.FlagSet) {
 	f.BoolVar(&g.CpuProfile, "cpuprofile", false, "")
 }
 
-func (a *App) Run(cmd *cobra.Command, _ []string) error {
+func (a *App) Run(cmd *cobra.Command, args []string) error {
 	// профилировка
-	if a.Globals.CpuProfile {
+	if a.CpuProfile {
 		f, err := os.Create("cpu.pprof")
 		if err != nil {
 			return err
@@ -36,7 +30,7 @@ func (a *App) Run(cmd *cobra.Command, _ []string) error {
 		defer pprof.StopCPUProfile()
 	}
 	// запуск программы
-	err := engine.Evaluate(a.Globals.File)
+	err := engine.Evaluate(args[0])
 	if err != nil {
 		return err
 	}

@@ -32,23 +32,20 @@ func main() {
 	ctx := zctx.Base(context.Background(), lg)
 
 	root := &cobra.Command{
+		Use:           "mlan [flags] <file>",
+		Short:         "mlan executor",
 		SilenceUsage:  true,
 		SilenceErrors: true,
-		Use:           "mlan",
-		Short:         "mlan executor",
-		Args:          cobra.NoArgs,
+		Args:          cobra.MinimumNArgs(1),
 		RunE:          a.Run,
 		PersistentPostRun: func(_ *cobra.Command, _ []string) {
 			flush()
 		},
 	}
 
-	// отключаем автокомплит
 	root.CompletionOptions.DisableDefaultCmd = true
-	// регаем глобальные флаги
-	a.Globals.RegisterFlags(root.PersistentFlags())
+	a.RegisterFlags(root.PersistentFlags())
 
-	// стартуем
 	if err = root.ExecuteContext(ctx); err != nil {
 		color.Red("%v", err)
 		exit(2)

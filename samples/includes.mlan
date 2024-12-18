@@ -1,0 +1,10 @@
+include("samples/add.mlan");
+include("samples/sub.mlan");
+
+fn func1() {
+  println(add(1, 2));
+}
+
+func1();
+println(sub(1, 2));
+

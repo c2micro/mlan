@@ -5,6 +5,7 @@ go 1.22.4
 require (
 	github.com/antlr4-go/antlr/v4 v4.13.1
 	github.com/fatih/color v1.17.0
+	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/sdk v0.15.1
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/pflag v1.0.5
