@@ -48,7 +48,7 @@ MLAN offered with next data types, which implements object's interface:
 - `int` (int64 in Golang)
 - `list` (list of objects)
 - `null` (just empty object)
-- `str` (string in Golang)
+- `str` (string in Golang, but operates using runes)
 - `closures` (special type of object, that can be called inline)
 
 More info about [data types](docs/data_types.md) with examples.

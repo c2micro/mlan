@@ -13,7 +13,7 @@ Moreover data types has builtin methods. More information you can find [here](./
 - [float](../pkg/engine/object/float.go) (`float64` type in Golang)
 - [int](../pkg/engine/object/int.go) (`int64` type in Golang)
 - [null](../pkg/engine/object/null.go) (empty object in Golang)
-- [str](../pkg/engine/object/str.go) (`string` in Golang)
+- [str](../pkg/engine/object/str.go) (`string` in Golang, process with runes)
 
 ## Composite data types
 
