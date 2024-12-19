@@ -59,11 +59,12 @@ Here you can find some more information:
 - [Syntax](docs/syntax.md)
 - [Data types](docs/data_types.md)
 - [Builtin functions](docs/builtin_functions.md)
+- [Builtin methods](docs/builtin_methods.md)
 
 ## What's next?
 
 - [ ] Improve quality of documentation
-- [ ] Builtin methods for data types
+- [x] Builtin methods for data types
 - [ ] Builtin functions to handle regexp
 - [ ] Builtin functions to handle network interaction
 - [ ] Extend builtin functions to handle FS interaction

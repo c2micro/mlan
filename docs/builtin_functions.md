@@ -141,34 +141,6 @@ println(is_str("hello world")); // true
 println(is_str(["A"])); // false
 ```
 
-## len
-
-Signature: `len(arg0)`
-
-Arguments:
-- `arg0`: `dict`/`list`/`str`
-
-Return length of `arg0`.
-```
-println(len("hello")); // 5
-println(len("привет")); // 12 (in case of non-ascii it is number of bytes)
-println(len([0, 1, 2, 3])); // 4
-println(len({"a": "b"})); // 1
-```
-
-## str_len
-
-Signature: `str_len(arg0)`
-
-Arguments:
-- `arg0`: `str`
-
-Return number of runes in `arg0`'s underly string.
-```
-println(str_len("hello")); // 5
-println(str_len("привет")); // 6
-```
-
 ## bool
 
 Signature: `bool(arg0)`
@@ -240,18 +212,6 @@ Cast `arg0` to `str`. Will use underly `String()` implementation of each type.
 println(true); // true
 println([1]); // [1]
 println(fn () {}); // <native-func>
-```
-
-## reverse
-
-Signature: `reverse(arg0)`
-
-Arguments:
-- `arg0`: `list`
-
-Reverse `list` and return new object of type `list`.
-```
-println(reverse([6, 5, 4, 3, 2, 1])); // [1, 2, 3, 4, 5, 6]
 ```
 
 ## chr

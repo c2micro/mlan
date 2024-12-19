@@ -5,6 +5,8 @@ All data types of language sit on abstraction (interface) called [`object`](../p
 - `composite`
 - `functions`
 
+Moreover data types has builtin methods. More information you can find [here](./builtin_methods.md).
+
 ## Essential data types
 
 - [bool](../pkg/engine/object/bool.go) (`bool` type in Golang)

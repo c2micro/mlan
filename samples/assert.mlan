@@ -171,8 +171,10 @@ assert(combiner(2) == 8);
 assert(new_list() == [1,2,3,4,5,6]);
 assert(new_list()[2] == 3);
 assert(new_dict()["key1"] == "val1");
-assert(len(new_list()) == 6);
-assert(len(new_dict()) == 2);
+x = new_list();
+assert(x.len() == 6);
+y = new_dict();
+assert(y.len() == 2);
 
 // nested dict in list
 list_double = [[1,{"a":"b"},3],[4,5,6]];
