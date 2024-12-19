@@ -267,6 +267,12 @@ str003[0] = "\u0000";
 assert("\u0000oot" == str003);
 assert("\x00oot" == str003);
 
+// utf string assignment
+str003 = "пр\x00вет";
+assert(str003[2] == "\x00");
+str003[2] = "и";
+assert(str003 == "привет");
+
 // ascii string
 ascii_str = "abcdef";
 ascii_codes = [97, 98, 99, 100, 101, 102];

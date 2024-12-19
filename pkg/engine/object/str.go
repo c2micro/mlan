@@ -58,10 +58,9 @@ func (o *Str) IndexGet(rs Object) (Object, error) {
 		}
 		c++
 	}
-	return NewStr(string(o.value[idx.value])), nil
+	return nil, ErrNotImplemented
 }
 
-// TODO
 func (o *Str) IndexSet(idx Object, rs Object) error {
 	idxInt, ok := idx.(*Int)
 	if !ok {
@@ -71,13 +70,28 @@ func (o *Str) IndexSet(idx Object, rs Object) error {
 	if !ok {
 		return fmt.Errorf("invalid type '%s' of assignment to str", rs.TypeName())
 	}
-	if idxInt.value < 0 || int(idxInt.value) >= len(o.value) {
+	if idxInt.value < 0 || idxInt.value >= int64(utf8.RuneCountInString(o.value)) {
 		return ErrIndexOutOfRange
 	}
-	if len(rsStr.value) != 1 {
+	if utf8.RuneCountInString(rsStr.value) != 1 {
 		return fmt.Errorf("expected str with length of 1, got %d", len(rsStr.value))
 	}
-	o.value = o.value[:idxInt.value] + rsStr.value + o.value[idxInt.value+1:]
+	res := ""
+	// ширина руны (в количестве байт)
+	w := 0
+	// количество рун
+	c := 0
+	for i := 0; i < len(o.value); i += w {
+		var r rune
+		r, w = utf8.DecodeRuneInString(o.value[i:])
+		if c == int(idxInt.value) {
+			res += rsStr.value
+		} else {
+			res += string(r)
+		}
+		c++
+	}
+	o.value = res
 	return nil
 }
 
