@@ -33,187 +33,192 @@ func mlanParserInit() {
 	staticData := &MlanParserStaticData
 	staticData.LiteralNames = []string{
 		"", "';'", "'while'", "'{'", "'}'", "'for'", "'return'", "'continue'",
-		"'break'", "'='", "'-='", "'*='", "'/='", "'%='", "'**='", "'['", "','",
-		"']'", "':'", "'('", "')'", "'if'", "'elif'", "'else'", "'fn'", "'include'",
-		"", "'=='", "'!='", "'||'", "'&&'", "'**'", "'>='", "'<= '", "'+='",
-		"'>'", "'<'", "'*'", "'/'", "'%'", "'+'", "'-'", "'^'", "'!'", "'@'",
-		"", "'null'",
+		"'break'", "'='", "'['", "','", "']'", "':'", "'.'", "'('", "')'", "'if'",
+		"'elif'", "'else'", "'fn'", "'include'", "", "'=='", "'!='", "'||'",
+		"'&&'", "'**'", "'>='", "'<='", "'+='", "'-='", "'*='", "'/='", "'%='",
+		"'**='", "'>'", "'<'", "'*'", "'/'", "'%'", "'+'", "'-'", "'^'", "'!'",
+		"'@'", "", "'null'",
 	}
 	staticData.SymbolicNames = []string{
 		"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-		"", "", "", "", "", "", "", "", "", "WS", "Eq", "Neq", "Or", "And",
-		"Pow", "GtEq", "LtEq", "AssignSum", "Gt", "Lt", "Multiply", "Division",
-		"Modulus", "Add", "Subtract", "Xor", "Not", "Closure", "Bool", "Null",
-		"Identifier", "Integer", "IntegerHex", "Float", "String", "Comment",
+		"", "", "", "", "", "WS", "Eq", "Neq", "Or", "And", "Pow", "GtEq", "LtEq",
+		"AssSum", "AssSub", "AssMul", "AssDiv", "AssMod", "AssPow", "Gt", "Lt",
+		"Multiply", "Division", "Modulus", "Add", "Subtract", "Xor", "Not",
+		"Closure", "Bool", "Null", "Identifier", "Integer", "IntegerHex", "Float",
+		"String", "Comment",
 	}
 	staticData.RuleNames = []string{
-		"program", "block", "statement", "whileStatement", "forStatement", "returnStatement",
-		"continueStatement", "breakStatement", "assignment", "list", "dictUnit",
-		"dict", "index", "functionInvoke", "closureInvoke", "expression", "ifBlock",
-		"elifBlock", "elseBlock", "ifStatement", "functionParameters", "functionDefinition",
-		"closureDefinition", "includeSubmodule",
+		"prog", "stmt", "whileStmt", "forStmt", "returnStmt", "continueStmt",
+		"breakStmt", "assignment", "list", "dictUnit", "dict", "idx", "methodInvoke",
+		"fnInvoke", "csInvoke", "exp", "ifBlock", "elifBlock", "elseBlock",
+		"ifStmt", "fnParams", "fnBody", "fn", "closure", "include",
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 52, 352, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 53, 363, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13, 2, 14, 7, 14, 2, 15, 7, 15,
 		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7, 20, 2,
-		21, 7, 21, 2, 22, 7, 22, 2, 23, 7, 23, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1,
-		1, 5, 1, 55, 8, 1, 10, 1, 12, 1, 58, 9, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
-		1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
-		1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 81, 8, 2, 1, 3, 1, 3, 1, 3, 1, 3, 5, 3, 87,
-		8, 3, 10, 3, 12, 3, 90, 9, 3, 1, 3, 1, 3, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4,
-		1, 4, 1, 4, 1, 4, 5, 4, 102, 8, 4, 10, 4, 12, 4, 105, 9, 4, 1, 4, 1, 4,
-		1, 5, 1, 5, 3, 5, 111, 8, 5, 1, 6, 1, 6, 1, 7, 1, 7, 1, 8, 1, 8, 1, 8,
-		1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8,
-		1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8,
-		1, 8, 1, 8, 3, 8, 146, 8, 8, 1, 9, 1, 9, 1, 9, 1, 9, 5, 9, 152, 8, 9, 10,
-		9, 12, 9, 155, 9, 9, 3, 9, 157, 8, 9, 1, 9, 1, 9, 1, 10, 1, 10, 1, 10,
-		1, 10, 1, 11, 1, 11, 1, 11, 1, 11, 5, 11, 169, 8, 11, 10, 11, 12, 11, 172,
-		9, 11, 3, 11, 174, 8, 11, 1, 11, 1, 11, 1, 12, 1, 12, 1, 12, 1, 12, 1,
-		13, 1, 13, 1, 13, 1, 13, 1, 13, 5, 13, 187, 8, 13, 10, 13, 12, 13, 190,
-		9, 13, 3, 13, 192, 8, 13, 1, 13, 1, 13, 1, 14, 1, 14, 1, 14, 1, 14, 1,
-		14, 1, 14, 5, 14, 202, 8, 14, 10, 14, 12, 14, 205, 9, 14, 3, 14, 207, 8,
-		14, 1, 14, 1, 14, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15,
-		1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1,
-		15, 1, 15, 1, 15, 3, 15, 232, 8, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15,
-		1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1,
+		21, 7, 21, 2, 22, 7, 22, 2, 23, 7, 23, 2, 24, 7, 24, 1, 0, 1, 0, 1, 0,
+		5, 0, 54, 8, 0, 10, 0, 12, 0, 57, 9, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 85, 8, 1, 1, 2,
+		1, 2, 1, 2, 1, 2, 5, 2, 91, 8, 2, 10, 2, 12, 2, 94, 9, 2, 1, 2, 1, 2, 1,
+		3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 5, 3, 106, 8, 3, 10, 3, 12,
+		3, 109, 9, 3, 1, 3, 1, 3, 1, 4, 1, 4, 3, 4, 115, 8, 4, 1, 5, 1, 5, 1, 6,
+		1, 6, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7,
+		1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7,
+		1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 3, 7, 150, 8, 7, 1, 8, 1, 8, 1, 8,
+		1, 8, 5, 8, 156, 8, 8, 10, 8, 12, 8, 159, 9, 8, 3, 8, 161, 8, 8, 1, 8,
+		1, 8, 1, 9, 1, 9, 1, 9, 1, 9, 1, 10, 1, 10, 1, 10, 1, 10, 5, 10, 173, 8,
+		10, 10, 10, 12, 10, 176, 9, 10, 3, 10, 178, 8, 10, 1, 10, 1, 10, 1, 11,
+		1, 11, 1, 11, 1, 11, 1, 12, 1, 12, 1, 12, 1, 12, 1, 12, 1, 12, 1, 12, 5,
+		12, 193, 8, 12, 10, 12, 12, 12, 196, 9, 12, 3, 12, 198, 8, 12, 1, 12, 1,
+		12, 1, 13, 1, 13, 1, 13, 1, 13, 1, 13, 5, 13, 207, 8, 13, 10, 13, 12, 13,
+		210, 9, 13, 3, 13, 212, 8, 13, 1, 13, 1, 13, 1, 14, 1, 14, 1, 14, 1, 14,
+		1, 14, 1, 14, 5, 14, 222, 8, 14, 10, 14, 12, 14, 225, 9, 14, 3, 14, 227,
+		8, 14, 1, 14, 1, 14, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1,
 		15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15,
-		5, 15, 260, 8, 15, 10, 15, 12, 15, 263, 9, 15, 1, 16, 1, 16, 1, 16, 1,
-		16, 5, 16, 269, 8, 16, 10, 16, 12, 16, 272, 9, 16, 1, 16, 1, 16, 1, 17,
-		1, 17, 1, 17, 1, 17, 5, 17, 280, 8, 17, 10, 17, 12, 17, 283, 9, 17, 1,
-		17, 1, 17, 1, 18, 1, 18, 1, 18, 5, 18, 290, 8, 18, 10, 18, 12, 18, 293,
-		9, 18, 1, 18, 1, 18, 1, 19, 1, 19, 5, 19, 299, 8, 19, 10, 19, 12, 19, 302,
-		9, 19, 1, 19, 3, 19, 305, 8, 19, 1, 20, 1, 20, 1, 20, 5, 20, 310, 8, 20,
-		10, 20, 12, 20, 313, 9, 20, 1, 21, 1, 21, 1, 21, 1, 21, 3, 21, 319, 8,
-		21, 1, 21, 1, 21, 1, 21, 5, 21, 324, 8, 21, 10, 21, 12, 21, 327, 9, 21,
-		1, 21, 1, 21, 1, 22, 1, 22, 1, 22, 3, 22, 334, 8, 22, 1, 22, 1, 22, 1,
-		22, 5, 22, 339, 8, 22, 10, 22, 12, 22, 342, 9, 22, 1, 22, 1, 22, 1, 23,
-		1, 23, 1, 23, 1, 23, 1, 23, 1, 23, 1, 23, 0, 1, 30, 24, 0, 2, 4, 6, 8,
-		10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44,
-		46, 0, 4, 1, 0, 37, 39, 1, 0, 40, 41, 2, 0, 32, 33, 35, 36, 1, 0, 27, 28,
-		390, 0, 48, 1, 0, 0, 0, 2, 56, 1, 0, 0, 0, 4, 80, 1, 0, 0, 0, 6, 82, 1,
-		0, 0, 0, 8, 93, 1, 0, 0, 0, 10, 108, 1, 0, 0, 0, 12, 112, 1, 0, 0, 0, 14,
-		114, 1, 0, 0, 0, 16, 145, 1, 0, 0, 0, 18, 147, 1, 0, 0, 0, 20, 160, 1,
-		0, 0, 0, 22, 164, 1, 0, 0, 0, 24, 177, 1, 0, 0, 0, 26, 181, 1, 0, 0, 0,
-		28, 195, 1, 0, 0, 0, 30, 231, 1, 0, 0, 0, 32, 264, 1, 0, 0, 0, 34, 275,
-		1, 0, 0, 0, 36, 286, 1, 0, 0, 0, 38, 296, 1, 0, 0, 0, 40, 306, 1, 0, 0,
-		0, 42, 314, 1, 0, 0, 0, 44, 330, 1, 0, 0, 0, 46, 345, 1, 0, 0, 0, 48, 49,
-		3, 2, 1, 0, 49, 50, 5, 0, 0, 1, 50, 1, 1, 0, 0, 0, 51, 55, 3, 4, 2, 0,
-		52, 55, 3, 42, 21, 0, 53, 55, 3, 46, 23, 0, 54, 51, 1, 0, 0, 0, 54, 52,
-		1, 0, 0, 0, 54, 53, 1, 0, 0, 0, 55, 58, 1, 0, 0, 0, 56, 54, 1, 0, 0, 0,
-		56, 57, 1, 0, 0, 0, 57, 3, 1, 0, 0, 0, 58, 56, 1, 0, 0, 0, 59, 60, 3, 16,
-		8, 0, 60, 61, 5, 1, 0, 0, 61, 81, 1, 0, 0, 0, 62, 63, 3, 28, 14, 0, 63,
-		64, 5, 1, 0, 0, 64, 81, 1, 0, 0, 0, 65, 66, 3, 26, 13, 0, 66, 67, 5, 1,
-		0, 0, 67, 81, 1, 0, 0, 0, 68, 81, 3, 6, 3, 0, 69, 81, 3, 8, 4, 0, 70, 81,
-		3, 38, 19, 0, 71, 72, 3, 14, 7, 0, 72, 73, 5, 1, 0, 0, 73, 81, 1, 0, 0,
-		0, 74, 75, 3, 12, 6, 0, 75, 76, 5, 1, 0, 0, 76, 81, 1, 0, 0, 0, 77, 78,
-		3, 10, 5, 0, 78, 79, 5, 1, 0, 0, 79, 81, 1, 0, 0, 0, 80, 59, 1, 0, 0, 0,
-		80, 62, 1, 0, 0, 0, 80, 65, 1, 0, 0, 0, 80, 68, 1, 0, 0, 0, 80, 69, 1,
-		0, 0, 0, 80, 70, 1, 0, 0, 0, 80, 71, 1, 0, 0, 0, 80, 74, 1, 0, 0, 0, 80,
-		77, 1, 0, 0, 0, 81, 5, 1, 0, 0, 0, 82, 83, 5, 2, 0, 0, 83, 84, 3, 30, 15,
-		0, 84, 88, 5, 3, 0, 0, 85, 87, 3, 4, 2, 0, 86, 85, 1, 0, 0, 0, 87, 90,
-		1, 0, 0, 0, 88, 86, 1, 0, 0, 0, 88, 89, 1, 0, 0, 0, 89, 91, 1, 0, 0, 0,
-		90, 88, 1, 0, 0, 0, 91, 92, 5, 4, 0, 0, 92, 7, 1, 0, 0, 0, 93, 94, 5, 5,
-		0, 0, 94, 95, 3, 16, 8, 0, 95, 96, 5, 1, 0, 0, 96, 97, 3, 30, 15, 0, 97,
-		98, 5, 1, 0, 0, 98, 99, 3, 16, 8, 0, 99, 103, 5, 3, 0, 0, 100, 102, 3,
-		4, 2, 0, 101, 100, 1, 0, 0, 0, 102, 105, 1, 0, 0, 0, 103, 101, 1, 0, 0,
-		0, 103, 104, 1, 0, 0, 0, 104, 106, 1, 0, 0, 0, 105, 103, 1, 0, 0, 0, 106,
-		107, 5, 4, 0, 0, 107, 9, 1, 0, 0, 0, 108, 110, 5, 6, 0, 0, 109, 111, 3,
-		30, 15, 0, 110, 109, 1, 0, 0, 0, 110, 111, 1, 0, 0, 0, 111, 11, 1, 0, 0,
-		0, 112, 113, 5, 7, 0, 0, 113, 13, 1, 0, 0, 0, 114, 115, 5, 8, 0, 0, 115,
-		15, 1, 0, 0, 0, 116, 117, 5, 47, 0, 0, 117, 118, 5, 9, 0, 0, 118, 146,
-		3, 30, 15, 0, 119, 120, 5, 47, 0, 0, 120, 121, 5, 9, 0, 0, 121, 146, 3,
-		44, 22, 0, 122, 123, 5, 47, 0, 0, 123, 124, 5, 34, 0, 0, 124, 146, 3, 30,
-		15, 0, 125, 126, 5, 47, 0, 0, 126, 127, 5, 10, 0, 0, 127, 146, 3, 30, 15,
-		0, 128, 129, 5, 47, 0, 0, 129, 130, 5, 11, 0, 0, 130, 146, 3, 30, 15, 0,
-		131, 132, 5, 47, 0, 0, 132, 133, 5, 12, 0, 0, 133, 146, 3, 30, 15, 0, 134,
-		135, 5, 47, 0, 0, 135, 136, 5, 13, 0, 0, 136, 146, 3, 30, 15, 0, 137, 138,
-		5, 47, 0, 0, 138, 139, 5, 14, 0, 0, 139, 146, 3, 30, 15, 0, 140, 141, 5,
-		47, 0, 0, 141, 142, 3, 24, 12, 0, 142, 143, 5, 9, 0, 0, 143, 144, 3, 30,
-		15, 0, 144, 146, 1, 0, 0, 0, 145, 116, 1, 0, 0, 0, 145, 119, 1, 0, 0, 0,
-		145, 122, 1, 0, 0, 0, 145, 125, 1, 0, 0, 0, 145, 128, 1, 0, 0, 0, 145,
-		131, 1, 0, 0, 0, 145, 134, 1, 0, 0, 0, 145, 137, 1, 0, 0, 0, 145, 140,
-		1, 0, 0, 0, 146, 17, 1, 0, 0, 0, 147, 156, 5, 15, 0, 0, 148, 153, 3, 30,
-		15, 0, 149, 150, 5, 16, 0, 0, 150, 152, 3, 30, 15, 0, 151, 149, 1, 0, 0,
-		0, 152, 155, 1, 0, 0, 0, 153, 151, 1, 0, 0, 0, 153, 154, 1, 0, 0, 0, 154,
-		157, 1, 0, 0, 0, 155, 153, 1, 0, 0, 0, 156, 148, 1, 0, 0, 0, 156, 157,
-		1, 0, 0, 0, 157, 158, 1, 0, 0, 0, 158, 159, 5, 17, 0, 0, 159, 19, 1, 0,
-		0, 0, 160, 161, 3, 30, 15, 0, 161, 162, 5, 18, 0, 0, 162, 163, 3, 30, 15,
-		0, 163, 21, 1, 0, 0, 0, 164, 173, 5, 3, 0, 0, 165, 170, 3, 20, 10, 0, 166,
-		167, 5, 16, 0, 0, 167, 169, 3, 20, 10, 0, 168, 166, 1, 0, 0, 0, 169, 172,
-		1, 0, 0, 0, 170, 168, 1, 0, 0, 0, 170, 171, 1, 0, 0, 0, 171, 174, 1, 0,
-		0, 0, 172, 170, 1, 0, 0, 0, 173, 165, 1, 0, 0, 0, 173, 174, 1, 0, 0, 0,
-		174, 175, 1, 0, 0, 0, 175, 176, 5, 4, 0, 0, 176, 23, 1, 0, 0, 0, 177, 178,
-		5, 15, 0, 0, 178, 179, 3, 30, 15, 0, 179, 180, 5, 17, 0, 0, 180, 25, 1,
-		0, 0, 0, 181, 182, 5, 47, 0, 0, 182, 191, 5, 19, 0, 0, 183, 188, 3, 30,
-		15, 0, 184, 185, 5, 16, 0, 0, 185, 187, 3, 30, 15, 0, 186, 184, 1, 0, 0,
-		0, 187, 190, 1, 0, 0, 0, 188, 186, 1, 0, 0, 0, 188, 189, 1, 0, 0, 0, 189,
-		192, 1, 0, 0, 0, 190, 188, 1, 0, 0, 0, 191, 183, 1, 0, 0, 0, 191, 192,
-		1, 0, 0, 0, 192, 193, 1, 0, 0, 0, 193, 194, 5, 20, 0, 0, 194, 27, 1, 0,
-		0, 0, 195, 196, 5, 44, 0, 0, 196, 197, 5, 47, 0, 0, 197, 206, 5, 19, 0,
-		0, 198, 203, 3, 30, 15, 0, 199, 200, 5, 16, 0, 0, 200, 202, 3, 30, 15,
-		0, 201, 199, 1, 0, 0, 0, 202, 205, 1, 0, 0, 0, 203, 201, 1, 0, 0, 0, 203,
-		204, 1, 0, 0, 0, 204, 207, 1, 0, 0, 0, 205, 203, 1, 0, 0, 0, 206, 198,
-		1, 0, 0, 0, 206, 207, 1, 0, 0, 0, 207, 208, 1, 0, 0, 0, 208, 209, 5, 20,
-		0, 0, 209, 29, 1, 0, 0, 0, 210, 211, 6, 15, -1, 0, 211, 232, 5, 48, 0,
-		0, 212, 232, 5, 49, 0, 0, 213, 232, 5, 46, 0, 0, 214, 232, 5, 45, 0, 0,
-		215, 232, 5, 47, 0, 0, 216, 232, 5, 50, 0, 0, 217, 232, 5, 51, 0, 0, 218,
-		232, 3, 44, 22, 0, 219, 232, 3, 26, 13, 0, 220, 232, 3, 28, 14, 0, 221,
-		222, 5, 41, 0, 0, 222, 232, 3, 30, 15, 13, 223, 224, 5, 43, 0, 0, 224,
-		232, 3, 30, 15, 12, 225, 226, 5, 19, 0, 0, 226, 227, 3, 30, 15, 0, 227,
-		228, 5, 20, 0, 0, 228, 232, 1, 0, 0, 0, 229, 232, 3, 18, 9, 0, 230, 232,
-		3, 22, 11, 0, 231, 210, 1, 0, 0, 0, 231, 212, 1, 0, 0, 0, 231, 213, 1,
-		0, 0, 0, 231, 214, 1, 0, 0, 0, 231, 215, 1, 0, 0, 0, 231, 216, 1, 0, 0,
-		0, 231, 217, 1, 0, 0, 0, 231, 218, 1, 0, 0, 0, 231, 219, 1, 0, 0, 0, 231,
-		220, 1, 0, 0, 0, 231, 221, 1, 0, 0, 0, 231, 223, 1, 0, 0, 0, 231, 225,
-		1, 0, 0, 0, 231, 229, 1, 0, 0, 0, 231, 230, 1, 0, 0, 0, 232, 261, 1, 0,
-		0, 0, 233, 234, 10, 11, 0, 0, 234, 235, 5, 31, 0, 0, 235, 260, 3, 30, 15,
-		11, 236, 237, 10, 10, 0, 0, 237, 238, 7, 0, 0, 0, 238, 260, 3, 30, 15,
-		11, 239, 240, 10, 9, 0, 0, 240, 241, 7, 1, 0, 0, 241, 260, 3, 30, 15, 10,
-		242, 243, 10, 8, 0, 0, 243, 244, 7, 2, 0, 0, 244, 260, 3, 30, 15, 9, 245,
-		246, 10, 7, 0, 0, 246, 247, 7, 3, 0, 0, 247, 260, 3, 30, 15, 8, 248, 249,
-		10, 6, 0, 0, 249, 250, 5, 42, 0, 0, 250, 260, 3, 30, 15, 7, 251, 252, 10,
-		5, 0, 0, 252, 253, 5, 30, 0, 0, 253, 260, 3, 30, 15, 6, 254, 255, 10, 4,
-		0, 0, 255, 256, 5, 29, 0, 0, 256, 260, 3, 30, 15, 5, 257, 258, 10, 14,
-		0, 0, 258, 260, 3, 24, 12, 0, 259, 233, 1, 0, 0, 0, 259, 236, 1, 0, 0,
-		0, 259, 239, 1, 0, 0, 0, 259, 242, 1, 0, 0, 0, 259, 245, 1, 0, 0, 0, 259,
-		248, 1, 0, 0, 0, 259, 251, 1, 0, 0, 0, 259, 254, 1, 0, 0, 0, 259, 257,
-		1, 0, 0, 0, 260, 263, 1, 0, 0, 0, 261, 259, 1, 0, 0, 0, 261, 262, 1, 0,
-		0, 0, 262, 31, 1, 0, 0, 0, 263, 261, 1, 0, 0, 0, 264, 265, 5, 21, 0, 0,
-		265, 266, 3, 30, 15, 0, 266, 270, 5, 3, 0, 0, 267, 269, 3, 4, 2, 0, 268,
-		267, 1, 0, 0, 0, 269, 272, 1, 0, 0, 0, 270, 268, 1, 0, 0, 0, 270, 271,
-		1, 0, 0, 0, 271, 273, 1, 0, 0, 0, 272, 270, 1, 0, 0, 0, 273, 274, 5, 4,
-		0, 0, 274, 33, 1, 0, 0, 0, 275, 276, 5, 22, 0, 0, 276, 277, 3, 30, 15,
-		0, 277, 281, 5, 3, 0, 0, 278, 280, 3, 4, 2, 0, 279, 278, 1, 0, 0, 0, 280,
-		283, 1, 0, 0, 0, 281, 279, 1, 0, 0, 0, 281, 282, 1, 0, 0, 0, 282, 284,
-		1, 0, 0, 0, 283, 281, 1, 0, 0, 0, 284, 285, 5, 4, 0, 0, 285, 35, 1, 0,
-		0, 0, 286, 287, 5, 23, 0, 0, 287, 291, 5, 3, 0, 0, 288, 290, 3, 4, 2, 0,
-		289, 288, 1, 0, 0, 0, 290, 293, 1, 0, 0, 0, 291, 289, 1, 0, 0, 0, 291,
-		292, 1, 0, 0, 0, 292, 294, 1, 0, 0, 0, 293, 291, 1, 0, 0, 0, 294, 295,
-		5, 4, 0, 0, 295, 37, 1, 0, 0, 0, 296, 300, 3, 32, 16, 0, 297, 299, 3, 34,
-		17, 0, 298, 297, 1, 0, 0, 0, 299, 302, 1, 0, 0, 0, 300, 298, 1, 0, 0, 0,
-		300, 301, 1, 0, 0, 0, 301, 304, 1, 0, 0, 0, 302, 300, 1, 0, 0, 0, 303,
-		305, 3, 36, 18, 0, 304, 303, 1, 0, 0, 0, 304, 305, 1, 0, 0, 0, 305, 39,
-		1, 0, 0, 0, 306, 311, 5, 47, 0, 0, 307, 308, 5, 16, 0, 0, 308, 310, 5,
-		47, 0, 0, 309, 307, 1, 0, 0, 0, 310, 313, 1, 0, 0, 0, 311, 309, 1, 0, 0,
-		0, 311, 312, 1, 0, 0, 0, 312, 41, 1, 0, 0, 0, 313, 311, 1, 0, 0, 0, 314,
-		315, 5, 24, 0, 0, 315, 316, 5, 47, 0, 0, 316, 318, 5, 19, 0, 0, 317, 319,
-		3, 40, 20, 0, 318, 317, 1, 0, 0, 0, 318, 319, 1, 0, 0, 0, 319, 320, 1,
-		0, 0, 0, 320, 321, 5, 20, 0, 0, 321, 325, 5, 3, 0, 0, 322, 324, 3, 4, 2,
-		0, 323, 322, 1, 0, 0, 0, 324, 327, 1, 0, 0, 0, 325, 323, 1, 0, 0, 0, 325,
-		326, 1, 0, 0, 0, 326, 328, 1, 0, 0, 0, 327, 325, 1, 0, 0, 0, 328, 329,
-		5, 4, 0, 0, 329, 43, 1, 0, 0, 0, 330, 331, 5, 24, 0, 0, 331, 333, 5, 19,
-		0, 0, 332, 334, 3, 40, 20, 0, 333, 332, 1, 0, 0, 0, 333, 334, 1, 0, 0,
-		0, 334, 335, 1, 0, 0, 0, 335, 336, 5, 20, 0, 0, 336, 340, 5, 3, 0, 0, 337,
-		339, 3, 4, 2, 0, 338, 337, 1, 0, 0, 0, 339, 342, 1, 0, 0, 0, 340, 338,
-		1, 0, 0, 0, 340, 341, 1, 0, 0, 0, 341, 343, 1, 0, 0, 0, 342, 340, 1, 0,
-		0, 0, 343, 344, 5, 4, 0, 0, 344, 45, 1, 0, 0, 0, 345, 346, 5, 25, 0, 0,
-		346, 347, 5, 19, 0, 0, 347, 348, 3, 30, 15, 0, 348, 349, 5, 20, 0, 0, 349,
-		350, 5, 1, 0, 0, 350, 47, 1, 0, 0, 0, 28, 54, 56, 80, 88, 103, 110, 145,
-		153, 156, 170, 173, 188, 191, 203, 206, 231, 259, 261, 270, 281, 291, 300,
-		304, 311, 318, 325, 333, 340,
+		1, 15, 1, 15, 1, 15, 1, 15, 3, 15, 253, 8, 15, 1, 15, 1, 15, 1, 15, 1,
+		15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15,
+		1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1,
+		15, 1, 15, 5, 15, 281, 8, 15, 10, 15, 12, 15, 284, 9, 15, 1, 16, 1, 16,
+		1, 16, 1, 16, 5, 16, 290, 8, 16, 10, 16, 12, 16, 293, 9, 16, 1, 16, 1,
+		16, 1, 17, 1, 17, 1, 17, 1, 17, 5, 17, 301, 8, 17, 10, 17, 12, 17, 304,
+		9, 17, 1, 17, 1, 17, 1, 18, 1, 18, 1, 18, 5, 18, 311, 8, 18, 10, 18, 12,
+		18, 314, 9, 18, 1, 18, 1, 18, 1, 19, 1, 19, 5, 19, 320, 8, 19, 10, 19,
+		12, 19, 323, 9, 19, 1, 19, 3, 19, 326, 8, 19, 1, 20, 1, 20, 1, 20, 5, 20,
+		331, 8, 20, 10, 20, 12, 20, 334, 9, 20, 1, 21, 1, 21, 3, 21, 338, 8, 21,
+		1, 21, 1, 21, 1, 21, 5, 21, 343, 8, 21, 10, 21, 12, 21, 346, 9, 21, 1,
+		21, 1, 21, 1, 22, 1, 22, 1, 22, 1, 22, 1, 23, 1, 23, 1, 23, 1, 24, 1, 24,
+		1, 24, 1, 24, 1, 24, 1, 24, 1, 24, 0, 1, 30, 25, 0, 2, 4, 6, 8, 10, 12,
+		14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48,
+		0, 4, 1, 0, 38, 40, 1, 0, 41, 42, 2, 0, 28, 29, 36, 37, 1, 0, 23, 24, 402,
+		0, 55, 1, 0, 0, 0, 2, 84, 1, 0, 0, 0, 4, 86, 1, 0, 0, 0, 6, 97, 1, 0, 0,
+		0, 8, 112, 1, 0, 0, 0, 10, 116, 1, 0, 0, 0, 12, 118, 1, 0, 0, 0, 14, 149,
+		1, 0, 0, 0, 16, 151, 1, 0, 0, 0, 18, 164, 1, 0, 0, 0, 20, 168, 1, 0, 0,
+		0, 22, 181, 1, 0, 0, 0, 24, 185, 1, 0, 0, 0, 26, 201, 1, 0, 0, 0, 28, 215,
+		1, 0, 0, 0, 30, 252, 1, 0, 0, 0, 32, 285, 1, 0, 0, 0, 34, 296, 1, 0, 0,
+		0, 36, 307, 1, 0, 0, 0, 38, 317, 1, 0, 0, 0, 40, 327, 1, 0, 0, 0, 42, 335,
+		1, 0, 0, 0, 44, 349, 1, 0, 0, 0, 46, 353, 1, 0, 0, 0, 48, 356, 1, 0, 0,
+		0, 50, 54, 3, 2, 1, 0, 51, 54, 3, 44, 22, 0, 52, 54, 3, 48, 24, 0, 53,
+		50, 1, 0, 0, 0, 53, 51, 1, 0, 0, 0, 53, 52, 1, 0, 0, 0, 54, 57, 1, 0, 0,
+		0, 55, 53, 1, 0, 0, 0, 55, 56, 1, 0, 0, 0, 56, 58, 1, 0, 0, 0, 57, 55,
+		1, 0, 0, 0, 58, 59, 5, 0, 0, 1, 59, 1, 1, 0, 0, 0, 60, 61, 3, 14, 7, 0,
+		61, 62, 5, 1, 0, 0, 62, 85, 1, 0, 0, 0, 63, 64, 3, 24, 12, 0, 64, 65, 5,
+		1, 0, 0, 65, 85, 1, 0, 0, 0, 66, 67, 3, 28, 14, 0, 67, 68, 5, 1, 0, 0,
+		68, 85, 1, 0, 0, 0, 69, 70, 3, 26, 13, 0, 70, 71, 5, 1, 0, 0, 71, 85, 1,
+		0, 0, 0, 72, 85, 3, 4, 2, 0, 73, 85, 3, 6, 3, 0, 74, 85, 3, 38, 19, 0,
+		75, 76, 3, 12, 6, 0, 76, 77, 5, 1, 0, 0, 77, 85, 1, 0, 0, 0, 78, 79, 3,
+		10, 5, 0, 79, 80, 5, 1, 0, 0, 80, 85, 1, 0, 0, 0, 81, 82, 3, 8, 4, 0, 82,
+		83, 5, 1, 0, 0, 83, 85, 1, 0, 0, 0, 84, 60, 1, 0, 0, 0, 84, 63, 1, 0, 0,
+		0, 84, 66, 1, 0, 0, 0, 84, 69, 1, 0, 0, 0, 84, 72, 1, 0, 0, 0, 84, 73,
+		1, 0, 0, 0, 84, 74, 1, 0, 0, 0, 84, 75, 1, 0, 0, 0, 84, 78, 1, 0, 0, 0,
+		84, 81, 1, 0, 0, 0, 85, 3, 1, 0, 0, 0, 86, 87, 5, 2, 0, 0, 87, 88, 3, 30,
+		15, 0, 88, 92, 5, 3, 0, 0, 89, 91, 3, 2, 1, 0, 90, 89, 1, 0, 0, 0, 91,
+		94, 1, 0, 0, 0, 92, 90, 1, 0, 0, 0, 92, 93, 1, 0, 0, 0, 93, 95, 1, 0, 0,
+		0, 94, 92, 1, 0, 0, 0, 95, 96, 5, 4, 0, 0, 96, 5, 1, 0, 0, 0, 97, 98, 5,
+		5, 0, 0, 98, 99, 3, 14, 7, 0, 99, 100, 5, 1, 0, 0, 100, 101, 3, 30, 15,
+		0, 101, 102, 5, 1, 0, 0, 102, 103, 3, 14, 7, 0, 103, 107, 5, 3, 0, 0, 104,
+		106, 3, 2, 1, 0, 105, 104, 1, 0, 0, 0, 106, 109, 1, 0, 0, 0, 107, 105,
+		1, 0, 0, 0, 107, 108, 1, 0, 0, 0, 108, 110, 1, 0, 0, 0, 109, 107, 1, 0,
+		0, 0, 110, 111, 5, 4, 0, 0, 111, 7, 1, 0, 0, 0, 112, 114, 5, 6, 0, 0, 113,
+		115, 3, 30, 15, 0, 114, 113, 1, 0, 0, 0, 114, 115, 1, 0, 0, 0, 115, 9,
+		1, 0, 0, 0, 116, 117, 5, 7, 0, 0, 117, 11, 1, 0, 0, 0, 118, 119, 5, 8,
+		0, 0, 119, 13, 1, 0, 0, 0, 120, 121, 5, 48, 0, 0, 121, 122, 5, 9, 0, 0,
+		122, 150, 3, 30, 15, 0, 123, 124, 5, 48, 0, 0, 124, 125, 5, 9, 0, 0, 125,
+		150, 3, 46, 23, 0, 126, 127, 5, 48, 0, 0, 127, 128, 5, 30, 0, 0, 128, 150,
+		3, 30, 15, 0, 129, 130, 5, 48, 0, 0, 130, 131, 5, 31, 0, 0, 131, 150, 3,
+		30, 15, 0, 132, 133, 5, 48, 0, 0, 133, 134, 5, 32, 0, 0, 134, 150, 3, 30,
+		15, 0, 135, 136, 5, 48, 0, 0, 136, 137, 5, 33, 0, 0, 137, 150, 3, 30, 15,
+		0, 138, 139, 5, 48, 0, 0, 139, 140, 5, 34, 0, 0, 140, 150, 3, 30, 15, 0,
+		141, 142, 5, 48, 0, 0, 142, 143, 5, 35, 0, 0, 143, 150, 3, 30, 15, 0, 144,
+		145, 5, 48, 0, 0, 145, 146, 3, 22, 11, 0, 146, 147, 5, 9, 0, 0, 147, 148,
+		3, 30, 15, 0, 148, 150, 1, 0, 0, 0, 149, 120, 1, 0, 0, 0, 149, 123, 1,
+		0, 0, 0, 149, 126, 1, 0, 0, 0, 149, 129, 1, 0, 0, 0, 149, 132, 1, 0, 0,
+		0, 149, 135, 1, 0, 0, 0, 149, 138, 1, 0, 0, 0, 149, 141, 1, 0, 0, 0, 149,
+		144, 1, 0, 0, 0, 150, 15, 1, 0, 0, 0, 151, 160, 5, 10, 0, 0, 152, 157,
+		3, 30, 15, 0, 153, 154, 5, 11, 0, 0, 154, 156, 3, 30, 15, 0, 155, 153,
+		1, 0, 0, 0, 156, 159, 1, 0, 0, 0, 157, 155, 1, 0, 0, 0, 157, 158, 1, 0,
+		0, 0, 158, 161, 1, 0, 0, 0, 159, 157, 1, 0, 0, 0, 160, 152, 1, 0, 0, 0,
+		160, 161, 1, 0, 0, 0, 161, 162, 1, 0, 0, 0, 162, 163, 5, 12, 0, 0, 163,
+		17, 1, 0, 0, 0, 164, 165, 3, 30, 15, 0, 165, 166, 5, 13, 0, 0, 166, 167,
+		3, 30, 15, 0, 167, 19, 1, 0, 0, 0, 168, 177, 5, 3, 0, 0, 169, 174, 3, 18,
+		9, 0, 170, 171, 5, 11, 0, 0, 171, 173, 3, 18, 9, 0, 172, 170, 1, 0, 0,
+		0, 173, 176, 1, 0, 0, 0, 174, 172, 1, 0, 0, 0, 174, 175, 1, 0, 0, 0, 175,
+		178, 1, 0, 0, 0, 176, 174, 1, 0, 0, 0, 177, 169, 1, 0, 0, 0, 177, 178,
+		1, 0, 0, 0, 178, 179, 1, 0, 0, 0, 179, 180, 5, 4, 0, 0, 180, 21, 1, 0,
+		0, 0, 181, 182, 5, 10, 0, 0, 182, 183, 3, 30, 15, 0, 183, 184, 5, 12, 0,
+		0, 184, 23, 1, 0, 0, 0, 185, 186, 5, 48, 0, 0, 186, 187, 5, 14, 0, 0, 187,
+		188, 5, 48, 0, 0, 188, 197, 5, 15, 0, 0, 189, 194, 3, 30, 15, 0, 190, 191,
+		5, 11, 0, 0, 191, 193, 3, 30, 15, 0, 192, 190, 1, 0, 0, 0, 193, 196, 1,
+		0, 0, 0, 194, 192, 1, 0, 0, 0, 194, 195, 1, 0, 0, 0, 195, 198, 1, 0, 0,
+		0, 196, 194, 1, 0, 0, 0, 197, 189, 1, 0, 0, 0, 197, 198, 1, 0, 0, 0, 198,
+		199, 1, 0, 0, 0, 199, 200, 5, 16, 0, 0, 200, 25, 1, 0, 0, 0, 201, 202,
+		5, 48, 0, 0, 202, 211, 5, 15, 0, 0, 203, 208, 3, 30, 15, 0, 204, 205, 5,
+		11, 0, 0, 205, 207, 3, 30, 15, 0, 206, 204, 1, 0, 0, 0, 207, 210, 1, 0,
+		0, 0, 208, 206, 1, 0, 0, 0, 208, 209, 1, 0, 0, 0, 209, 212, 1, 0, 0, 0,
+		210, 208, 1, 0, 0, 0, 211, 203, 1, 0, 0, 0, 211, 212, 1, 0, 0, 0, 212,
+		213, 1, 0, 0, 0, 213, 214, 5, 16, 0, 0, 214, 27, 1, 0, 0, 0, 215, 216,
+		5, 45, 0, 0, 216, 217, 5, 48, 0, 0, 217, 226, 5, 15, 0, 0, 218, 223, 3,
+		30, 15, 0, 219, 220, 5, 11, 0, 0, 220, 222, 3, 30, 15, 0, 221, 219, 1,
+		0, 0, 0, 222, 225, 1, 0, 0, 0, 223, 221, 1, 0, 0, 0, 223, 224, 1, 0, 0,
+		0, 224, 227, 1, 0, 0, 0, 225, 223, 1, 0, 0, 0, 226, 218, 1, 0, 0, 0, 226,
+		227, 1, 0, 0, 0, 227, 228, 1, 0, 0, 0, 228, 229, 5, 16, 0, 0, 229, 29,
+		1, 0, 0, 0, 230, 231, 6, 15, -1, 0, 231, 253, 5, 49, 0, 0, 232, 253, 5,
+		50, 0, 0, 233, 253, 5, 47, 0, 0, 234, 253, 5, 46, 0, 0, 235, 253, 5, 48,
+		0, 0, 236, 253, 5, 51, 0, 0, 237, 253, 5, 52, 0, 0, 238, 253, 3, 46, 23,
+		0, 239, 253, 3, 24, 12, 0, 240, 253, 3, 26, 13, 0, 241, 253, 3, 28, 14,
+		0, 242, 243, 5, 42, 0, 0, 243, 253, 3, 30, 15, 13, 244, 245, 5, 44, 0,
+		0, 245, 253, 3, 30, 15, 12, 246, 247, 5, 15, 0, 0, 247, 248, 3, 30, 15,
+		0, 248, 249, 5, 16, 0, 0, 249, 253, 1, 0, 0, 0, 250, 253, 3, 16, 8, 0,
+		251, 253, 3, 20, 10, 0, 252, 230, 1, 0, 0, 0, 252, 232, 1, 0, 0, 0, 252,
+		233, 1, 0, 0, 0, 252, 234, 1, 0, 0, 0, 252, 235, 1, 0, 0, 0, 252, 236,
+		1, 0, 0, 0, 252, 237, 1, 0, 0, 0, 252, 238, 1, 0, 0, 0, 252, 239, 1, 0,
+		0, 0, 252, 240, 1, 0, 0, 0, 252, 241, 1, 0, 0, 0, 252, 242, 1, 0, 0, 0,
+		252, 244, 1, 0, 0, 0, 252, 246, 1, 0, 0, 0, 252, 250, 1, 0, 0, 0, 252,
+		251, 1, 0, 0, 0, 253, 282, 1, 0, 0, 0, 254, 255, 10, 11, 0, 0, 255, 256,
+		5, 27, 0, 0, 256, 281, 3, 30, 15, 11, 257, 258, 10, 10, 0, 0, 258, 259,
+		7, 0, 0, 0, 259, 281, 3, 30, 15, 11, 260, 261, 10, 9, 0, 0, 261, 262, 7,
+		1, 0, 0, 262, 281, 3, 30, 15, 10, 263, 264, 10, 8, 0, 0, 264, 265, 7, 2,
+		0, 0, 265, 281, 3, 30, 15, 9, 266, 267, 10, 7, 0, 0, 267, 268, 7, 3, 0,
+		0, 268, 281, 3, 30, 15, 8, 269, 270, 10, 6, 0, 0, 270, 271, 5, 43, 0, 0,
+		271, 281, 3, 30, 15, 7, 272, 273, 10, 5, 0, 0, 273, 274, 5, 26, 0, 0, 274,
+		281, 3, 30, 15, 6, 275, 276, 10, 4, 0, 0, 276, 277, 5, 25, 0, 0, 277, 281,
+		3, 30, 15, 5, 278, 279, 10, 14, 0, 0, 279, 281, 3, 22, 11, 0, 280, 254,
+		1, 0, 0, 0, 280, 257, 1, 0, 0, 0, 280, 260, 1, 0, 0, 0, 280, 263, 1, 0,
+		0, 0, 280, 266, 1, 0, 0, 0, 280, 269, 1, 0, 0, 0, 280, 272, 1, 0, 0, 0,
+		280, 275, 1, 0, 0, 0, 280, 278, 1, 0, 0, 0, 281, 284, 1, 0, 0, 0, 282,
+		280, 1, 0, 0, 0, 282, 283, 1, 0, 0, 0, 283, 31, 1, 0, 0, 0, 284, 282, 1,
+		0, 0, 0, 285, 286, 5, 17, 0, 0, 286, 287, 3, 30, 15, 0, 287, 291, 5, 3,
+		0, 0, 288, 290, 3, 2, 1, 0, 289, 288, 1, 0, 0, 0, 290, 293, 1, 0, 0, 0,
+		291, 289, 1, 0, 0, 0, 291, 292, 1, 0, 0, 0, 292, 294, 1, 0, 0, 0, 293,
+		291, 1, 0, 0, 0, 294, 295, 5, 4, 0, 0, 295, 33, 1, 0, 0, 0, 296, 297, 5,
+		18, 0, 0, 297, 298, 3, 30, 15, 0, 298, 302, 5, 3, 0, 0, 299, 301, 3, 2,
+		1, 0, 300, 299, 1, 0, 0, 0, 301, 304, 1, 0, 0, 0, 302, 300, 1, 0, 0, 0,
+		302, 303, 1, 0, 0, 0, 303, 305, 1, 0, 0, 0, 304, 302, 1, 0, 0, 0, 305,
+		306, 5, 4, 0, 0, 306, 35, 1, 0, 0, 0, 307, 308, 5, 19, 0, 0, 308, 312,
+		5, 3, 0, 0, 309, 311, 3, 2, 1, 0, 310, 309, 1, 0, 0, 0, 311, 314, 1, 0,
+		0, 0, 312, 310, 1, 0, 0, 0, 312, 313, 1, 0, 0, 0, 313, 315, 1, 0, 0, 0,
+		314, 312, 1, 0, 0, 0, 315, 316, 5, 4, 0, 0, 316, 37, 1, 0, 0, 0, 317, 321,
+		3, 32, 16, 0, 318, 320, 3, 34, 17, 0, 319, 318, 1, 0, 0, 0, 320, 323, 1,
+		0, 0, 0, 321, 319, 1, 0, 0, 0, 321, 322, 1, 0, 0, 0, 322, 325, 1, 0, 0,
+		0, 323, 321, 1, 0, 0, 0, 324, 326, 3, 36, 18, 0, 325, 324, 1, 0, 0, 0,
+		325, 326, 1, 0, 0, 0, 326, 39, 1, 0, 0, 0, 327, 332, 5, 48, 0, 0, 328,
+		329, 5, 11, 0, 0, 329, 331, 5, 48, 0, 0, 330, 328, 1, 0, 0, 0, 331, 334,
+		1, 0, 0, 0, 332, 330, 1, 0, 0, 0, 332, 333, 1, 0, 0, 0, 333, 41, 1, 0,
+		0, 0, 334, 332, 1, 0, 0, 0, 335, 337, 5, 15, 0, 0, 336, 338, 3, 40, 20,
+		0, 337, 336, 1, 0, 0, 0, 337, 338, 1, 0, 0, 0, 338, 339, 1, 0, 0, 0, 339,
+		340, 5, 16, 0, 0, 340, 344, 5, 3, 0, 0, 341, 343, 3, 2, 1, 0, 342, 341,
+		1, 0, 0, 0, 343, 346, 1, 0, 0, 0, 344, 342, 1, 0, 0, 0, 344, 345, 1, 0,
+		0, 0, 345, 347, 1, 0, 0, 0, 346, 344, 1, 0, 0, 0, 347, 348, 5, 4, 0, 0,
+		348, 43, 1, 0, 0, 0, 349, 350, 5, 20, 0, 0, 350, 351, 5, 48, 0, 0, 351,
+		352, 3, 42, 21, 0, 352, 45, 1, 0, 0, 0, 353, 354, 5, 20, 0, 0, 354, 355,
+		3, 42, 21, 0, 355, 47, 1, 0, 0, 0, 356, 357, 5, 21, 0, 0, 357, 358, 5,
+		15, 0, 0, 358, 359, 3, 30, 15, 0, 359, 360, 5, 16, 0, 0, 360, 361, 5, 1,
+		0, 0, 361, 49, 1, 0, 0, 0, 28, 53, 55, 84, 92, 107, 114, 149, 157, 160,
+		174, 177, 194, 197, 208, 211, 223, 226, 252, 280, 282, 291, 302, 312, 321,
+		325, 332, 337, 344,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -273,120 +278,156 @@ const (
 	MlanParserT__18      = 19
 	MlanParserT__19      = 20
 	MlanParserT__20      = 21
-	MlanParserT__21      = 22
-	MlanParserT__22      = 23
-	MlanParserT__23      = 24
-	MlanParserT__24      = 25
-	MlanParserWS         = 26
-	MlanParserEq         = 27
-	MlanParserNeq        = 28
-	MlanParserOr         = 29
-	MlanParserAnd        = 30
-	MlanParserPow        = 31
-	MlanParserGtEq       = 32
-	MlanParserLtEq       = 33
-	MlanParserAssignSum  = 34
-	MlanParserGt         = 35
-	MlanParserLt         = 36
-	MlanParserMultiply   = 37
-	MlanParserDivision   = 38
-	MlanParserModulus    = 39
-	MlanParserAdd        = 40
-	MlanParserSubtract   = 41
-	MlanParserXor        = 42
-	MlanParserNot        = 43
-	MlanParserClosure    = 44
-	MlanParserBool       = 45
-	MlanParserNull       = 46
-	MlanParserIdentifier = 47
-	MlanParserInteger    = 48
-	MlanParserIntegerHex = 49
-	MlanParserFloat      = 50
-	MlanParserString_    = 51
-	MlanParserComment    = 52
+	MlanParserWS         = 22
+	MlanParserEq         = 23
+	MlanParserNeq        = 24
+	MlanParserOr         = 25
+	MlanParserAnd        = 26
+	MlanParserPow        = 27
+	MlanParserGtEq       = 28
+	MlanParserLtEq       = 29
+	MlanParserAssSum     = 30
+	MlanParserAssSub     = 31
+	MlanParserAssMul     = 32
+	MlanParserAssDiv     = 33
+	MlanParserAssMod     = 34
+	MlanParserAssPow     = 35
+	MlanParserGt         = 36
+	MlanParserLt         = 37
+	MlanParserMultiply   = 38
+	MlanParserDivision   = 39
+	MlanParserModulus    = 40
+	MlanParserAdd        = 41
+	MlanParserSubtract   = 42
+	MlanParserXor        = 43
+	MlanParserNot        = 44
+	MlanParserClosure    = 45
+	MlanParserBool       = 46
+	MlanParserNull       = 47
+	MlanParserIdentifier = 48
+	MlanParserInteger    = 49
+	MlanParserIntegerHex = 50
+	MlanParserFloat      = 51
+	MlanParserString_    = 52
+	MlanParserComment    = 53
 )
 
 // MlanParser rules.
 const (
-	MlanParserRULE_program            = 0
-	MlanParserRULE_block              = 1
-	MlanParserRULE_statement          = 2
-	MlanParserRULE_whileStatement     = 3
-	MlanParserRULE_forStatement       = 4
-	MlanParserRULE_returnStatement    = 5
-	MlanParserRULE_continueStatement  = 6
-	MlanParserRULE_breakStatement     = 7
-	MlanParserRULE_assignment         = 8
-	MlanParserRULE_list               = 9
-	MlanParserRULE_dictUnit           = 10
-	MlanParserRULE_dict               = 11
-	MlanParserRULE_index              = 12
-	MlanParserRULE_functionInvoke     = 13
-	MlanParserRULE_closureInvoke      = 14
-	MlanParserRULE_expression         = 15
-	MlanParserRULE_ifBlock            = 16
-	MlanParserRULE_elifBlock          = 17
-	MlanParserRULE_elseBlock          = 18
-	MlanParserRULE_ifStatement        = 19
-	MlanParserRULE_functionParameters = 20
-	MlanParserRULE_functionDefinition = 21
-	MlanParserRULE_closureDefinition  = 22
-	MlanParserRULE_includeSubmodule   = 23
+	MlanParserRULE_prog         = 0
+	MlanParserRULE_stmt         = 1
+	MlanParserRULE_whileStmt    = 2
+	MlanParserRULE_forStmt      = 3
+	MlanParserRULE_returnStmt   = 4
+	MlanParserRULE_continueStmt = 5
+	MlanParserRULE_breakStmt    = 6
+	MlanParserRULE_assignment   = 7
+	MlanParserRULE_list         = 8
+	MlanParserRULE_dictUnit     = 9
+	MlanParserRULE_dict         = 10
+	MlanParserRULE_idx          = 11
+	MlanParserRULE_methodInvoke = 12
+	MlanParserRULE_fnInvoke     = 13
+	MlanParserRULE_csInvoke     = 14
+	MlanParserRULE_exp          = 15
+	MlanParserRULE_ifBlock      = 16
+	MlanParserRULE_elifBlock    = 17
+	MlanParserRULE_elseBlock    = 18
+	MlanParserRULE_ifStmt       = 19
+	MlanParserRULE_fnParams     = 20
+	MlanParserRULE_fnBody       = 21
+	MlanParserRULE_fn           = 22
+	MlanParserRULE_closure      = 23
+	MlanParserRULE_include      = 24
 )
 
-// IProgramContext is an interface to support dynamic dispatch.
-type IProgramContext interface {
+// IProgContext is an interface to support dynamic dispatch.
+type IProgContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	Block() IBlockContext
 	EOF() antlr.TerminalNode
+	AllStmt() []IStmtContext
+	Stmt(i int) IStmtContext
+	AllFn() []IFnContext
+	Fn(i int) IFnContext
+	AllInclude() []IIncludeContext
+	Include(i int) IIncludeContext
 
-	// IsProgramContext differentiates from other interfaces.
-	IsProgramContext()
+	// IsProgContext differentiates from other interfaces.
+	IsProgContext()
 }
 
-type ProgramContext struct {
+type ProgContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyProgramContext() *ProgramContext {
-	var p = new(ProgramContext)
+func NewEmptyProgContext() *ProgContext {
+	var p = new(ProgContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_program
+	p.RuleIndex = MlanParserRULE_prog
 	return p
 }
 
-func InitEmptyProgramContext(p *ProgramContext) {
+func InitEmptyProgContext(p *ProgContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_program
+	p.RuleIndex = MlanParserRULE_prog
 }
 
-func (*ProgramContext) IsProgramContext() {}
+func (*ProgContext) IsProgContext() {}
 
-func NewProgramContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ProgramContext {
-	var p = new(ProgramContext)
+func NewProgContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ProgContext {
+	var p = new(ProgContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_program
+	p.RuleIndex = MlanParserRULE_prog
 
 	return p
 }
 
-func (s *ProgramContext) GetParser() antlr.Parser { return s.parser }
+func (s *ProgContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ProgramContext) Block() IBlockContext {
+func (s *ProgContext) EOF() antlr.TerminalNode {
+	return s.GetToken(MlanParserEOF, 0)
+}
+
+func (s *ProgContext) AllStmt() []IStmtContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IStmtContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IStmtContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IStmtContext); ok {
+			tst[i] = t.(IStmtContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *ProgContext) Stmt(i int) IStmtContext {
 	var t antlr.RuleContext
+	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IBlockContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
+		if _, ok := ctx.(IStmtContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
 		}
 	}
 
@@ -394,53 +435,174 @@ func (s *ProgramContext) Block() IBlockContext {
 		return nil
 	}
 
-	return t.(IBlockContext)
+	return t.(IStmtContext)
 }
 
-func (s *ProgramContext) EOF() antlr.TerminalNode {
-	return s.GetToken(MlanParserEOF, 0)
+func (s *ProgContext) AllFn() []IFnContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IFnContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IFnContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IFnContext); ok {
+			tst[i] = t.(IFnContext)
+			i++
+		}
+	}
+
+	return tst
 }
 
-func (s *ProgramContext) GetRuleContext() antlr.RuleContext {
+func (s *ProgContext) Fn(i int) IFnContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFnContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFnContext)
+}
+
+func (s *ProgContext) AllInclude() []IIncludeContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IIncludeContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IIncludeContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IIncludeContext); ok {
+			tst[i] = t.(IIncludeContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *ProgContext) Include(i int) IIncludeContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIncludeContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIncludeContext)
+}
+
+func (s *ProgContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ProgramContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *ProgContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *ProgramContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ProgContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterProgram(s)
+		listenerT.EnterProg(s)
 	}
 }
 
-func (s *ProgramContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ProgContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitProgram(s)
+		listenerT.ExitProg(s)
 	}
 }
 
-func (s *ProgramContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ProgContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitProgram(s)
+		return t.VisitProg(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) Program() (localctx IProgramContext) {
-	localctx = NewProgramContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 0, MlanParserRULE_program)
+func (p *MlanParser) Prog() (localctx IProgContext) {
+	localctx = NewProgContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 0, MlanParserRULE_prog)
+	var _la int
+
 	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(48)
-		p.Block()
+	p.SetState(55)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&316659352076772) != 0 {
+		p.SetState(53)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetTokenStream().LA(1) {
+		case MlanParserT__1, MlanParserT__4, MlanParserT__5, MlanParserT__6, MlanParserT__7, MlanParserT__16, MlanParserClosure, MlanParserIdentifier:
+			{
+				p.SetState(50)
+				p.Stmt()
+			}
+
+		case MlanParserT__19:
+			{
+				p.SetState(51)
+				p.Fn()
+			}
+
+		case MlanParserT__20:
+			{
+				p.SetState(52)
+				p.Include()
+			}
+
+		default:
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
+		}
+
+		p.SetState(57)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(49)
+		p.SetState(58)
 		p.Match(MlanParserEOF)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -461,277 +623,8 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IBlockContext is an interface to support dynamic dispatch.
-type IBlockContext interface {
-	antlr.ParserRuleContext
-
-	// GetParser returns the parser.
-	GetParser() antlr.Parser
-
-	// Getter signatures
-	AllStatement() []IStatementContext
-	Statement(i int) IStatementContext
-	AllFunctionDefinition() []IFunctionDefinitionContext
-	FunctionDefinition(i int) IFunctionDefinitionContext
-	AllIncludeSubmodule() []IIncludeSubmoduleContext
-	IncludeSubmodule(i int) IIncludeSubmoduleContext
-
-	// IsBlockContext differentiates from other interfaces.
-	IsBlockContext()
-}
-
-type BlockContext struct {
-	antlr.BaseParserRuleContext
-	parser antlr.Parser
-}
-
-func NewEmptyBlockContext() *BlockContext {
-	var p = new(BlockContext)
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_block
-	return p
-}
-
-func InitEmptyBlockContext(p *BlockContext) {
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_block
-}
-
-func (*BlockContext) IsBlockContext() {}
-
-func NewBlockContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *BlockContext {
-	var p = new(BlockContext)
-
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
-
-	p.parser = parser
-	p.RuleIndex = MlanParserRULE_block
-
-	return p
-}
-
-func (s *BlockContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *BlockContext) AllStatement() []IStatementContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IStatementContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *BlockContext) Statement(i int) IStatementContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IStatementContext)
-}
-
-func (s *BlockContext) AllFunctionDefinition() []IFunctionDefinitionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IFunctionDefinitionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IFunctionDefinitionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IFunctionDefinitionContext); ok {
-			tst[i] = t.(IFunctionDefinitionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *BlockContext) FunctionDefinition(i int) IFunctionDefinitionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IFunctionDefinitionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IFunctionDefinitionContext)
-}
-
-func (s *BlockContext) AllIncludeSubmodule() []IIncludeSubmoduleContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IIncludeSubmoduleContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IIncludeSubmoduleContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IIncludeSubmoduleContext); ok {
-			tst[i] = t.(IIncludeSubmoduleContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *BlockContext) IncludeSubmodule(i int) IIncludeSubmoduleContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IIncludeSubmoduleContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IIncludeSubmoduleContext)
-}
-
-func (s *BlockContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *BlockContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-func (s *BlockContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterBlock(s)
-	}
-}
-
-func (s *BlockContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitBlock(s)
-	}
-}
-
-func (s *BlockContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitBlock(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-func (p *MlanParser) Block() (localctx IBlockContext) {
-	localctx = NewBlockContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 2, MlanParserRULE_block)
-	var _la int
-
-	p.EnterOuterAlt(localctx, 1)
-	p.SetState(56)
-	p.GetErrorHandler().Sync(p)
-	if p.HasError() {
-		goto errorExit
-	}
-	_la = p.GetTokenStream().LA(1)
-
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329726829028) != 0 {
-		p.SetState(54)
-		p.GetErrorHandler().Sync(p)
-		if p.HasError() {
-			goto errorExit
-		}
-
-		switch p.GetTokenStream().LA(1) {
-		case MlanParserT__1, MlanParserT__4, MlanParserT__5, MlanParserT__6, MlanParserT__7, MlanParserT__20, MlanParserClosure, MlanParserIdentifier:
-			{
-				p.SetState(51)
-				p.Statement()
-			}
-
-		case MlanParserT__23:
-			{
-				p.SetState(52)
-				p.FunctionDefinition()
-			}
-
-		case MlanParserT__24:
-			{
-				p.SetState(53)
-				p.IncludeSubmodule()
-			}
-
-		default:
-			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
-			goto errorExit
-		}
-
-		p.SetState(58)
-		p.GetErrorHandler().Sync(p)
-		if p.HasError() {
-			goto errorExit
-		}
-		_la = p.GetTokenStream().LA(1)
-	}
-
-errorExit:
-	if p.HasError() {
-		v := p.GetError()
-		localctx.SetException(v)
-		p.GetErrorHandler().ReportError(p, v)
-		p.GetErrorHandler().Recover(p, v)
-		p.SetError(nil)
-	}
-	p.ExitRule()
-	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
-}
-
-// IStatementContext is an interface to support dynamic dispatch.
-type IStatementContext interface {
+// IStmtContext is an interface to support dynamic dispatch.
+type IStmtContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
@@ -739,52 +632,53 @@ type IStatementContext interface {
 
 	// Getter signatures
 	Assignment() IAssignmentContext
-	ClosureInvoke() IClosureInvokeContext
-	FunctionInvoke() IFunctionInvokeContext
-	WhileStatement() IWhileStatementContext
-	ForStatement() IForStatementContext
-	IfStatement() IIfStatementContext
-	BreakStatement() IBreakStatementContext
-	ContinueStatement() IContinueStatementContext
-	ReturnStatement() IReturnStatementContext
+	MethodInvoke() IMethodInvokeContext
+	CsInvoke() ICsInvokeContext
+	FnInvoke() IFnInvokeContext
+	WhileStmt() IWhileStmtContext
+	ForStmt() IForStmtContext
+	IfStmt() IIfStmtContext
+	BreakStmt() IBreakStmtContext
+	ContinueStmt() IContinueStmtContext
+	ReturnStmt() IReturnStmtContext
 
-	// IsStatementContext differentiates from other interfaces.
-	IsStatementContext()
+	// IsStmtContext differentiates from other interfaces.
+	IsStmtContext()
 }
 
-type StatementContext struct {
+type StmtContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyStatementContext() *StatementContext {
-	var p = new(StatementContext)
+func NewEmptyStmtContext() *StmtContext {
+	var p = new(StmtContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_statement
+	p.RuleIndex = MlanParserRULE_stmt
 	return p
 }
 
-func InitEmptyStatementContext(p *StatementContext) {
+func InitEmptyStmtContext(p *StmtContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_statement
+	p.RuleIndex = MlanParserRULE_stmt
 }
 
-func (*StatementContext) IsStatementContext() {}
+func (*StmtContext) IsStmtContext() {}
 
-func NewStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *StatementContext {
-	var p = new(StatementContext)
+func NewStmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *StmtContext {
+	var p = new(StmtContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_statement
+	p.RuleIndex = MlanParserRULE_stmt
 
 	return p
 }
 
-func (s *StatementContext) GetParser() antlr.Parser { return s.parser }
+func (s *StmtContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *StatementContext) Assignment() IAssignmentContext {
+func (s *StmtContext) Assignment() IAssignmentContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
 		if _, ok := ctx.(IAssignmentContext); ok {
@@ -800,10 +694,10 @@ func (s *StatementContext) Assignment() IAssignmentContext {
 	return t.(IAssignmentContext)
 }
 
-func (s *StatementContext) ClosureInvoke() IClosureInvokeContext {
+func (s *StmtContext) MethodInvoke() IMethodInvokeContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IClosureInvokeContext); ok {
+		if _, ok := ctx.(IMethodInvokeContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -813,13 +707,13 @@ func (s *StatementContext) ClosureInvoke() IClosureInvokeContext {
 		return nil
 	}
 
-	return t.(IClosureInvokeContext)
+	return t.(IMethodInvokeContext)
 }
 
-func (s *StatementContext) FunctionInvoke() IFunctionInvokeContext {
+func (s *StmtContext) CsInvoke() ICsInvokeContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IFunctionInvokeContext); ok {
+		if _, ok := ctx.(ICsInvokeContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -829,13 +723,13 @@ func (s *StatementContext) FunctionInvoke() IFunctionInvokeContext {
 		return nil
 	}
 
-	return t.(IFunctionInvokeContext)
+	return t.(ICsInvokeContext)
 }
 
-func (s *StatementContext) WhileStatement() IWhileStatementContext {
+func (s *StmtContext) FnInvoke() IFnInvokeContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IWhileStatementContext); ok {
+		if _, ok := ctx.(IFnInvokeContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -845,13 +739,13 @@ func (s *StatementContext) WhileStatement() IWhileStatementContext {
 		return nil
 	}
 
-	return t.(IWhileStatementContext)
+	return t.(IFnInvokeContext)
 }
 
-func (s *StatementContext) ForStatement() IForStatementContext {
+func (s *StmtContext) WhileStmt() IWhileStmtContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IForStatementContext); ok {
+		if _, ok := ctx.(IWhileStmtContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -861,13 +755,13 @@ func (s *StatementContext) ForStatement() IForStatementContext {
 		return nil
 	}
 
-	return t.(IForStatementContext)
+	return t.(IWhileStmtContext)
 }
 
-func (s *StatementContext) IfStatement() IIfStatementContext {
+func (s *StmtContext) ForStmt() IForStmtContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IIfStatementContext); ok {
+		if _, ok := ctx.(IForStmtContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -877,13 +771,13 @@ func (s *StatementContext) IfStatement() IIfStatementContext {
 		return nil
 	}
 
-	return t.(IIfStatementContext)
+	return t.(IForStmtContext)
 }
 
-func (s *StatementContext) BreakStatement() IBreakStatementContext {
+func (s *StmtContext) IfStmt() IIfStmtContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IBreakStatementContext); ok {
+		if _, ok := ctx.(IIfStmtContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -893,13 +787,13 @@ func (s *StatementContext) BreakStatement() IBreakStatementContext {
 		return nil
 	}
 
-	return t.(IBreakStatementContext)
+	return t.(IIfStmtContext)
 }
 
-func (s *StatementContext) ContinueStatement() IContinueStatementContext {
+func (s *StmtContext) BreakStmt() IBreakStmtContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IContinueStatementContext); ok {
+		if _, ok := ctx.(IBreakStmtContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -909,13 +803,13 @@ func (s *StatementContext) ContinueStatement() IContinueStatementContext {
 		return nil
 	}
 
-	return t.(IContinueStatementContext)
+	return t.(IBreakStmtContext)
 }
 
-func (s *StatementContext) ReturnStatement() IReturnStatementContext {
+func (s *StmtContext) ContinueStmt() IContinueStmtContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IReturnStatementContext); ok {
+		if _, ok := ctx.(IContinueStmtContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -925,43 +819,59 @@ func (s *StatementContext) ReturnStatement() IReturnStatementContext {
 		return nil
 	}
 
-	return t.(IReturnStatementContext)
+	return t.(IContinueStmtContext)
 }
 
-func (s *StatementContext) GetRuleContext() antlr.RuleContext {
+func (s *StmtContext) ReturnStmt() IReturnStmtContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IReturnStmtContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IReturnStmtContext)
+}
+
+func (s *StmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *StatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *StmtContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *StatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *StmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterStatement(s)
+		listenerT.EnterStmt(s)
 	}
 }
 
-func (s *StatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *StmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitStatement(s)
+		listenerT.ExitStmt(s)
 	}
 }
 
-func (s *StatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *StmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitStatement(s)
+		return t.VisitStmt(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) Statement() (localctx IStatementContext) {
-	localctx = NewStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 4, MlanParserRULE_statement)
-	p.SetState(80)
+func (p *MlanParser) Stmt() (localctx IStmtContext) {
+	localctx = NewStmtContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 2, MlanParserRULE_stmt)
+	p.SetState(84)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -971,11 +881,11 @@ func (p *MlanParser) Statement() (localctx IStatementContext) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(59)
+			p.SetState(60)
 			p.Assignment()
 		}
 		{
-			p.SetState(60)
+			p.SetState(61)
 			p.Match(MlanParserT__0)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -986,11 +896,11 @@ func (p *MlanParser) Statement() (localctx IStatementContext) {
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(62)
-			p.ClosureInvoke()
+			p.SetState(63)
+			p.MethodInvoke()
 		}
 		{
-			p.SetState(63)
+			p.SetState(64)
 			p.Match(MlanParserT__0)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1001,11 +911,11 @@ func (p *MlanParser) Statement() (localctx IStatementContext) {
 	case 3:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(65)
-			p.FunctionInvoke()
+			p.SetState(66)
+			p.CsInvoke()
 		}
 		{
-			p.SetState(66)
+			p.SetState(67)
 			p.Match(MlanParserT__0)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1016,32 +926,11 @@ func (p *MlanParser) Statement() (localctx IStatementContext) {
 	case 4:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(68)
-			p.WhileStatement()
-		}
-
-	case 5:
-		p.EnterOuterAlt(localctx, 5)
-		{
 			p.SetState(69)
-			p.ForStatement()
+			p.FnInvoke()
 		}
-
-	case 6:
-		p.EnterOuterAlt(localctx, 6)
 		{
 			p.SetState(70)
-			p.IfStatement()
-		}
-
-	case 7:
-		p.EnterOuterAlt(localctx, 7)
-		{
-			p.SetState(71)
-			p.BreakStatement()
-		}
-		{
-			p.SetState(72)
 			p.Match(MlanParserT__0)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1049,14 +938,35 @@ func (p *MlanParser) Statement() (localctx IStatementContext) {
 			}
 		}
 
+	case 5:
+		p.EnterOuterAlt(localctx, 5)
+		{
+			p.SetState(72)
+			p.WhileStmt()
+		}
+
+	case 6:
+		p.EnterOuterAlt(localctx, 6)
+		{
+			p.SetState(73)
+			p.ForStmt()
+		}
+
+	case 7:
+		p.EnterOuterAlt(localctx, 7)
+		{
+			p.SetState(74)
+			p.IfStmt()
+		}
+
 	case 8:
 		p.EnterOuterAlt(localctx, 8)
 		{
-			p.SetState(74)
-			p.ContinueStatement()
+			p.SetState(75)
+			p.BreakStmt()
 		}
 		{
-			p.SetState(75)
+			p.SetState(76)
 			p.Match(MlanParserT__0)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1067,11 +977,26 @@ func (p *MlanParser) Statement() (localctx IStatementContext) {
 	case 9:
 		p.EnterOuterAlt(localctx, 9)
 		{
-			p.SetState(77)
-			p.ReturnStatement()
+			p.SetState(78)
+			p.ContinueStmt()
 		}
 		{
-			p.SetState(78)
+			p.SetState(79)
+			p.Match(MlanParserT__0)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case 10:
+		p.EnterOuterAlt(localctx, 10)
+		{
+			p.SetState(81)
+			p.ReturnStmt()
+		}
+		{
+			p.SetState(82)
 			p.Match(MlanParserT__0)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1096,58 +1021,58 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IWhileStatementContext is an interface to support dynamic dispatch.
-type IWhileStatementContext interface {
+// IWhileStmtContext is an interface to support dynamic dispatch.
+type IWhileStmtContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	Expression() IExpressionContext
-	AllStatement() []IStatementContext
-	Statement(i int) IStatementContext
+	Exp() IExpContext
+	AllStmt() []IStmtContext
+	Stmt(i int) IStmtContext
 
-	// IsWhileStatementContext differentiates from other interfaces.
-	IsWhileStatementContext()
+	// IsWhileStmtContext differentiates from other interfaces.
+	IsWhileStmtContext()
 }
 
-type WhileStatementContext struct {
+type WhileStmtContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyWhileStatementContext() *WhileStatementContext {
-	var p = new(WhileStatementContext)
+func NewEmptyWhileStmtContext() *WhileStmtContext {
+	var p = new(WhileStmtContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_whileStatement
+	p.RuleIndex = MlanParserRULE_whileStmt
 	return p
 }
 
-func InitEmptyWhileStatementContext(p *WhileStatementContext) {
+func InitEmptyWhileStmtContext(p *WhileStmtContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_whileStatement
+	p.RuleIndex = MlanParserRULE_whileStmt
 }
 
-func (*WhileStatementContext) IsWhileStatementContext() {}
+func (*WhileStmtContext) IsWhileStmtContext() {}
 
-func NewWhileStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *WhileStatementContext {
-	var p = new(WhileStatementContext)
+func NewWhileStmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *WhileStmtContext {
+	var p = new(WhileStmtContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_whileStatement
+	p.RuleIndex = MlanParserRULE_whileStmt
 
 	return p
 }
 
-func (s *WhileStatementContext) GetParser() antlr.Parser { return s.parser }
+func (s *WhileStmtContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *WhileStatementContext) Expression() IExpressionContext {
+func (s *WhileStmtContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -1157,23 +1082,23 @@ func (s *WhileStatementContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *WhileStatementContext) AllStatement() []IStatementContext {
+func (s *WhileStmtContext) AllStmt() []IStmtContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IStatementContext, len)
+	tst := make([]IStmtContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
+		if t, ok := ctx.(IStmtContext); ok {
+			tst[i] = t.(IStmtContext)
 			i++
 		}
 	}
@@ -1181,11 +1106,11 @@ func (s *WhileStatementContext) AllStatement() []IStatementContext {
 	return tst
 }
 
-func (s *WhileStatementContext) Statement(i int) IStatementContext {
+func (s *WhileStmtContext) Stmt(i int) IStmtContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -1198,47 +1123,47 @@ func (s *WhileStatementContext) Statement(i int) IStatementContext {
 		return nil
 	}
 
-	return t.(IStatementContext)
+	return t.(IStmtContext)
 }
 
-func (s *WhileStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *WhileStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *WhileStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *WhileStmtContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *WhileStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *WhileStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterWhileStatement(s)
+		listenerT.EnterWhileStmt(s)
 	}
 }
 
-func (s *WhileStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *WhileStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitWhileStatement(s)
+		listenerT.ExitWhileStmt(s)
 	}
 }
 
-func (s *WhileStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *WhileStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitWhileStatement(s)
+		return t.VisitWhileStmt(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) WhileStatement() (localctx IWhileStatementContext) {
-	localctx = NewWhileStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 6, MlanParserRULE_whileStatement)
+func (p *MlanParser) WhileStmt() (localctx IWhileStmtContext) {
+	localctx = NewWhileStmtContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 4, MlanParserRULE_whileStmt)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(82)
+		p.SetState(86)
 		p.Match(MlanParserT__1)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1246,31 +1171,31 @@ func (p *MlanParser) WhileStatement() (localctx IWhileStatementContext) {
 		}
 	}
 	{
-		p.SetState(83)
-		p.expression(0)
+		p.SetState(87)
+		p.exp(0)
 	}
 	{
-		p.SetState(84)
+		p.SetState(88)
 		p.Match(MlanParserT__2)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(88)
+	p.SetState(92)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329676497380) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&316659348931044) != 0 {
 		{
-			p.SetState(85)
-			p.Statement()
+			p.SetState(89)
+			p.Stmt()
 		}
 
-		p.SetState(90)
+		p.SetState(94)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1278,7 +1203,7 @@ func (p *MlanParser) WhileStatement() (localctx IWhileStatementContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(91)
+		p.SetState(95)
 		p.Match(MlanParserT__3)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1299,8 +1224,8 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IForStatementContext is an interface to support dynamic dispatch.
-type IForStatementContext interface {
+// IForStmtContext is an interface to support dynamic dispatch.
+type IForStmtContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
@@ -1309,47 +1234,47 @@ type IForStatementContext interface {
 	// Getter signatures
 	AllAssignment() []IAssignmentContext
 	Assignment(i int) IAssignmentContext
-	Expression() IExpressionContext
-	AllStatement() []IStatementContext
-	Statement(i int) IStatementContext
+	Exp() IExpContext
+	AllStmt() []IStmtContext
+	Stmt(i int) IStmtContext
 
-	// IsForStatementContext differentiates from other interfaces.
-	IsForStatementContext()
+	// IsForStmtContext differentiates from other interfaces.
+	IsForStmtContext()
 }
 
-type ForStatementContext struct {
+type ForStmtContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyForStatementContext() *ForStatementContext {
-	var p = new(ForStatementContext)
+func NewEmptyForStmtContext() *ForStmtContext {
+	var p = new(ForStmtContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_forStatement
+	p.RuleIndex = MlanParserRULE_forStmt
 	return p
 }
 
-func InitEmptyForStatementContext(p *ForStatementContext) {
+func InitEmptyForStmtContext(p *ForStmtContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_forStatement
+	p.RuleIndex = MlanParserRULE_forStmt
 }
 
-func (*ForStatementContext) IsForStatementContext() {}
+func (*ForStmtContext) IsForStmtContext() {}
 
-func NewForStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ForStatementContext {
-	var p = new(ForStatementContext)
+func NewForStmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ForStmtContext {
+	var p = new(ForStmtContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_forStatement
+	p.RuleIndex = MlanParserRULE_forStmt
 
 	return p
 }
 
-func (s *ForStatementContext) GetParser() antlr.Parser { return s.parser }
+func (s *ForStmtContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ForStatementContext) AllAssignment() []IAssignmentContext {
+func (s *ForStmtContext) AllAssignment() []IAssignmentContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
@@ -1370,7 +1295,7 @@ func (s *ForStatementContext) AllAssignment() []IAssignmentContext {
 	return tst
 }
 
-func (s *ForStatementContext) Assignment(i int) IAssignmentContext {
+func (s *ForStmtContext) Assignment(i int) IAssignmentContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
@@ -1390,10 +1315,10 @@ func (s *ForStatementContext) Assignment(i int) IAssignmentContext {
 	return t.(IAssignmentContext)
 }
 
-func (s *ForStatementContext) Expression() IExpressionContext {
+func (s *ForStmtContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -1403,23 +1328,23 @@ func (s *ForStatementContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *ForStatementContext) AllStatement() []IStatementContext {
+func (s *ForStmtContext) AllStmt() []IStmtContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IStatementContext, len)
+	tst := make([]IStmtContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
+		if t, ok := ctx.(IStmtContext); ok {
+			tst[i] = t.(IStmtContext)
 			i++
 		}
 	}
@@ -1427,11 +1352,11 @@ func (s *ForStatementContext) AllStatement() []IStatementContext {
 	return tst
 }
 
-func (s *ForStatementContext) Statement(i int) IStatementContext {
+func (s *ForStmtContext) Stmt(i int) IStmtContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -1444,72 +1369,48 @@ func (s *ForStatementContext) Statement(i int) IStatementContext {
 		return nil
 	}
 
-	return t.(IStatementContext)
+	return t.(IStmtContext)
 }
 
-func (s *ForStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *ForStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ForStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *ForStmtContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *ForStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ForStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterForStatement(s)
+		listenerT.EnterForStmt(s)
 	}
 }
 
-func (s *ForStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ForStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitForStatement(s)
+		listenerT.ExitForStmt(s)
 	}
 }
 
-func (s *ForStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ForStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitForStatement(s)
+		return t.VisitForStmt(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) ForStatement() (localctx IForStatementContext) {
-	localctx = NewForStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 8, MlanParserRULE_forStatement)
+func (p *MlanParser) ForStmt() (localctx IForStmtContext) {
+	localctx = NewForStmtContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 6, MlanParserRULE_forStmt)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(93)
-		p.Match(MlanParserT__4)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(94)
-		p.Assignment()
-	}
-	{
-		p.SetState(95)
-		p.Match(MlanParserT__0)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(96)
-		p.expression(0)
-	}
-	{
 		p.SetState(97)
-		p.Match(MlanParserT__0)
+		p.Match(MlanParserT__4)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
@@ -1521,26 +1422,50 @@ func (p *MlanParser) ForStatement() (localctx IForStatementContext) {
 	}
 	{
 		p.SetState(99)
+		p.Match(MlanParserT__0)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(100)
+		p.exp(0)
+	}
+	{
+		p.SetState(101)
+		p.Match(MlanParserT__0)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(102)
+		p.Assignment()
+	}
+	{
+		p.SetState(103)
 		p.Match(MlanParserT__2)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(103)
+	p.SetState(107)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329676497380) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&316659348931044) != 0 {
 		{
-			p.SetState(100)
-			p.Statement()
+			p.SetState(104)
+			p.Stmt()
 		}
 
-		p.SetState(105)
+		p.SetState(109)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1548,7 +1473,7 @@ func (p *MlanParser) ForStatement() (localctx IForStatementContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(106)
+		p.SetState(110)
 		p.Match(MlanParserT__3)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1569,56 +1494,56 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IReturnStatementContext is an interface to support dynamic dispatch.
-type IReturnStatementContext interface {
+// IReturnStmtContext is an interface to support dynamic dispatch.
+type IReturnStmtContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	Expression() IExpressionContext
+	Exp() IExpContext
 
-	// IsReturnStatementContext differentiates from other interfaces.
-	IsReturnStatementContext()
+	// IsReturnStmtContext differentiates from other interfaces.
+	IsReturnStmtContext()
 }
 
-type ReturnStatementContext struct {
+type ReturnStmtContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyReturnStatementContext() *ReturnStatementContext {
-	var p = new(ReturnStatementContext)
+func NewEmptyReturnStmtContext() *ReturnStmtContext {
+	var p = new(ReturnStmtContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_returnStatement
+	p.RuleIndex = MlanParserRULE_returnStmt
 	return p
 }
 
-func InitEmptyReturnStatementContext(p *ReturnStatementContext) {
+func InitEmptyReturnStmtContext(p *ReturnStmtContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_returnStatement
+	p.RuleIndex = MlanParserRULE_returnStmt
 }
 
-func (*ReturnStatementContext) IsReturnStatementContext() {}
+func (*ReturnStmtContext) IsReturnStmtContext() {}
 
-func NewReturnStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ReturnStatementContext {
-	var p = new(ReturnStatementContext)
+func NewReturnStmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ReturnStmtContext {
+	var p = new(ReturnStmtContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_returnStatement
+	p.RuleIndex = MlanParserRULE_returnStmt
 
 	return p
 }
 
-func (s *ReturnStatementContext) GetParser() antlr.Parser { return s.parser }
+func (s *ReturnStmtContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ReturnStatementContext) Expression() IExpressionContext {
+func (s *ReturnStmtContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -1628,64 +1553,64 @@ func (s *ReturnStatementContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *ReturnStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *ReturnStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ReturnStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *ReturnStmtContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *ReturnStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ReturnStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterReturnStatement(s)
+		listenerT.EnterReturnStmt(s)
 	}
 }
 
-func (s *ReturnStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ReturnStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitReturnStatement(s)
+		listenerT.ExitReturnStmt(s)
 	}
 }
 
-func (s *ReturnStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ReturnStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitReturnStatement(s)
+		return t.VisitReturnStmt(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) ReturnStatement() (localctx IReturnStatementContext) {
-	localctx = NewReturnStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 10, MlanParserRULE_returnStatement)
+func (p *MlanParser) ReturnStmt() (localctx IReturnStmtContext) {
+	localctx = NewReturnStmtContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 8, MlanParserRULE_returnStmt)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(108)
+		p.SetState(112)
 		p.Match(MlanParserT__5)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(110)
+	p.SetState(114)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&4497002574938120) != 0 {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8994005116290056) != 0 {
 		{
-			p.SetState(109)
-			p.expression(0)
+			p.SetState(113)
+			p.exp(0)
 		}
 
 	}
@@ -1703,83 +1628,83 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IContinueStatementContext is an interface to support dynamic dispatch.
-type IContinueStatementContext interface {
+// IContinueStmtContext is an interface to support dynamic dispatch.
+type IContinueStmtContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
-	// IsContinueStatementContext differentiates from other interfaces.
-	IsContinueStatementContext()
+	// IsContinueStmtContext differentiates from other interfaces.
+	IsContinueStmtContext()
 }
 
-type ContinueStatementContext struct {
+type ContinueStmtContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyContinueStatementContext() *ContinueStatementContext {
-	var p = new(ContinueStatementContext)
+func NewEmptyContinueStmtContext() *ContinueStmtContext {
+	var p = new(ContinueStmtContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_continueStatement
+	p.RuleIndex = MlanParserRULE_continueStmt
 	return p
 }
 
-func InitEmptyContinueStatementContext(p *ContinueStatementContext) {
+func InitEmptyContinueStmtContext(p *ContinueStmtContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_continueStatement
+	p.RuleIndex = MlanParserRULE_continueStmt
 }
 
-func (*ContinueStatementContext) IsContinueStatementContext() {}
+func (*ContinueStmtContext) IsContinueStmtContext() {}
 
-func NewContinueStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ContinueStatementContext {
-	var p = new(ContinueStatementContext)
+func NewContinueStmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ContinueStmtContext {
+	var p = new(ContinueStmtContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_continueStatement
+	p.RuleIndex = MlanParserRULE_continueStmt
 
 	return p
 }
 
-func (s *ContinueStatementContext) GetParser() antlr.Parser { return s.parser }
-func (s *ContinueStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *ContinueStmtContext) GetParser() antlr.Parser { return s.parser }
+func (s *ContinueStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ContinueStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *ContinueStmtContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *ContinueStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ContinueStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterContinueStatement(s)
+		listenerT.EnterContinueStmt(s)
 	}
 }
 
-func (s *ContinueStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ContinueStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitContinueStatement(s)
+		listenerT.ExitContinueStmt(s)
 	}
 }
 
-func (s *ContinueStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ContinueStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitContinueStatement(s)
+		return t.VisitContinueStmt(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) ContinueStatement() (localctx IContinueStatementContext) {
-	localctx = NewContinueStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 12, MlanParserRULE_continueStatement)
+func (p *MlanParser) ContinueStmt() (localctx IContinueStmtContext) {
+	localctx = NewContinueStmtContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 10, MlanParserRULE_continueStmt)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(112)
+		p.SetState(116)
 		p.Match(MlanParserT__6)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1800,83 +1725,83 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IBreakStatementContext is an interface to support dynamic dispatch.
-type IBreakStatementContext interface {
+// IBreakStmtContext is an interface to support dynamic dispatch.
+type IBreakStmtContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
-	// IsBreakStatementContext differentiates from other interfaces.
-	IsBreakStatementContext()
+	// IsBreakStmtContext differentiates from other interfaces.
+	IsBreakStmtContext()
 }
 
-type BreakStatementContext struct {
+type BreakStmtContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyBreakStatementContext() *BreakStatementContext {
-	var p = new(BreakStatementContext)
+func NewEmptyBreakStmtContext() *BreakStmtContext {
+	var p = new(BreakStmtContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_breakStatement
+	p.RuleIndex = MlanParserRULE_breakStmt
 	return p
 }
 
-func InitEmptyBreakStatementContext(p *BreakStatementContext) {
+func InitEmptyBreakStmtContext(p *BreakStmtContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_breakStatement
+	p.RuleIndex = MlanParserRULE_breakStmt
 }
 
-func (*BreakStatementContext) IsBreakStatementContext() {}
+func (*BreakStmtContext) IsBreakStmtContext() {}
 
-func NewBreakStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *BreakStatementContext {
-	var p = new(BreakStatementContext)
+func NewBreakStmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *BreakStmtContext {
+	var p = new(BreakStmtContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_breakStatement
+	p.RuleIndex = MlanParserRULE_breakStmt
 
 	return p
 }
 
-func (s *BreakStatementContext) GetParser() antlr.Parser { return s.parser }
-func (s *BreakStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *BreakStmtContext) GetParser() antlr.Parser { return s.parser }
+func (s *BreakStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *BreakStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *BreakStmtContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *BreakStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *BreakStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterBreakStatement(s)
+		listenerT.EnterBreakStmt(s)
 	}
 }
 
-func (s *BreakStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *BreakStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitBreakStatement(s)
+		listenerT.ExitBreakStmt(s)
 	}
 }
 
-func (s *BreakStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *BreakStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitBreakStatement(s)
+		return t.VisitBreakStmt(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) BreakStatement() (localctx IBreakStatementContext) {
-	localctx = NewBreakStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 14, MlanParserRULE_breakStatement)
+func (p *MlanParser) BreakStmt() (localctx IBreakStmtContext) {
+	localctx = NewBreakStmtContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 12, MlanParserRULE_breakStmt)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(114)
+		p.SetState(118)
 		p.Match(MlanParserT__7)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1951,13 +1876,13 @@ func (s *AssignmentContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-type AssignmentRegularContext struct {
+type AssignSumContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentRegularContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentRegularContext {
-	var p = new(AssignmentRegularContext)
+func NewAssignSumContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignSumContext {
+	var p = new(AssignSumContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -1966,18 +1891,22 @@ func NewAssignmentRegularContext(parser antlr.Parser, ctx antlr.ParserRuleContex
 	return p
 }
 
-func (s *AssignmentRegularContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignSumContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentRegularContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignSumContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentRegularContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignSumContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentRegularContext) Expression() IExpressionContext {
+func (s *AssignSumContext) AssSum() antlr.TerminalNode {
+	return s.GetToken(MlanParserAssSum, 0)
+}
+
+func (s *AssignSumContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -1987,42 +1916,42 @@ func (s *AssignmentRegularContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *AssignmentRegularContext) Identifier() antlr.TerminalNode {
+func (s *AssignSumContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentRegularContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignSumContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentRegular(s)
+		listenerT.EnterAssignSum(s)
 	}
 }
 
-func (s *AssignmentRegularContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignSumContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentRegular(s)
+		listenerT.ExitAssignSum(s)
 	}
 }
 
-func (s *AssignmentRegularContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignSumContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentRegular(s)
+		return t.VisitAssignSum(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentSumContext struct {
+type AssignPowContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentSumContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentSumContext {
-	var p = new(AssignmentSumContext)
+func NewAssignPowContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignPowContext {
+	var p = new(AssignPowContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2031,22 +1960,22 @@ func NewAssignmentSumContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *
 	return p
 }
 
-func (s *AssignmentSumContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignPowContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentSumContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignPowContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentSumContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignPowContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentSumContext) AssignSum() antlr.TerminalNode {
-	return s.GetToken(MlanParserAssignSum, 0)
+func (s *AssignPowContext) AssPow() antlr.TerminalNode {
+	return s.GetToken(MlanParserAssPow, 0)
 }
 
-func (s *AssignmentSumContext) Expression() IExpressionContext {
+func (s *AssignPowContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2056,42 +1985,42 @@ func (s *AssignmentSumContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *AssignmentSumContext) Identifier() antlr.TerminalNode {
+func (s *AssignPowContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentSumContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignPowContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentSum(s)
+		listenerT.EnterAssignPow(s)
 	}
 }
 
-func (s *AssignmentSumContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignPowContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentSum(s)
+		listenerT.ExitAssignPow(s)
 	}
 }
 
-func (s *AssignmentSumContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignPowContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentSum(s)
+		return t.VisitAssignPow(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentIndexRegularContext struct {
+type AssignMulContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentIndexRegularContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentIndexRegularContext {
-	var p = new(AssignmentIndexRegularContext)
+func NewAssignMulContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignMulContext {
+	var p = new(AssignMulContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2100,18 +2029,22 @@ func NewAssignmentIndexRegularContext(parser antlr.Parser, ctx antlr.ParserRuleC
 	return p
 }
 
-func (s *AssignmentIndexRegularContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignMulContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentIndexRegularContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignMulContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentIndexRegularContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignMulContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentIndexRegularContext) Index() IIndexContext {
+func (s *AssignMulContext) AssMul() antlr.TerminalNode {
+	return s.GetToken(MlanParserAssMul, 0)
+}
+
+func (s *AssignMulContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IIndexContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2121,58 +2054,42 @@ func (s *AssignmentIndexRegularContext) Index() IIndexContext {
 		return nil
 	}
 
-	return t.(IIndexContext)
+	return t.(IExpContext)
 }
 
-func (s *AssignmentIndexRegularContext) Expression() IExpressionContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *AssignmentIndexRegularContext) Identifier() antlr.TerminalNode {
+func (s *AssignMulContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentIndexRegularContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignMulContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentIndexRegular(s)
+		listenerT.EnterAssignMul(s)
 	}
 }
 
-func (s *AssignmentIndexRegularContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignMulContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentIndexRegular(s)
+		listenerT.ExitAssignMul(s)
 	}
 }
 
-func (s *AssignmentIndexRegularContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignMulContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentIndexRegular(s)
+		return t.VisitAssignMul(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentPowContext struct {
+type AssignIdxRegularContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentPowContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentPowContext {
-	var p = new(AssignmentPowContext)
+func NewAssignIdxRegularContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignIdxRegularContext {
+	var p = new(AssignIdxRegularContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2181,18 +2098,18 @@ func NewAssignmentPowContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *
 	return p
 }
 
-func (s *AssignmentPowContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignIdxRegularContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentPowContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignIdxRegularContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentPowContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignIdxRegularContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentPowContext) Expression() IExpressionContext {
+func (s *AssignIdxRegularContext) Idx() IIdxContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IIdxContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2202,42 +2119,58 @@ func (s *AssignmentPowContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IIdxContext)
 }
 
-func (s *AssignmentPowContext) Identifier() antlr.TerminalNode {
+func (s *AssignIdxRegularContext) Exp() IExpContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *AssignIdxRegularContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentPowContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignIdxRegularContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentPow(s)
+		listenerT.EnterAssignIdxRegular(s)
 	}
 }
 
-func (s *AssignmentPowContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignIdxRegularContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentPow(s)
+		listenerT.ExitAssignIdxRegular(s)
 	}
 }
 
-func (s *AssignmentPowContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignIdxRegularContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentPow(s)
+		return t.VisitAssignIdxRegular(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentDivContext struct {
+type AssignClosureContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentDivContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentDivContext {
-	var p = new(AssignmentDivContext)
+func NewAssignClosureContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignClosureContext {
+	var p = new(AssignClosureContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2246,18 +2179,18 @@ func NewAssignmentDivContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *
 	return p
 }
 
-func (s *AssignmentDivContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignClosureContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentDivContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignClosureContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentDivContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignClosureContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentDivContext) Expression() IExpressionContext {
+func (s *AssignClosureContext) Closure() IClosureContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IClosureContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2267,42 +2200,42 @@ func (s *AssignmentDivContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IClosureContext)
 }
 
-func (s *AssignmentDivContext) Identifier() antlr.TerminalNode {
+func (s *AssignClosureContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentDivContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignClosureContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentDiv(s)
+		listenerT.EnterAssignClosure(s)
 	}
 }
 
-func (s *AssignmentDivContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignClosureContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentDiv(s)
+		listenerT.ExitAssignClosure(s)
 	}
 }
 
-func (s *AssignmentDivContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignClosureContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentDiv(s)
+		return t.VisitAssignClosure(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentModContext struct {
+type AssignSubContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentModContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentModContext {
-	var p = new(AssignmentModContext)
+func NewAssignSubContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignSubContext {
+	var p = new(AssignSubContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2311,18 +2244,22 @@ func NewAssignmentModContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *
 	return p
 }
 
-func (s *AssignmentModContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignSubContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentModContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignSubContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentModContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignSubContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentModContext) Expression() IExpressionContext {
+func (s *AssignSubContext) AssSub() antlr.TerminalNode {
+	return s.GetToken(MlanParserAssSub, 0)
+}
+
+func (s *AssignSubContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2332,42 +2269,42 @@ func (s *AssignmentModContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *AssignmentModContext) Identifier() antlr.TerminalNode {
+func (s *AssignSubContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentModContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignSubContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentMod(s)
+		listenerT.EnterAssignSub(s)
 	}
 }
 
-func (s *AssignmentModContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignSubContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentMod(s)
+		listenerT.ExitAssignSub(s)
 	}
 }
 
-func (s *AssignmentModContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignSubContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentMod(s)
+		return t.VisitAssignSub(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentMulContext struct {
+type AssignRegularContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentMulContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentMulContext {
-	var p = new(AssignmentMulContext)
+func NewAssignRegularContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignRegularContext {
+	var p = new(AssignRegularContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2376,18 +2313,18 @@ func NewAssignmentMulContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *
 	return p
 }
 
-func (s *AssignmentMulContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignRegularContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentMulContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignRegularContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentMulContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignRegularContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentMulContext) Expression() IExpressionContext {
+func (s *AssignRegularContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2397,42 +2334,42 @@ func (s *AssignmentMulContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *AssignmentMulContext) Identifier() antlr.TerminalNode {
+func (s *AssignRegularContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentMulContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignRegularContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentMul(s)
+		listenerT.EnterAssignRegular(s)
 	}
 }
 
-func (s *AssignmentMulContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignRegularContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentMul(s)
+		listenerT.ExitAssignRegular(s)
 	}
 }
 
-func (s *AssignmentMulContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignRegularContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentMul(s)
+		return t.VisitAssignRegular(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentSubContext struct {
+type AssignModContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentSubContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentSubContext {
-	var p = new(AssignmentSubContext)
+func NewAssignModContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignModContext {
+	var p = new(AssignModContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2441,18 +2378,22 @@ func NewAssignmentSubContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *
 	return p
 }
 
-func (s *AssignmentSubContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignModContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentSubContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignModContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentSubContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignModContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentSubContext) Expression() IExpressionContext {
+func (s *AssignModContext) AssMod() antlr.TerminalNode {
+	return s.GetToken(MlanParserAssMod, 0)
+}
+
+func (s *AssignModContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2462,42 +2403,42 @@ func (s *AssignmentSubContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *AssignmentSubContext) Identifier() antlr.TerminalNode {
+func (s *AssignModContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentSubContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignModContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentSub(s)
+		listenerT.EnterAssignMod(s)
 	}
 }
 
-func (s *AssignmentSubContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignModContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentSub(s)
+		listenerT.ExitAssignMod(s)
 	}
 }
 
-func (s *AssignmentSubContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignModContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentSub(s)
+		return t.VisitAssignMod(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type AssignmentClosureContext struct {
+type AssignDivContext struct {
 	AssignmentContext
-	varScalarName antlr.Token
+	name antlr.Token
 }
 
-func NewAssignmentClosureContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignmentClosureContext {
-	var p = new(AssignmentClosureContext)
+func NewAssignDivContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *AssignDivContext {
+	var p = new(AssignDivContext)
 
 	InitEmptyAssignmentContext(&p.AssignmentContext)
 	p.parser = parser
@@ -2506,18 +2447,22 @@ func NewAssignmentClosureContext(parser antlr.Parser, ctx antlr.ParserRuleContex
 	return p
 }
 
-func (s *AssignmentClosureContext) GetVarScalarName() antlr.Token { return s.varScalarName }
+func (s *AssignDivContext) GetName() antlr.Token { return s.name }
 
-func (s *AssignmentClosureContext) SetVarScalarName(v antlr.Token) { s.varScalarName = v }
+func (s *AssignDivContext) SetName(v antlr.Token) { s.name = v }
 
-func (s *AssignmentClosureContext) GetRuleContext() antlr.RuleContext {
+func (s *AssignDivContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *AssignmentClosureContext) ClosureDefinition() IClosureDefinitionContext {
+func (s *AssignDivContext) AssDiv() antlr.TerminalNode {
+	return s.GetToken(MlanParserAssDiv, 0)
+}
+
+func (s *AssignDivContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IClosureDefinitionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -2527,29 +2472,29 @@ func (s *AssignmentClosureContext) ClosureDefinition() IClosureDefinitionContext
 		return nil
 	}
 
-	return t.(IClosureDefinitionContext)
+	return t.(IExpContext)
 }
 
-func (s *AssignmentClosureContext) Identifier() antlr.TerminalNode {
+func (s *AssignDivContext) Identifier() antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, 0)
 }
 
-func (s *AssignmentClosureContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *AssignDivContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterAssignmentClosure(s)
+		listenerT.EnterAssignDiv(s)
 	}
 }
 
-func (s *AssignmentClosureContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *AssignDivContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitAssignmentClosure(s)
+		listenerT.ExitAssignDiv(s)
 	}
 }
 
-func (s *AssignmentClosureContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *AssignDivContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitAssignmentClosure(s)
+		return t.VisitAssignDiv(s)
 
 	default:
 		return t.VisitChildren(s)
@@ -2558,8 +2503,8 @@ func (s *AssignmentClosureContext) Accept(visitor antlr.ParseTreeVisitor) interf
 
 func (p *MlanParser) Assignment() (localctx IAssignmentContext) {
 	localctx = NewAssignmentContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 16, MlanParserRULE_assignment)
-	p.SetState(145)
+	p.EnterRule(localctx, 14, MlanParserRULE_assignment)
+	p.SetState(149)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -2567,49 +2512,14 @@ func (p *MlanParser) Assignment() (localctx IAssignmentContext) {
 
 	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 6, p.GetParserRuleContext()) {
 	case 1:
-		localctx = NewAssignmentRegularContext(p, localctx)
+		localctx = NewAssignRegularContext(p, localctx)
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(116)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentRegularContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(117)
-			p.Match(MlanParserT__8)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(118)
-			p.expression(0)
-		}
-
-	case 2:
-		localctx = NewAssignmentClosureContext(p, localctx)
-		p.EnterOuterAlt(localctx, 2)
-		{
-			p.SetState(119)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentClosureContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
 			p.SetState(120)
-			p.Match(MlanParserT__8)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignRegularContext).name = _m
 			if p.HasError() {
 				// Recognition error - abort rule
 				goto errorExit
@@ -2617,191 +2527,6 @@ func (p *MlanParser) Assignment() (localctx IAssignmentContext) {
 		}
 		{
 			p.SetState(121)
-			p.ClosureDefinition()
-		}
-
-	case 3:
-		localctx = NewAssignmentSumContext(p, localctx)
-		p.EnterOuterAlt(localctx, 3)
-		{
-			p.SetState(122)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentSumContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(123)
-			p.Match(MlanParserAssignSum)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(124)
-			p.expression(0)
-		}
-
-	case 4:
-		localctx = NewAssignmentSubContext(p, localctx)
-		p.EnterOuterAlt(localctx, 4)
-		{
-			p.SetState(125)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentSubContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(126)
-			p.Match(MlanParserT__9)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(127)
-			p.expression(0)
-		}
-
-	case 5:
-		localctx = NewAssignmentMulContext(p, localctx)
-		p.EnterOuterAlt(localctx, 5)
-		{
-			p.SetState(128)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentMulContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(129)
-			p.Match(MlanParserT__10)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(130)
-			p.expression(0)
-		}
-
-	case 6:
-		localctx = NewAssignmentDivContext(p, localctx)
-		p.EnterOuterAlt(localctx, 6)
-		{
-			p.SetState(131)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentDivContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(132)
-			p.Match(MlanParserT__11)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(133)
-			p.expression(0)
-		}
-
-	case 7:
-		localctx = NewAssignmentModContext(p, localctx)
-		p.EnterOuterAlt(localctx, 7)
-		{
-			p.SetState(134)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentModContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(135)
-			p.Match(MlanParserT__12)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(136)
-			p.expression(0)
-		}
-
-	case 8:
-		localctx = NewAssignmentPowContext(p, localctx)
-		p.EnterOuterAlt(localctx, 8)
-		{
-			p.SetState(137)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentPowContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(138)
-			p.Match(MlanParserT__13)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(139)
-			p.expression(0)
-		}
-
-	case 9:
-		localctx = NewAssignmentIndexRegularContext(p, localctx)
-		p.EnterOuterAlt(localctx, 9)
-		{
-			p.SetState(140)
-
-			var _m = p.Match(MlanParserIdentifier)
-
-			localctx.(*AssignmentIndexRegularContext).varScalarName = _m
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(141)
-			p.Index()
-		}
-		{
-			p.SetState(142)
 			p.Match(MlanParserT__8)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2809,8 +2534,228 @@ func (p *MlanParser) Assignment() (localctx IAssignmentContext) {
 			}
 		}
 		{
+			p.SetState(122)
+			p.exp(0)
+		}
+
+	case 2:
+		localctx = NewAssignClosureContext(p, localctx)
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(123)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignClosureContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(124)
+			p.Match(MlanParserT__8)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(125)
+			p.Closure()
+		}
+
+	case 3:
+		localctx = NewAssignSumContext(p, localctx)
+		p.EnterOuterAlt(localctx, 3)
+		{
+			p.SetState(126)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignSumContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(127)
+			p.Match(MlanParserAssSum)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(128)
+			p.exp(0)
+		}
+
+	case 4:
+		localctx = NewAssignSubContext(p, localctx)
+		p.EnterOuterAlt(localctx, 4)
+		{
+			p.SetState(129)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignSubContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(130)
+			p.Match(MlanParserAssSub)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(131)
+			p.exp(0)
+		}
+
+	case 5:
+		localctx = NewAssignMulContext(p, localctx)
+		p.EnterOuterAlt(localctx, 5)
+		{
+			p.SetState(132)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignMulContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(133)
+			p.Match(MlanParserAssMul)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(134)
+			p.exp(0)
+		}
+
+	case 6:
+		localctx = NewAssignDivContext(p, localctx)
+		p.EnterOuterAlt(localctx, 6)
+		{
+			p.SetState(135)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignDivContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(136)
+			p.Match(MlanParserAssDiv)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(137)
+			p.exp(0)
+		}
+
+	case 7:
+		localctx = NewAssignModContext(p, localctx)
+		p.EnterOuterAlt(localctx, 7)
+		{
+			p.SetState(138)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignModContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(139)
+			p.Match(MlanParserAssMod)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(140)
+			p.exp(0)
+		}
+
+	case 8:
+		localctx = NewAssignPowContext(p, localctx)
+		p.EnterOuterAlt(localctx, 8)
+		{
+			p.SetState(141)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignPowContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(142)
+			p.Match(MlanParserAssPow)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
 			p.SetState(143)
-			p.expression(0)
+			p.exp(0)
+		}
+
+	case 9:
+		localctx = NewAssignIdxRegularContext(p, localctx)
+		p.EnterOuterAlt(localctx, 9)
+		{
+			p.SetState(144)
+
+			var _m = p.Match(MlanParserIdentifier)
+
+			localctx.(*AssignIdxRegularContext).name = _m
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(145)
+			p.Idx()
+		}
+		{
+			p.SetState(146)
+			p.Match(MlanParserT__8)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(147)
+			p.exp(0)
 		}
 
 	case antlr.ATNInvalidAltNumber:
@@ -2838,8 +2783,8 @@ type IListContext interface {
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	AllExpression() []IExpressionContext
-	Expression(i int) IExpressionContext
+	AllExp() []IExpContext
+	Exp(i int) IExpContext
 
 	// IsListContext differentiates from other interfaces.
 	IsListContext()
@@ -2877,20 +2822,20 @@ func NewListContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 
 func (s *ListContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ListContext) AllExpression() []IExpressionContext {
+func (s *ListContext) AllExp() []IExpContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IExpressionContext, len)
+	tst := make([]IExpContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
 			i++
 		}
 	}
@@ -2898,11 +2843,11 @@ func (s *ListContext) AllExpression() []IExpressionContext {
 	return tst
 }
 
-func (s *ListContext) Expression(i int) IExpressionContext {
+func (s *ListContext) Exp(i int) IExpContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -2915,7 +2860,7 @@ func (s *ListContext) Expression(i int) IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
 func (s *ListContext) GetRuleContext() antlr.RuleContext {
@@ -2950,52 +2895,52 @@ func (s *ListContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 
 func (p *MlanParser) List() (localctx IListContext) {
 	localctx = NewListContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 18, MlanParserRULE_list)
+	p.EnterRule(localctx, 16, MlanParserRULE_list)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(147)
-		p.Match(MlanParserT__14)
+		p.SetState(151)
+		p.Match(MlanParserT__9)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(156)
+	p.SetState(160)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&4497002574938120) != 0 {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8994005116290056) != 0 {
 		{
-			p.SetState(148)
-			p.expression(0)
+			p.SetState(152)
+			p.exp(0)
 		}
-		p.SetState(153)
+		p.SetState(157)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
 		_la = p.GetTokenStream().LA(1)
 
-		for _la == MlanParserT__15 {
+		for _la == MlanParserT__10 {
 			{
-				p.SetState(149)
-				p.Match(MlanParserT__15)
+				p.SetState(153)
+				p.Match(MlanParserT__10)
 				if p.HasError() {
 					// Recognition error - abort rule
 					goto errorExit
 				}
 			}
 			{
-				p.SetState(150)
-				p.expression(0)
+				p.SetState(154)
+				p.exp(0)
 			}
 
-			p.SetState(155)
+			p.SetState(159)
 			p.GetErrorHandler().Sync(p)
 			if p.HasError() {
 				goto errorExit
@@ -3005,8 +2950,8 @@ func (p *MlanParser) List() (localctx IListContext) {
 
 	}
 	{
-		p.SetState(158)
-		p.Match(MlanParserT__16)
+		p.SetState(162)
+		p.Match(MlanParserT__11)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
@@ -3034,8 +2979,8 @@ type IDictUnitContext interface {
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	AllExpression() []IExpressionContext
-	Expression(i int) IExpressionContext
+	AllExp() []IExpContext
+	Exp(i int) IExpContext
 
 	// IsDictUnitContext differentiates from other interfaces.
 	IsDictUnitContext()
@@ -3073,20 +3018,20 @@ func NewDictUnitContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 
 func (s *DictUnitContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *DictUnitContext) AllExpression() []IExpressionContext {
+func (s *DictUnitContext) AllExp() []IExpContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IExpressionContext, len)
+	tst := make([]IExpContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
 			i++
 		}
 	}
@@ -3094,11 +3039,11 @@ func (s *DictUnitContext) AllExpression() []IExpressionContext {
 	return tst
 }
 
-func (s *DictUnitContext) Expression(i int) IExpressionContext {
+func (s *DictUnitContext) Exp(i int) IExpContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -3111,7 +3056,7 @@ func (s *DictUnitContext) Expression(i int) IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
 func (s *DictUnitContext) GetRuleContext() antlr.RuleContext {
@@ -3146,23 +3091,23 @@ func (s *DictUnitContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 
 func (p *MlanParser) DictUnit() (localctx IDictUnitContext) {
 	localctx = NewDictUnitContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 20, MlanParserRULE_dictUnit)
+	p.EnterRule(localctx, 18, MlanParserRULE_dictUnit)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(160)
-		p.expression(0)
+		p.SetState(164)
+		p.exp(0)
 	}
 	{
-		p.SetState(161)
-		p.Match(MlanParserT__17)
+		p.SetState(165)
+		p.Match(MlanParserT__12)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
 	{
-		p.SetState(162)
-		p.expression(0)
+		p.SetState(166)
+		p.exp(0)
 	}
 
 errorExit:
@@ -3298,52 +3243,52 @@ func (s *DictContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 
 func (p *MlanParser) Dict() (localctx IDictContext) {
 	localctx = NewDictContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 22, MlanParserRULE_dict)
+	p.EnterRule(localctx, 20, MlanParserRULE_dict)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(164)
+		p.SetState(168)
 		p.Match(MlanParserT__2)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(173)
+	p.SetState(177)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&4497002574938120) != 0 {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8994005116290056) != 0 {
 		{
-			p.SetState(165)
+			p.SetState(169)
 			p.DictUnit()
 		}
-		p.SetState(170)
+		p.SetState(174)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
 		_la = p.GetTokenStream().LA(1)
 
-		for _la == MlanParserT__15 {
+		for _la == MlanParserT__10 {
 			{
-				p.SetState(166)
-				p.Match(MlanParserT__15)
+				p.SetState(170)
+				p.Match(MlanParserT__10)
 				if p.HasError() {
 					// Recognition error - abort rule
 					goto errorExit
 				}
 			}
 			{
-				p.SetState(167)
+				p.SetState(171)
 				p.DictUnit()
 			}
 
-			p.SetState(172)
+			p.SetState(176)
 			p.GetErrorHandler().Sync(p)
 			if p.HasError() {
 				goto errorExit
@@ -3353,7 +3298,7 @@ func (p *MlanParser) Dict() (localctx IDictContext) {
 
 	}
 	{
-		p.SetState(175)
+		p.SetState(179)
 		p.Match(MlanParserT__3)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -3374,56 +3319,56 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IIndexContext is an interface to support dynamic dispatch.
-type IIndexContext interface {
+// IIdxContext is an interface to support dynamic dispatch.
+type IIdxContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	Expression() IExpressionContext
+	Exp() IExpContext
 
-	// IsIndexContext differentiates from other interfaces.
-	IsIndexContext()
+	// IsIdxContext differentiates from other interfaces.
+	IsIdxContext()
 }
 
-type IndexContext struct {
+type IdxContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyIndexContext() *IndexContext {
-	var p = new(IndexContext)
+func NewEmptyIdxContext() *IdxContext {
+	var p = new(IdxContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_index
+	p.RuleIndex = MlanParserRULE_idx
 	return p
 }
 
-func InitEmptyIndexContext(p *IndexContext) {
+func InitEmptyIdxContext(p *IdxContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_index
+	p.RuleIndex = MlanParserRULE_idx
 }
 
-func (*IndexContext) IsIndexContext() {}
+func (*IdxContext) IsIdxContext() {}
 
-func NewIndexContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IndexContext {
-	var p = new(IndexContext)
+func NewIdxContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IdxContext {
+	var p = new(IdxContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_index
+	p.RuleIndex = MlanParserRULE_idx
 
 	return p
 }
 
-func (s *IndexContext) GetParser() antlr.Parser { return s.parser }
+func (s *IdxContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *IndexContext) Expression() IExpressionContext {
+func (s *IdxContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -3433,234 +3378,46 @@ func (s *IndexContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *IndexContext) GetRuleContext() antlr.RuleContext {
+func (s *IdxContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *IndexContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *IdxContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *IndexContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *IdxContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterIndex(s)
+		listenerT.EnterIdx(s)
 	}
 }
 
-func (s *IndexContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *IdxContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitIndex(s)
+		listenerT.ExitIdx(s)
 	}
 }
 
-func (s *IndexContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *IdxContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitIndex(s)
+		return t.VisitIdx(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) Index() (localctx IIndexContext) {
-	localctx = NewIndexContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 24, MlanParserRULE_index)
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(177)
-		p.Match(MlanParserT__14)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(178)
-		p.expression(0)
-	}
-	{
-		p.SetState(179)
-		p.Match(MlanParserT__16)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-
-errorExit:
-	if p.HasError() {
-		v := p.GetError()
-		localctx.SetException(v)
-		p.GetErrorHandler().ReportError(p, v)
-		p.GetErrorHandler().Recover(p, v)
-		p.SetError(nil)
-	}
-	p.ExitRule()
-	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
-}
-
-// IFunctionInvokeContext is an interface to support dynamic dispatch.
-type IFunctionInvokeContext interface {
-	antlr.ParserRuleContext
-
-	// GetParser returns the parser.
-	GetParser() antlr.Parser
-	// IsFunctionInvokeContext differentiates from other interfaces.
-	IsFunctionInvokeContext()
-}
-
-type FunctionInvokeContext struct {
-	antlr.BaseParserRuleContext
-	parser antlr.Parser
-}
-
-func NewEmptyFunctionInvokeContext() *FunctionInvokeContext {
-	var p = new(FunctionInvokeContext)
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_functionInvoke
-	return p
-}
-
-func InitEmptyFunctionInvokeContext(p *FunctionInvokeContext) {
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_functionInvoke
-}
-
-func (*FunctionInvokeContext) IsFunctionInvokeContext() {}
-
-func NewFunctionInvokeContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FunctionInvokeContext {
-	var p = new(FunctionInvokeContext)
-
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
-
-	p.parser = parser
-	p.RuleIndex = MlanParserRULE_functionInvoke
-
-	return p
-}
-
-func (s *FunctionInvokeContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *FunctionInvokeContext) CopyAll(ctx *FunctionInvokeContext) {
-	s.CopyFrom(&ctx.BaseParserRuleContext)
-}
-
-func (s *FunctionInvokeContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *FunctionInvokeContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-type IdentifierFunctionInvokeContext struct {
-	FunctionInvokeContext
-	varFunctionName antlr.Token
-}
-
-func NewIdentifierFunctionInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IdentifierFunctionInvokeContext {
-	var p = new(IdentifierFunctionInvokeContext)
-
-	InitEmptyFunctionInvokeContext(&p.FunctionInvokeContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*FunctionInvokeContext))
-
-	return p
-}
-
-func (s *IdentifierFunctionInvokeContext) GetVarFunctionName() antlr.Token { return s.varFunctionName }
-
-func (s *IdentifierFunctionInvokeContext) SetVarFunctionName(v antlr.Token) { s.varFunctionName = v }
-
-func (s *IdentifierFunctionInvokeContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *IdentifierFunctionInvokeContext) Identifier() antlr.TerminalNode {
-	return s.GetToken(MlanParserIdentifier, 0)
-}
-
-func (s *IdentifierFunctionInvokeContext) AllExpression() []IExpressionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IExpressionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *IdentifierFunctionInvokeContext) Expression(i int) IExpressionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *IdentifierFunctionInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterIdentifierFunctionInvoke(s)
-	}
-}
-
-func (s *IdentifierFunctionInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitIdentifierFunctionInvoke(s)
-	}
-}
-
-func (s *IdentifierFunctionInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitIdentifierFunctionInvoke(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-func (p *MlanParser) FunctionInvoke() (localctx IFunctionInvokeContext) {
-	localctx = NewFunctionInvokeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 26, MlanParserRULE_functionInvoke)
-	var _la int
-
-	localctx = NewIdentifierFunctionInvokeContext(p, localctx)
+func (p *MlanParser) Idx() (localctx IIdxContext) {
+	localctx = NewIdxContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 22, MlanParserRULE_idx)
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(181)
-
-		var _m = p.Match(MlanParserIdentifier)
-
-		localctx.(*IdentifierFunctionInvokeContext).varFunctionName = _m
+		p.Match(MlanParserT__9)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
@@ -3668,57 +3425,11 @@ func (p *MlanParser) FunctionInvoke() (localctx IFunctionInvokeContext) {
 	}
 	{
 		p.SetState(182)
-		p.Match(MlanParserT__18)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(191)
-	p.GetErrorHandler().Sync(p)
-	if p.HasError() {
-		goto errorExit
-	}
-	_la = p.GetTokenStream().LA(1)
-
-	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&4497002574938120) != 0 {
-		{
-			p.SetState(183)
-			p.expression(0)
-		}
-		p.SetState(188)
-		p.GetErrorHandler().Sync(p)
-		if p.HasError() {
-			goto errorExit
-		}
-		_la = p.GetTokenStream().LA(1)
-
-		for _la == MlanParserT__15 {
-			{
-				p.SetState(184)
-				p.Match(MlanParserT__15)
-				if p.HasError() {
-					// Recognition error - abort rule
-					goto errorExit
-				}
-			}
-			{
-				p.SetState(185)
-				p.expression(0)
-			}
-
-			p.SetState(190)
-			p.GetErrorHandler().Sync(p)
-			if p.HasError() {
-				goto errorExit
-			}
-			_la = p.GetTokenStream().LA(1)
-		}
-
+		p.exp(0)
 	}
 	{
-		p.SetState(193)
-		p.Match(MlanParserT__19)
+		p.SetState(183)
+		p.Match(MlanParserT__11)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
@@ -3738,105 +3449,110 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IClosureInvokeContext is an interface to support dynamic dispatch.
-type IClosureInvokeContext interface {
+// IMethodInvokeContext is an interface to support dynamic dispatch.
+type IMethodInvokeContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
-	// IsClosureInvokeContext differentiates from other interfaces.
-	IsClosureInvokeContext()
+	// IsMethodInvokeContext differentiates from other interfaces.
+	IsMethodInvokeContext()
 }
 
-type ClosureInvokeContext struct {
+type MethodInvokeContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyClosureInvokeContext() *ClosureInvokeContext {
-	var p = new(ClosureInvokeContext)
+func NewEmptyMethodInvokeContext() *MethodInvokeContext {
+	var p = new(MethodInvokeContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_closureInvoke
+	p.RuleIndex = MlanParserRULE_methodInvoke
 	return p
 }
 
-func InitEmptyClosureInvokeContext(p *ClosureInvokeContext) {
+func InitEmptyMethodInvokeContext(p *MethodInvokeContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_closureInvoke
+	p.RuleIndex = MlanParserRULE_methodInvoke
 }
 
-func (*ClosureInvokeContext) IsClosureInvokeContext() {}
+func (*MethodInvokeContext) IsMethodInvokeContext() {}
 
-func NewClosureInvokeContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ClosureInvokeContext {
-	var p = new(ClosureInvokeContext)
+func NewMethodInvokeContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *MethodInvokeContext {
+	var p = new(MethodInvokeContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_closureInvoke
+	p.RuleIndex = MlanParserRULE_methodInvoke
 
 	return p
 }
 
-func (s *ClosureInvokeContext) GetParser() antlr.Parser { return s.parser }
+func (s *MethodInvokeContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ClosureInvokeContext) CopyAll(ctx *ClosureInvokeContext) {
+func (s *MethodInvokeContext) CopyAll(ctx *MethodInvokeContext) {
 	s.CopyFrom(&ctx.BaseParserRuleContext)
 }
 
-func (s *ClosureInvokeContext) GetRuleContext() antlr.RuleContext {
+func (s *MethodInvokeContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ClosureInvokeContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *MethodInvokeContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-type IdentifierClosureInvokeContext struct {
-	ClosureInvokeContext
-	varClosureName antlr.Token
+type IdentifierMethodInvokeContext struct {
+	MethodInvokeContext
+	var_ antlr.Token
+	name antlr.Token
 }
 
-func NewIdentifierClosureInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IdentifierClosureInvokeContext {
-	var p = new(IdentifierClosureInvokeContext)
+func NewIdentifierMethodInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IdentifierMethodInvokeContext {
+	var p = new(IdentifierMethodInvokeContext)
 
-	InitEmptyClosureInvokeContext(&p.ClosureInvokeContext)
+	InitEmptyMethodInvokeContext(&p.MethodInvokeContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ClosureInvokeContext))
+	p.CopyAll(ctx.(*MethodInvokeContext))
 
 	return p
 }
 
-func (s *IdentifierClosureInvokeContext) GetVarClosureName() antlr.Token { return s.varClosureName }
+func (s *IdentifierMethodInvokeContext) GetVar_() antlr.Token { return s.var_ }
 
-func (s *IdentifierClosureInvokeContext) SetVarClosureName(v antlr.Token) { s.varClosureName = v }
+func (s *IdentifierMethodInvokeContext) GetName() antlr.Token { return s.name }
 
-func (s *IdentifierClosureInvokeContext) GetRuleContext() antlr.RuleContext {
+func (s *IdentifierMethodInvokeContext) SetVar_(v antlr.Token) { s.var_ = v }
+
+func (s *IdentifierMethodInvokeContext) SetName(v antlr.Token) { s.name = v }
+
+func (s *IdentifierMethodInvokeContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *IdentifierClosureInvokeContext) Closure() antlr.TerminalNode {
-	return s.GetToken(MlanParserClosure, 0)
+func (s *IdentifierMethodInvokeContext) AllIdentifier() []antlr.TerminalNode {
+	return s.GetTokens(MlanParserIdentifier)
 }
 
-func (s *IdentifierClosureInvokeContext) Identifier() antlr.TerminalNode {
-	return s.GetToken(MlanParserIdentifier, 0)
+func (s *IdentifierMethodInvokeContext) Identifier(i int) antlr.TerminalNode {
+	return s.GetToken(MlanParserIdentifier, i)
 }
 
-func (s *IdentifierClosureInvokeContext) AllExpression() []IExpressionContext {
+func (s *IdentifierMethodInvokeContext) AllExp() []IExpContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IExpressionContext, len)
+	tst := make([]IExpContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
 			i++
 		}
 	}
@@ -3844,11 +3560,11 @@ func (s *IdentifierClosureInvokeContext) AllExpression() []IExpressionContext {
 	return tst
 }
 
-func (s *IdentifierClosureInvokeContext) Expression(i int) IExpressionContext {
+func (s *IdentifierMethodInvokeContext) Exp(i int) IExpContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -3861,40 +3577,531 @@ func (s *IdentifierClosureInvokeContext) Expression(i int) IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *IdentifierClosureInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *IdentifierMethodInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterIdentifierClosureInvoke(s)
+		listenerT.EnterIdentifierMethodInvoke(s)
 	}
 }
 
-func (s *IdentifierClosureInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *IdentifierMethodInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitIdentifierClosureInvoke(s)
+		listenerT.ExitIdentifierMethodInvoke(s)
 	}
 }
 
-func (s *IdentifierClosureInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *IdentifierMethodInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitIdentifierClosureInvoke(s)
+		return t.VisitIdentifierMethodInvoke(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) ClosureInvoke() (localctx IClosureInvokeContext) {
-	localctx = NewClosureInvokeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 28, MlanParserRULE_closureInvoke)
+func (p *MlanParser) MethodInvoke() (localctx IMethodInvokeContext) {
+	localctx = NewMethodInvokeContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 24, MlanParserRULE_methodInvoke)
 	var _la int
 
-	localctx = NewIdentifierClosureInvokeContext(p, localctx)
+	localctx = NewIdentifierMethodInvokeContext(p, localctx)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(195)
+		p.SetState(185)
+
+		var _m = p.Match(MlanParserIdentifier)
+
+		localctx.(*IdentifierMethodInvokeContext).var_ = _m
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(186)
+		p.Match(MlanParserT__13)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(187)
+
+		var _m = p.Match(MlanParserIdentifier)
+
+		localctx.(*IdentifierMethodInvokeContext).name = _m
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(188)
+		p.Match(MlanParserT__14)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	p.SetState(197)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8994005116290056) != 0 {
+		{
+			p.SetState(189)
+			p.exp(0)
+		}
+		p.SetState(194)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+		_la = p.GetTokenStream().LA(1)
+
+		for _la == MlanParserT__10 {
+			{
+				p.SetState(190)
+				p.Match(MlanParserT__10)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
+			}
+			{
+				p.SetState(191)
+				p.exp(0)
+			}
+
+			p.SetState(196)
+			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
+			_la = p.GetTokenStream().LA(1)
+		}
+
+	}
+	{
+		p.SetState(199)
+		p.Match(MlanParserT__15)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IFnInvokeContext is an interface to support dynamic dispatch.
+type IFnInvokeContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+	// IsFnInvokeContext differentiates from other interfaces.
+	IsFnInvokeContext()
+}
+
+type FnInvokeContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyFnInvokeContext() *FnInvokeContext {
+	var p = new(FnInvokeContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_fnInvoke
+	return p
+}
+
+func InitEmptyFnInvokeContext(p *FnInvokeContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_fnInvoke
+}
+
+func (*FnInvokeContext) IsFnInvokeContext() {}
+
+func NewFnInvokeContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FnInvokeContext {
+	var p = new(FnInvokeContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = MlanParserRULE_fnInvoke
+
+	return p
+}
+
+func (s *FnInvokeContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *FnInvokeContext) CopyAll(ctx *FnInvokeContext) {
+	s.CopyFrom(&ctx.BaseParserRuleContext)
+}
+
+func (s *FnInvokeContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *FnInvokeContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+type IdentifierFnInvokeContext struct {
+	FnInvokeContext
+	name antlr.Token
+}
+
+func NewIdentifierFnInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IdentifierFnInvokeContext {
+	var p = new(IdentifierFnInvokeContext)
+
+	InitEmptyFnInvokeContext(&p.FnInvokeContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*FnInvokeContext))
+
+	return p
+}
+
+func (s *IdentifierFnInvokeContext) GetName() antlr.Token { return s.name }
+
+func (s *IdentifierFnInvokeContext) SetName(v antlr.Token) { s.name = v }
+
+func (s *IdentifierFnInvokeContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *IdentifierFnInvokeContext) Identifier() antlr.TerminalNode {
+	return s.GetToken(MlanParserIdentifier, 0)
+}
+
+func (s *IdentifierFnInvokeContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *IdentifierFnInvokeContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *IdentifierFnInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterIdentifierFnInvoke(s)
+	}
+}
+
+func (s *IdentifierFnInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitIdentifierFnInvoke(s)
+	}
+}
+
+func (s *IdentifierFnInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitIdentifierFnInvoke(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *MlanParser) FnInvoke() (localctx IFnInvokeContext) {
+	localctx = NewFnInvokeContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 26, MlanParserRULE_fnInvoke)
+	var _la int
+
+	localctx = NewIdentifierFnInvokeContext(p, localctx)
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(201)
+
+		var _m = p.Match(MlanParserIdentifier)
+
+		localctx.(*IdentifierFnInvokeContext).name = _m
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(202)
+		p.Match(MlanParserT__14)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	p.SetState(211)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8994005116290056) != 0 {
+		{
+			p.SetState(203)
+			p.exp(0)
+		}
+		p.SetState(208)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+		_la = p.GetTokenStream().LA(1)
+
+		for _la == MlanParserT__10 {
+			{
+				p.SetState(204)
+				p.Match(MlanParserT__10)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
+			}
+			{
+				p.SetState(205)
+				p.exp(0)
+			}
+
+			p.SetState(210)
+			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
+			_la = p.GetTokenStream().LA(1)
+		}
+
+	}
+	{
+		p.SetState(213)
+		p.Match(MlanParserT__15)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// ICsInvokeContext is an interface to support dynamic dispatch.
+type ICsInvokeContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+	// IsCsInvokeContext differentiates from other interfaces.
+	IsCsInvokeContext()
+}
+
+type CsInvokeContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyCsInvokeContext() *CsInvokeContext {
+	var p = new(CsInvokeContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_csInvoke
+	return p
+}
+
+func InitEmptyCsInvokeContext(p *CsInvokeContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_csInvoke
+}
+
+func (*CsInvokeContext) IsCsInvokeContext() {}
+
+func NewCsInvokeContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *CsInvokeContext {
+	var p = new(CsInvokeContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = MlanParserRULE_csInvoke
+
+	return p
+}
+
+func (s *CsInvokeContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *CsInvokeContext) CopyAll(ctx *CsInvokeContext) {
+	s.CopyFrom(&ctx.BaseParserRuleContext)
+}
+
+func (s *CsInvokeContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *CsInvokeContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+type IdentifierCsInvokeContext struct {
+	CsInvokeContext
+	name antlr.Token
+}
+
+func NewIdentifierCsInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IdentifierCsInvokeContext {
+	var p = new(IdentifierCsInvokeContext)
+
+	InitEmptyCsInvokeContext(&p.CsInvokeContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*CsInvokeContext))
+
+	return p
+}
+
+func (s *IdentifierCsInvokeContext) GetName() antlr.Token { return s.name }
+
+func (s *IdentifierCsInvokeContext) SetName(v antlr.Token) { s.name = v }
+
+func (s *IdentifierCsInvokeContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *IdentifierCsInvokeContext) Closure() antlr.TerminalNode {
+	return s.GetToken(MlanParserClosure, 0)
+}
+
+func (s *IdentifierCsInvokeContext) Identifier() antlr.TerminalNode {
+	return s.GetToken(MlanParserIdentifier, 0)
+}
+
+func (s *IdentifierCsInvokeContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *IdentifierCsInvokeContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *IdentifierCsInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterIdentifierCsInvoke(s)
+	}
+}
+
+func (s *IdentifierCsInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitIdentifierCsInvoke(s)
+	}
+}
+
+func (s *IdentifierCsInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitIdentifierCsInvoke(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *MlanParser) CsInvoke() (localctx ICsInvokeContext) {
+	localctx = NewCsInvokeContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 28, MlanParserRULE_csInvoke)
+	var _la int
+
+	localctx = NewIdentifierCsInvokeContext(p, localctx)
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(215)
 		p.Match(MlanParserClosure)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -3902,58 +4109,58 @@ func (p *MlanParser) ClosureInvoke() (localctx IClosureInvokeContext) {
 		}
 	}
 	{
-		p.SetState(196)
+		p.SetState(216)
 
 		var _m = p.Match(MlanParserIdentifier)
 
-		localctx.(*IdentifierClosureInvokeContext).varClosureName = _m
+		localctx.(*IdentifierCsInvokeContext).name = _m
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
 	{
-		p.SetState(197)
-		p.Match(MlanParserT__18)
+		p.SetState(217)
+		p.Match(MlanParserT__14)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(206)
+	p.SetState(226)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&4497002574938120) != 0 {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8994005116290056) != 0 {
 		{
-			p.SetState(198)
-			p.expression(0)
+			p.SetState(218)
+			p.exp(0)
 		}
-		p.SetState(203)
+		p.SetState(223)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
 		_la = p.GetTokenStream().LA(1)
 
-		for _la == MlanParserT__15 {
+		for _la == MlanParserT__10 {
 			{
-				p.SetState(199)
-				p.Match(MlanParserT__15)
+				p.SetState(219)
+				p.Match(MlanParserT__10)
 				if p.HasError() {
 					// Recognition error - abort rule
 					goto errorExit
 				}
 			}
 			{
-				p.SetState(200)
-				p.expression(0)
+				p.SetState(220)
+				p.exp(0)
 			}
 
-			p.SetState(205)
+			p.SetState(225)
 			p.GetErrorHandler().Sync(p)
 			if p.HasError() {
 				goto errorExit
@@ -3963,8 +4170,8 @@ func (p *MlanParser) ClosureInvoke() (localctx IClosureInvokeContext) {
 
 	}
 	{
-		p.SetState(208)
-		p.Match(MlanParserT__19)
+		p.SetState(228)
+		p.Match(MlanParserT__15)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
@@ -3984,471 +4191,141 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IExpressionContext is an interface to support dynamic dispatch.
-type IExpressionContext interface {
+// IExpContext is an interface to support dynamic dispatch.
+type IExpContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
-	// IsExpressionContext differentiates from other interfaces.
-	IsExpressionContext()
+	// IsExpContext differentiates from other interfaces.
+	IsExpContext()
 }
 
-type ExpressionContext struct {
+type ExpContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyExpressionContext() *ExpressionContext {
-	var p = new(ExpressionContext)
+func NewEmptyExpContext() *ExpContext {
+	var p = new(ExpContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_expression
+	p.RuleIndex = MlanParserRULE_exp
 	return p
 }
 
-func InitEmptyExpressionContext(p *ExpressionContext) {
+func InitEmptyExpContext(p *ExpContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_expression
+	p.RuleIndex = MlanParserRULE_exp
 }
 
-func (*ExpressionContext) IsExpressionContext() {}
+func (*ExpContext) IsExpContext() {}
 
-func NewExpressionContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ExpressionContext {
-	var p = new(ExpressionContext)
+func NewExpContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ExpContext {
+	var p = new(ExpContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_expression
+	p.RuleIndex = MlanParserRULE_exp
 
 	return p
 }
 
-func (s *ExpressionContext) GetParser() antlr.Parser { return s.parser }
+func (s *ExpContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ExpressionContext) CopyAll(ctx *ExpressionContext) {
+func (s *ExpContext) CopyAll(ctx *ExpContext) {
 	s.CopyFrom(&ctx.BaseParserRuleContext)
 }
 
-func (s *ExpressionContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *ExpContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-type ExpressionIntegerHexContext struct {
-	ExpressionContext
+type ExpBoolContext struct {
+	ExpContext
 }
 
-func NewExpressionIntegerHexContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionIntegerHexContext {
-	var p = new(ExpressionIntegerHexContext)
+func NewExpBoolContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpBoolContext {
+	var p = new(ExpBoolContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionIntegerHexContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpBoolContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionIntegerHexContext) IntegerHex() antlr.TerminalNode {
-	return s.GetToken(MlanParserIntegerHex, 0)
-}
-
-func (s *ExpressionIntegerHexContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionIntegerHex(s)
-	}
-}
-
-func (s *ExpressionIntegerHexContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionIntegerHex(s)
-	}
-}
-
-func (s *ExpressionIntegerHexContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionIntegerHex(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionFunctionInvokeContext struct {
-	ExpressionContext
-}
-
-func NewExpressionFunctionInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionFunctionInvokeContext {
-	var p = new(ExpressionFunctionInvokeContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionFunctionInvokeContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionFunctionInvokeContext) FunctionInvoke() IFunctionInvokeContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IFunctionInvokeContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IFunctionInvokeContext)
-}
-
-func (s *ExpressionFunctionInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionFunctionInvoke(s)
-	}
-}
-
-func (s *ExpressionFunctionInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionFunctionInvoke(s)
-	}
-}
-
-func (s *ExpressionFunctionInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionFunctionInvoke(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionUnaryNegationContext struct {
-	ExpressionContext
-}
-
-func NewExpressionUnaryNegationContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionUnaryNegationContext {
-	var p = new(ExpressionUnaryNegationContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionUnaryNegationContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionUnaryNegationContext) Subtract() antlr.TerminalNode {
-	return s.GetToken(MlanParserSubtract, 0)
-}
-
-func (s *ExpressionUnaryNegationContext) Expression() IExpressionContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionUnaryNegationContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionUnaryNegation(s)
-	}
-}
-
-func (s *ExpressionUnaryNegationContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionUnaryNegation(s)
-	}
-}
-
-func (s *ExpressionUnaryNegationContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionUnaryNegation(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionBoolContext struct {
-	ExpressionContext
-}
-
-func NewExpressionBoolContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionBoolContext {
-	var p = new(ExpressionBoolContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionBoolContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionBoolContext) Bool() antlr.TerminalNode {
+func (s *ExpBoolContext) Bool() antlr.TerminalNode {
 	return s.GetToken(MlanParserBool, 0)
 }
 
-func (s *ExpressionBoolContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpBoolContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionBool(s)
+		listenerT.EnterExpBool(s)
 	}
 }
 
-func (s *ExpressionBoolContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpBoolContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionBool(s)
+		listenerT.ExitExpBool(s)
 	}
 }
 
-func (s *ExpressionBoolContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpBoolContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionBool(s)
+		return t.VisitExpBool(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionPowContext struct {
-	ExpressionContext
-}
-
-func NewExpressionPowContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionPowContext {
-	var p = new(ExpressionPowContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionPowContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionPowContext) AllExpression() []IExpressionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IExpressionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *ExpressionPowContext) Expression(i int) IExpressionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionPowContext) Pow() antlr.TerminalNode {
-	return s.GetToken(MlanParserPow, 0)
-}
-
-func (s *ExpressionPowContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionPow(s)
-	}
-}
-
-func (s *ExpressionPowContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionPow(s)
-	}
-}
-
-func (s *ExpressionPowContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionPow(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionXorContext struct {
-	ExpressionContext
-}
-
-func NewExpressionXorContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionXorContext {
-	var p = new(ExpressionXorContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionXorContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionXorContext) AllExpression() []IExpressionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IExpressionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *ExpressionXorContext) Expression(i int) IExpressionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionXorContext) Xor() antlr.TerminalNode {
-	return s.GetToken(MlanParserXor, 0)
-}
-
-func (s *ExpressionXorContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionXor(s)
-	}
-}
-
-func (s *ExpressionXorContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionXor(s)
-	}
-}
-
-func (s *ExpressionXorContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionXor(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionEqualContext struct {
-	ExpressionContext
+type ExpComparisonContext struct {
+	ExpContext
 	op antlr.Token
 }
 
-func NewExpressionEqualContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionEqualContext {
-	var p = new(ExpressionEqualContext)
+func NewExpComparisonContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpComparisonContext {
+	var p = new(ExpComparisonContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionEqualContext) GetOp() antlr.Token { return s.op }
+func (s *ExpComparisonContext) GetOp() antlr.Token { return s.op }
 
-func (s *ExpressionEqualContext) SetOp(v antlr.Token) { s.op = v }
+func (s *ExpComparisonContext) SetOp(v antlr.Token) { s.op = v }
 
-func (s *ExpressionEqualContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpComparisonContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionEqualContext) AllExpression() []IExpressionContext {
+func (s *ExpComparisonContext) AllExp() []IExpContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IExpressionContext, len)
+	tst := make([]IExpContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
 			i++
 		}
 	}
@@ -4456,11 +4333,11 @@ func (s *ExpressionEqualContext) AllExpression() []IExpressionContext {
 	return tst
 }
 
-func (s *ExpressionEqualContext) Expression(i int) IExpressionContext {
+func (s *ExpComparisonContext) Exp(i int) IExpContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -4473,61 +4350,69 @@ func (s *ExpressionEqualContext) Expression(i int) IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *ExpressionEqualContext) Eq() antlr.TerminalNode {
-	return s.GetToken(MlanParserEq, 0)
+func (s *ExpComparisonContext) GtEq() antlr.TerminalNode {
+	return s.GetToken(MlanParserGtEq, 0)
 }
 
-func (s *ExpressionEqualContext) Neq() antlr.TerminalNode {
-	return s.GetToken(MlanParserNeq, 0)
+func (s *ExpComparisonContext) LtEq() antlr.TerminalNode {
+	return s.GetToken(MlanParserLtEq, 0)
 }
 
-func (s *ExpressionEqualContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpComparisonContext) Gt() antlr.TerminalNode {
+	return s.GetToken(MlanParserGt, 0)
+}
+
+func (s *ExpComparisonContext) Lt() antlr.TerminalNode {
+	return s.GetToken(MlanParserLt, 0)
+}
+
+func (s *ExpComparisonContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionEqual(s)
+		listenerT.EnterExpComparison(s)
 	}
 }
 
-func (s *ExpressionEqualContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpComparisonContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionEqual(s)
+		listenerT.ExitExpComparison(s)
 	}
 }
 
-func (s *ExpressionEqualContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpComparisonContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionEqual(s)
+		return t.VisitExpComparison(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionClosureContext struct {
-	ExpressionContext
+type ExpIdxContext struct {
+	ExpContext
 }
 
-func NewExpressionClosureContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionClosureContext {
-	var p = new(ExpressionClosureContext)
+func NewExpIdxContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpIdxContext {
+	var p = new(ExpIdxContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionClosureContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpIdxContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionClosureContext) ClosureDefinition() IClosureDefinitionContext {
+func (s *ExpIdxContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IClosureDefinitionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -4537,50 +4422,295 @@ func (s *ExpressionClosureContext) ClosureDefinition() IClosureDefinitionContext
 		return nil
 	}
 
-	return t.(IClosureDefinitionContext)
+	return t.(IExpContext)
 }
 
-func (s *ExpressionClosureContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpIdxContext) Idx() IIdxContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIdxContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIdxContext)
+}
+
+func (s *ExpIdxContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionClosure(s)
+		listenerT.EnterExpIdx(s)
 	}
 }
 
-func (s *ExpressionClosureContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpIdxContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionClosure(s)
+		listenerT.ExitExpIdx(s)
 	}
 }
 
-func (s *ExpressionClosureContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpIdxContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionClosure(s)
+		return t.VisitExpIdx(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionDictContext struct {
-	ExpressionContext
+type ExpStringContext struct {
+	ExpContext
 }
 
-func NewExpressionDictContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionDictContext {
-	var p = new(ExpressionDictContext)
+func NewExpStringContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpStringContext {
+	var p = new(ExpStringContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionDictContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpStringContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionDictContext) Dict() IDictContext {
+func (s *ExpStringContext) String_() antlr.TerminalNode {
+	return s.GetToken(MlanParserString_, 0)
+}
+
+func (s *ExpStringContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpString(s)
+	}
+}
+
+func (s *ExpStringContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpString(s)
+	}
+}
+
+func (s *ExpStringContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpString(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpCsInvokeContext struct {
+	ExpContext
+}
+
+func NewExpCsInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpCsInvokeContext {
+	var p = new(ExpCsInvokeContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpCsInvokeContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpCsInvokeContext) CsInvoke() ICsInvokeContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(ICsInvokeContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ICsInvokeContext)
+}
+
+func (s *ExpCsInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpCsInvoke(s)
+	}
+}
+
+func (s *ExpCsInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpCsInvoke(s)
+	}
+}
+
+func (s *ExpCsInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpCsInvoke(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpFloatContext struct {
+	ExpContext
+}
+
+func NewExpFloatContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpFloatContext {
+	var p = new(ExpFloatContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpFloatContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpFloatContext) Float() antlr.TerminalNode {
+	return s.GetToken(MlanParserFloat, 0)
+}
+
+func (s *ExpFloatContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpFloat(s)
+	}
+}
+
+func (s *ExpFloatContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpFloat(s)
+	}
+}
+
+func (s *ExpFloatContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpFloat(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpPowContext struct {
+	ExpContext
+}
+
+func NewExpPowContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpPowContext {
+	var p = new(ExpPowContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpPowContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpPowContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *ExpPowContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpPowContext) Pow() antlr.TerminalNode {
+	return s.GetToken(MlanParserPow, 0)
+}
+
+func (s *ExpPowContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpPow(s)
+	}
+}
+
+func (s *ExpPowContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpPow(s)
+	}
+}
+
+func (s *ExpPowContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpPow(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpDictContext struct {
+	ExpContext
+}
+
+func NewExpDictContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpDictContext {
+	var p = new(ExpDictContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpDictContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpDictContext) Dict() IDictContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
 		if _, ok := ctx.(IDictContext); ok {
@@ -4596,91 +4726,575 @@ func (s *ExpressionDictContext) Dict() IDictContext {
 	return t.(IDictContext)
 }
 
-func (s *ExpressionDictContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpDictContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionDict(s)
+		listenerT.EnterExpDict(s)
 	}
 }
 
-func (s *ExpressionDictContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpDictContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionDict(s)
+		listenerT.ExitExpDict(s)
 	}
 }
 
-func (s *ExpressionDictContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpDictContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionDict(s)
+		return t.VisitExpDict(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionIdentifierContext struct {
-	ExpressionContext
+type ExpXorContext struct {
+	ExpContext
 }
 
-func NewExpressionIdentifierContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionIdentifierContext {
-	var p = new(ExpressionIdentifierContext)
+func NewExpXorContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpXorContext {
+	var p = new(ExpXorContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionIdentifierContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpXorContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionIdentifierContext) Identifier() antlr.TerminalNode {
-	return s.GetToken(MlanParserIdentifier, 0)
+func (s *ExpXorContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
 }
 
-func (s *ExpressionIdentifierContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpXorContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpXorContext) Xor() antlr.TerminalNode {
+	return s.GetToken(MlanParserXor, 0)
+}
+
+func (s *ExpXorContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionIdentifier(s)
+		listenerT.EnterExpXor(s)
 	}
 }
 
-func (s *ExpressionIdentifierContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpXorContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionIdentifier(s)
+		listenerT.ExitExpXor(s)
 	}
 }
 
-func (s *ExpressionIdentifierContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpXorContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionIdentifier(s)
+		return t.VisitExpXor(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionListContext struct {
-	ExpressionContext
+type ExpNegContext struct {
+	ExpContext
 }
 
-func NewExpressionListContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionListContext {
-	var p = new(ExpressionListContext)
+func NewExpNegContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpNegContext {
+	var p = new(ExpNegContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionListContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpNegContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionListContext) List() IListContext {
+func (s *ExpNegContext) Subtract() antlr.TerminalNode {
+	return s.GetToken(MlanParserSubtract, 0)
+}
+
+func (s *ExpNegContext) Exp() IExpContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpNegContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpNeg(s)
+	}
+}
+
+func (s *ExpNegContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpNeg(s)
+	}
+}
+
+func (s *ExpNegContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpNeg(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpIntegerContext struct {
+	ExpContext
+}
+
+func NewExpIntegerContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpIntegerContext {
+	var p = new(ExpIntegerContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpIntegerContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpIntegerContext) Integer() antlr.TerminalNode {
+	return s.GetToken(MlanParserInteger, 0)
+}
+
+func (s *ExpIntegerContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpInteger(s)
+	}
+}
+
+func (s *ExpIntegerContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpInteger(s)
+	}
+}
+
+func (s *ExpIntegerContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpInteger(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpLogicalOrContext struct {
+	ExpContext
+}
+
+func NewExpLogicalOrContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpLogicalOrContext {
+	var p = new(ExpLogicalOrContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpLogicalOrContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpLogicalOrContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *ExpLogicalOrContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpLogicalOrContext) Or() antlr.TerminalNode {
+	return s.GetToken(MlanParserOr, 0)
+}
+
+func (s *ExpLogicalOrContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpLogicalOr(s)
+	}
+}
+
+func (s *ExpLogicalOrContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpLogicalOr(s)
+	}
+}
+
+func (s *ExpLogicalOrContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpLogicalOr(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpCsContext struct {
+	ExpContext
+}
+
+func NewExpCsContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpCsContext {
+	var p = new(ExpCsContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpCsContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpCsContext) Closure() IClosureContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IClosureContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IClosureContext)
+}
+
+func (s *ExpCsContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpCs(s)
+	}
+}
+
+func (s *ExpCsContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpCs(s)
+	}
+}
+
+func (s *ExpCsContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpCs(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpMulDivModContext struct {
+	ExpContext
+	op antlr.Token
+}
+
+func NewExpMulDivModContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpMulDivModContext {
+	var p = new(ExpMulDivModContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpMulDivModContext) GetOp() antlr.Token { return s.op }
+
+func (s *ExpMulDivModContext) SetOp(v antlr.Token) { s.op = v }
+
+func (s *ExpMulDivModContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpMulDivModContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *ExpMulDivModContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpMulDivModContext) Multiply() antlr.TerminalNode {
+	return s.GetToken(MlanParserMultiply, 0)
+}
+
+func (s *ExpMulDivModContext) Division() antlr.TerminalNode {
+	return s.GetToken(MlanParserDivision, 0)
+}
+
+func (s *ExpMulDivModContext) Modulus() antlr.TerminalNode {
+	return s.GetToken(MlanParserModulus, 0)
+}
+
+func (s *ExpMulDivModContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpMulDivMod(s)
+	}
+}
+
+func (s *ExpMulDivModContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpMulDivMod(s)
+	}
+}
+
+func (s *ExpMulDivModContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpMulDivMod(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpNullContext struct {
+	ExpContext
+}
+
+func NewExpNullContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpNullContext {
+	var p = new(ExpNullContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpNullContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpNullContext) Null() antlr.TerminalNode {
+	return s.GetToken(MlanParserNull, 0)
+}
+
+func (s *ExpNullContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpNull(s)
+	}
+}
+
+func (s *ExpNullContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpNull(s)
+	}
+}
+
+func (s *ExpNullContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpNull(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpFnInvokeContext struct {
+	ExpContext
+}
+
+func NewExpFnInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpFnInvokeContext {
+	var p = new(ExpFnInvokeContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpFnInvokeContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpFnInvokeContext) FnInvoke() IFnInvokeContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFnInvokeContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFnInvokeContext)
+}
+
+func (s *ExpFnInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpFnInvoke(s)
+	}
+}
+
+func (s *ExpFnInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpFnInvoke(s)
+	}
+}
+
+func (s *ExpFnInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpFnInvoke(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpListContext struct {
+	ExpContext
+}
+
+func NewExpListContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpListContext {
+	var p = new(ExpListContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpListContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpListContext) List() IListContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
 		if _, ok := ctx.(IListContext); ok {
@@ -4696,65 +5310,60 @@ func (s *ExpressionListContext) List() IListContext {
 	return t.(IListContext)
 }
 
-func (s *ExpressionListContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpListContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionList(s)
+		listenerT.EnterExpList(s)
 	}
 }
 
-func (s *ExpressionListContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpListContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionList(s)
+		listenerT.ExitExpList(s)
 	}
 }
 
-func (s *ExpressionListContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpListContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionList(s)
+		return t.VisitExpList(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionSumSubContext struct {
-	ExpressionContext
-	op antlr.Token
+type ExpLogicalAndContext struct {
+	ExpContext
 }
 
-func NewExpressionSumSubContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionSumSubContext {
-	var p = new(ExpressionSumSubContext)
+func NewExpLogicalAndContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpLogicalAndContext {
+	var p = new(ExpLogicalAndContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionSumSubContext) GetOp() antlr.Token { return s.op }
-
-func (s *ExpressionSumSubContext) SetOp(v antlr.Token) { s.op = v }
-
-func (s *ExpressionSumSubContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpLogicalAndContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionSumSubContext) AllExpression() []IExpressionContext {
+func (s *ExpLogicalAndContext) AllExp() []IExpContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IExpressionContext, len)
+	tst := make([]IExpContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
 			i++
 		}
 	}
@@ -4762,11 +5371,11 @@ func (s *ExpressionSumSubContext) AllExpression() []IExpressionContext {
 	return tst
 }
 
-func (s *ExpressionSumSubContext) Expression(i int) IExpressionContext {
+func (s *ExpLogicalAndContext) Exp(i int) IExpContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -4779,861 +5388,515 @@ func (s *ExpressionSumSubContext) Expression(i int) IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *ExpressionSumSubContext) Add() antlr.TerminalNode {
-	return s.GetToken(MlanParserAdd, 0)
-}
-
-func (s *ExpressionSumSubContext) Subtract() antlr.TerminalNode {
-	return s.GetToken(MlanParserSubtract, 0)
-}
-
-func (s *ExpressionSumSubContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionSumSub(s)
-	}
-}
-
-func (s *ExpressionSumSubContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionSumSub(s)
-	}
-}
-
-func (s *ExpressionSumSubContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionSumSub(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionComparisonContext struct {
-	ExpressionContext
-	op antlr.Token
-}
-
-func NewExpressionComparisonContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionComparisonContext {
-	var p = new(ExpressionComparisonContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionComparisonContext) GetOp() antlr.Token { return s.op }
-
-func (s *ExpressionComparisonContext) SetOp(v antlr.Token) { s.op = v }
-
-func (s *ExpressionComparisonContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionComparisonContext) AllExpression() []IExpressionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IExpressionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *ExpressionComparisonContext) Expression(i int) IExpressionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionComparisonContext) GtEq() antlr.TerminalNode {
-	return s.GetToken(MlanParserGtEq, 0)
-}
-
-func (s *ExpressionComparisonContext) LtEq() antlr.TerminalNode {
-	return s.GetToken(MlanParserLtEq, 0)
-}
-
-func (s *ExpressionComparisonContext) Gt() antlr.TerminalNode {
-	return s.GetToken(MlanParserGt, 0)
-}
-
-func (s *ExpressionComparisonContext) Lt() antlr.TerminalNode {
-	return s.GetToken(MlanParserLt, 0)
-}
-
-func (s *ExpressionComparisonContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionComparison(s)
-	}
-}
-
-func (s *ExpressionComparisonContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionComparison(s)
-	}
-}
-
-func (s *ExpressionComparisonContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionComparison(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionLogicalOrContext struct {
-	ExpressionContext
-}
-
-func NewExpressionLogicalOrContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionLogicalOrContext {
-	var p = new(ExpressionLogicalOrContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionLogicalOrContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionLogicalOrContext) AllExpression() []IExpressionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IExpressionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *ExpressionLogicalOrContext) Expression(i int) IExpressionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionLogicalOrContext) Or() antlr.TerminalNode {
-	return s.GetToken(MlanParserOr, 0)
-}
-
-func (s *ExpressionLogicalOrContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionLogicalOr(s)
-	}
-}
-
-func (s *ExpressionLogicalOrContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionLogicalOr(s)
-	}
-}
-
-func (s *ExpressionLogicalOrContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionLogicalOr(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionIndexContext struct {
-	ExpressionContext
-}
-
-func NewExpressionIndexContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionIndexContext {
-	var p = new(ExpressionIndexContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionIndexContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionIndexContext) Expression() IExpressionContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionIndexContext) Index() IIndexContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IIndexContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IIndexContext)
-}
-
-func (s *ExpressionIndexContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionIndex(s)
-	}
-}
-
-func (s *ExpressionIndexContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionIndex(s)
-	}
-}
-
-func (s *ExpressionIndexContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionIndex(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionLogicalNotContext struct {
-	ExpressionContext
-}
-
-func NewExpressionLogicalNotContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionLogicalNotContext {
-	var p = new(ExpressionLogicalNotContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionLogicalNotContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionLogicalNotContext) Not() antlr.TerminalNode {
-	return s.GetToken(MlanParserNot, 0)
-}
-
-func (s *ExpressionLogicalNotContext) Expression() IExpressionContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionLogicalNotContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionLogicalNot(s)
-	}
-}
-
-func (s *ExpressionLogicalNotContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionLogicalNot(s)
-	}
-}
-
-func (s *ExpressionLogicalNotContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionLogicalNot(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionClosureInvokeContext struct {
-	ExpressionContext
-}
-
-func NewExpressionClosureInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionClosureInvokeContext {
-	var p = new(ExpressionClosureInvokeContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionClosureInvokeContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionClosureInvokeContext) ClosureInvoke() IClosureInvokeContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IClosureInvokeContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IClosureInvokeContext)
-}
-
-func (s *ExpressionClosureInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionClosureInvoke(s)
-	}
-}
-
-func (s *ExpressionClosureInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionClosureInvoke(s)
-	}
-}
-
-func (s *ExpressionClosureInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionClosureInvoke(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionParenthesesContext struct {
-	ExpressionContext
-}
-
-func NewExpressionParenthesesContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionParenthesesContext {
-	var p = new(ExpressionParenthesesContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionParenthesesContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionParenthesesContext) Expression() IExpressionContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionParenthesesContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionParentheses(s)
-	}
-}
-
-func (s *ExpressionParenthesesContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionParentheses(s)
-	}
-}
-
-func (s *ExpressionParenthesesContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionParentheses(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionMulDivModContext struct {
-	ExpressionContext
-	op antlr.Token
-}
-
-func NewExpressionMulDivModContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionMulDivModContext {
-	var p = new(ExpressionMulDivModContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionMulDivModContext) GetOp() antlr.Token { return s.op }
-
-func (s *ExpressionMulDivModContext) SetOp(v antlr.Token) { s.op = v }
-
-func (s *ExpressionMulDivModContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionMulDivModContext) AllExpression() []IExpressionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IExpressionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *ExpressionMulDivModContext) Expression(i int) IExpressionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionMulDivModContext) Multiply() antlr.TerminalNode {
-	return s.GetToken(MlanParserMultiply, 0)
-}
-
-func (s *ExpressionMulDivModContext) Division() antlr.TerminalNode {
-	return s.GetToken(MlanParserDivision, 0)
-}
-
-func (s *ExpressionMulDivModContext) Modulus() antlr.TerminalNode {
-	return s.GetToken(MlanParserModulus, 0)
-}
-
-func (s *ExpressionMulDivModContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionMulDivMod(s)
-	}
-}
-
-func (s *ExpressionMulDivModContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionMulDivMod(s)
-	}
-}
-
-func (s *ExpressionMulDivModContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitExpressionMulDivMod(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-type ExpressionLogicalAndContext struct {
-	ExpressionContext
-}
-
-func NewExpressionLogicalAndContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionLogicalAndContext {
-	var p = new(ExpressionLogicalAndContext)
-
-	InitEmptyExpressionContext(&p.ExpressionContext)
-	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
-
-	return p
-}
-
-func (s *ExpressionLogicalAndContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *ExpressionLogicalAndContext) AllExpression() []IExpressionContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IExpressionContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IExpressionContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IExpressionContext); ok {
-			tst[i] = t.(IExpressionContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *ExpressionLogicalAndContext) Expression(i int) IExpressionContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *ExpressionLogicalAndContext) And() antlr.TerminalNode {
+func (s *ExpLogicalAndContext) And() antlr.TerminalNode {
 	return s.GetToken(MlanParserAnd, 0)
 }
 
-func (s *ExpressionLogicalAndContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpLogicalAndContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionLogicalAnd(s)
+		listenerT.EnterExpLogicalAnd(s)
 	}
 }
 
-func (s *ExpressionLogicalAndContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpLogicalAndContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionLogicalAnd(s)
+		listenerT.ExitExpLogicalAnd(s)
 	}
 }
 
-func (s *ExpressionLogicalAndContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpLogicalAndContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionLogicalAnd(s)
+		return t.VisitExpLogicalAnd(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionFloatContext struct {
-	ExpressionContext
+type ExpParenthesesContext struct {
+	ExpContext
 }
 
-func NewExpressionFloatContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionFloatContext {
-	var p = new(ExpressionFloatContext)
+func NewExpParenthesesContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpParenthesesContext {
+	var p = new(ExpParenthesesContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionFloatContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpParenthesesContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionFloatContext) Float() antlr.TerminalNode {
-	return s.GetToken(MlanParserFloat, 0)
+func (s *ExpParenthesesContext) Exp() IExpContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
 }
 
-func (s *ExpressionFloatContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpParenthesesContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionFloat(s)
+		listenerT.EnterExpParentheses(s)
 	}
 }
 
-func (s *ExpressionFloatContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpParenthesesContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionFloat(s)
+		listenerT.ExitExpParentheses(s)
 	}
 }
 
-func (s *ExpressionFloatContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpParenthesesContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionFloat(s)
+		return t.VisitExpParentheses(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionIntegerContext struct {
-	ExpressionContext
+type ExpEqualContext struct {
+	ExpContext
+	op antlr.Token
 }
 
-func NewExpressionIntegerContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionIntegerContext {
-	var p = new(ExpressionIntegerContext)
+func NewExpEqualContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpEqualContext {
+	var p = new(ExpEqualContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionIntegerContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpEqualContext) GetOp() antlr.Token { return s.op }
+
+func (s *ExpEqualContext) SetOp(v antlr.Token) { s.op = v }
+
+func (s *ExpEqualContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionIntegerContext) Integer() antlr.TerminalNode {
-	return s.GetToken(MlanParserInteger, 0)
+func (s *ExpEqualContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
 }
 
-func (s *ExpressionIntegerContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpEqualContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpEqualContext) Eq() antlr.TerminalNode {
+	return s.GetToken(MlanParserEq, 0)
+}
+
+func (s *ExpEqualContext) Neq() antlr.TerminalNode {
+	return s.GetToken(MlanParserNeq, 0)
+}
+
+func (s *ExpEqualContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionInteger(s)
+		listenerT.EnterExpEqual(s)
 	}
 }
 
-func (s *ExpressionIntegerContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpEqualContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionInteger(s)
+		listenerT.ExitExpEqual(s)
 	}
 }
 
-func (s *ExpressionIntegerContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpEqualContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionInteger(s)
+		return t.VisitExpEqual(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionNullContext struct {
-	ExpressionContext
+type ExpMethodInvokeContext struct {
+	ExpContext
 }
 
-func NewExpressionNullContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionNullContext {
-	var p = new(ExpressionNullContext)
+func NewExpMethodInvokeContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpMethodInvokeContext {
+	var p = new(ExpMethodInvokeContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionNullContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpMethodInvokeContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionNullContext) Null() antlr.TerminalNode {
-	return s.GetToken(MlanParserNull, 0)
+func (s *ExpMethodInvokeContext) MethodInvoke() IMethodInvokeContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IMethodInvokeContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IMethodInvokeContext)
 }
 
-func (s *ExpressionNullContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpMethodInvokeContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionNull(s)
+		listenerT.EnterExpMethodInvoke(s)
 	}
 }
 
-func (s *ExpressionNullContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpMethodInvokeContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionNull(s)
+		listenerT.ExitExpMethodInvoke(s)
 	}
 }
 
-func (s *ExpressionNullContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpMethodInvokeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionNull(s)
+		return t.VisitExpMethodInvoke(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-type ExpressionStringContext struct {
-	ExpressionContext
+type ExpLogicalNotContext struct {
+	ExpContext
 }
 
-func NewExpressionStringContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpressionStringContext {
-	var p = new(ExpressionStringContext)
+func NewExpLogicalNotContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpLogicalNotContext {
+	var p = new(ExpLogicalNotContext)
 
-	InitEmptyExpressionContext(&p.ExpressionContext)
+	InitEmptyExpContext(&p.ExpContext)
 	p.parser = parser
-	p.CopyAll(ctx.(*ExpressionContext))
+	p.CopyAll(ctx.(*ExpContext))
 
 	return p
 }
 
-func (s *ExpressionStringContext) GetRuleContext() antlr.RuleContext {
+func (s *ExpLogicalNotContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ExpressionStringContext) String_() antlr.TerminalNode {
-	return s.GetToken(MlanParserString_, 0)
+func (s *ExpLogicalNotContext) Not() antlr.TerminalNode {
+	return s.GetToken(MlanParserNot, 0)
 }
 
-func (s *ExpressionStringContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ExpLogicalNotContext) Exp() IExpContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpLogicalNotContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterExpressionString(s)
+		listenerT.EnterExpLogicalNot(s)
 	}
 }
 
-func (s *ExpressionStringContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ExpLogicalNotContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitExpressionString(s)
+		listenerT.ExitExpLogicalNot(s)
 	}
 }
 
-func (s *ExpressionStringContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ExpLogicalNotContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitExpressionString(s)
+		return t.VisitExpLogicalNot(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) Expression() (localctx IExpressionContext) {
-	return p.expression(0)
+type ExpIntegerHexContext struct {
+	ExpContext
 }
 
-func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
+func NewExpIntegerHexContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpIntegerHexContext {
+	var p = new(ExpIntegerHexContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpIntegerHexContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpIntegerHexContext) IntegerHex() antlr.TerminalNode {
+	return s.GetToken(MlanParserIntegerHex, 0)
+}
+
+func (s *ExpIntegerHexContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpIntegerHex(s)
+	}
+}
+
+func (s *ExpIntegerHexContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpIntegerHex(s)
+	}
+}
+
+func (s *ExpIntegerHexContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpIntegerHex(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpIdentifierContext struct {
+	ExpContext
+}
+
+func NewExpIdentifierContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpIdentifierContext {
+	var p = new(ExpIdentifierContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpIdentifierContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpIdentifierContext) Identifier() antlr.TerminalNode {
+	return s.GetToken(MlanParserIdentifier, 0)
+}
+
+func (s *ExpIdentifierContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpIdentifier(s)
+	}
+}
+
+func (s *ExpIdentifierContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpIdentifier(s)
+	}
+}
+
+func (s *ExpIdentifierContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpIdentifier(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type ExpSumSubContext struct {
+	ExpContext
+	op antlr.Token
+}
+
+func NewExpSumSubContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ExpSumSubContext {
+	var p = new(ExpSumSubContext)
+
+	InitEmptyExpContext(&p.ExpContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*ExpContext))
+
+	return p
+}
+
+func (s *ExpSumSubContext) GetOp() antlr.Token { return s.op }
+
+func (s *ExpSumSubContext) SetOp(v antlr.Token) { s.op = v }
+
+func (s *ExpSumSubContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ExpSumSubContext) AllExp() []IExpContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExpContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExpContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExpContext); ok {
+			tst[i] = t.(IExpContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *ExpSumSubContext) Exp(i int) IExpContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *ExpSumSubContext) Add() antlr.TerminalNode {
+	return s.GetToken(MlanParserAdd, 0)
+}
+
+func (s *ExpSumSubContext) Subtract() antlr.TerminalNode {
+	return s.GetToken(MlanParserSubtract, 0)
+}
+
+func (s *ExpSumSubContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterExpSumSub(s)
+	}
+}
+
+func (s *ExpSumSubContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitExpSumSub(s)
+	}
+}
+
+func (s *ExpSumSubContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitExpSumSub(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *MlanParser) Exp() (localctx IExpContext) {
+	return p.exp(0)
+}
+
+func (p *MlanParser) exp(_p int) (localctx IExpContext) {
 	var _parentctx antlr.ParserRuleContext = p.GetParserRuleContext()
 
 	_parentState := p.GetState()
-	localctx = NewExpressionContext(p, p.GetParserRuleContext(), _parentState)
-	var _prevctx IExpressionContext = localctx
+	localctx = NewExpContext(p, p.GetParserRuleContext(), _parentState)
+	var _prevctx IExpContext = localctx
 	var _ antlr.ParserRuleContext = _prevctx // TODO: To prevent unused variable warning.
 	_startState := 30
-	p.EnterRecursionRule(localctx, 30, MlanParserRULE_expression, _p)
+	p.EnterRecursionRule(localctx, 30, MlanParserRULE_exp, _p)
 	var _la int
 
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(231)
+	p.SetState(252)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 
-	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 15, p.GetParserRuleContext()) {
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 17, p.GetParserRuleContext()) {
 	case 1:
-		localctx = NewExpressionIntegerContext(p, localctx)
+		localctx = NewExpIntegerContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 
 		{
-			p.SetState(211)
+			p.SetState(231)
 			p.Match(MlanParserInteger)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5642,11 +5905,11 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		}
 
 	case 2:
-		localctx = NewExpressionIntegerHexContext(p, localctx)
+		localctx = NewExpIntegerHexContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(212)
+			p.SetState(232)
 			p.Match(MlanParserIntegerHex)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5655,11 +5918,11 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		}
 
 	case 3:
-		localctx = NewExpressionNullContext(p, localctx)
+		localctx = NewExpNullContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(213)
+			p.SetState(233)
 			p.Match(MlanParserNull)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5668,11 +5931,11 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		}
 
 	case 4:
-		localctx = NewExpressionBoolContext(p, localctx)
+		localctx = NewExpBoolContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(214)
+			p.SetState(234)
 			p.Match(MlanParserBool)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5681,11 +5944,11 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		}
 
 	case 5:
-		localctx = NewExpressionIdentifierContext(p, localctx)
+		localctx = NewExpIdentifierContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(215)
+			p.SetState(235)
 			p.Match(MlanParserIdentifier)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5694,11 +5957,11 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		}
 
 	case 6:
-		localctx = NewExpressionFloatContext(p, localctx)
+		localctx = NewExpFloatContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(216)
+			p.SetState(236)
 			p.Match(MlanParserFloat)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5707,11 +5970,11 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		}
 
 	case 7:
-		localctx = NewExpressionStringContext(p, localctx)
+		localctx = NewExpStringContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(217)
+			p.SetState(237)
 			p.Match(MlanParserString_)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5720,38 +5983,47 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		}
 
 	case 8:
-		localctx = NewExpressionClosureContext(p, localctx)
+		localctx = NewExpCsContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(218)
-			p.ClosureDefinition()
+			p.SetState(238)
+			p.Closure()
 		}
 
 	case 9:
-		localctx = NewExpressionFunctionInvokeContext(p, localctx)
+		localctx = NewExpMethodInvokeContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(219)
-			p.FunctionInvoke()
+			p.SetState(239)
+			p.MethodInvoke()
 		}
 
 	case 10:
-		localctx = NewExpressionClosureInvokeContext(p, localctx)
+		localctx = NewExpFnInvokeContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(220)
-			p.ClosureInvoke()
+			p.SetState(240)
+			p.FnInvoke()
 		}
 
 	case 11:
-		localctx = NewExpressionUnaryNegationContext(p, localctx)
+		localctx = NewExpCsInvokeContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(221)
+			p.SetState(241)
+			p.CsInvoke()
+		}
+
+	case 12:
+		localctx = NewExpNegContext(p, localctx)
+		p.SetParserRuleContext(localctx)
+		_prevctx = localctx
+		{
+			p.SetState(242)
 			p.Match(MlanParserSubtract)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5759,16 +6031,16 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 			}
 		}
 		{
-			p.SetState(222)
-			p.expression(13)
+			p.SetState(243)
+			p.exp(13)
 		}
 
-	case 12:
-		localctx = NewExpressionLogicalNotContext(p, localctx)
+	case 13:
+		localctx = NewExpLogicalNotContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(223)
+			p.SetState(244)
 			p.Match(MlanParserNot)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -5776,50 +6048,50 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 			}
 		}
 		{
-			p.SetState(224)
-			p.expression(12)
-		}
-
-	case 13:
-		localctx = NewExpressionParenthesesContext(p, localctx)
-		p.SetParserRuleContext(localctx)
-		_prevctx = localctx
-		{
-			p.SetState(225)
-			p.Match(MlanParserT__18)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
-		}
-		{
-			p.SetState(226)
-			p.expression(0)
-		}
-		{
-			p.SetState(227)
-			p.Match(MlanParserT__19)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
+			p.SetState(245)
+			p.exp(12)
 		}
 
 	case 14:
-		localctx = NewExpressionListContext(p, localctx)
+		localctx = NewExpParenthesesContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(229)
-			p.List()
+			p.SetState(246)
+			p.Match(MlanParserT__14)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(247)
+			p.exp(0)
+		}
+		{
+			p.SetState(248)
+			p.Match(MlanParserT__15)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 15:
-		localctx = NewExpressionDictContext(p, localctx)
+		localctx = NewExpListContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(230)
+			p.SetState(250)
+			p.List()
+		}
+
+	case 16:
+		localctx = NewExpDictContext(p, localctx)
+		p.SetParserRuleContext(localctx)
+		_prevctx = localctx
+		{
+			p.SetState(251)
 			p.Dict()
 		}
 
@@ -5827,12 +6099,12 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 		goto errorExit
 	}
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(261)
+	p.SetState(282)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 17, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 19, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
@@ -5842,24 +6114,24 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 				p.TriggerExitRuleEvent()
 			}
 			_prevctx = localctx
-			p.SetState(259)
+			p.SetState(280)
 			p.GetErrorHandler().Sync(p)
 			if p.HasError() {
 				goto errorExit
 			}
 
-			switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 16, p.GetParserRuleContext()) {
+			switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 18, p.GetParserRuleContext()) {
 			case 1:
-				localctx = NewExpressionPowContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(233)
+				localctx = NewExpPowContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(254)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 11)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 11)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(234)
+					p.SetState(255)
 					p.Match(MlanParserPow)
 					if p.HasError() {
 						// Recognition error - abort rule
@@ -5867,149 +6139,149 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 					}
 				}
 				{
-					p.SetState(235)
-					p.expression(11)
+					p.SetState(256)
+					p.exp(11)
 				}
 
 			case 2:
-				localctx = NewExpressionMulDivModContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(236)
+				localctx = NewExpMulDivModContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(257)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 10)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 10)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(237)
+					p.SetState(258)
 
 					var _lt = p.GetTokenStream().LT(1)
 
-					localctx.(*ExpressionMulDivModContext).op = _lt
+					localctx.(*ExpMulDivModContext).op = _lt
 
 					_la = p.GetTokenStream().LA(1)
 
-					if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&962072674304) != 0) {
+					if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&1924145348608) != 0) {
 						var _ri = p.GetErrorHandler().RecoverInline(p)
 
-						localctx.(*ExpressionMulDivModContext).op = _ri
+						localctx.(*ExpMulDivModContext).op = _ri
 					} else {
 						p.GetErrorHandler().ReportMatch(p)
 						p.Consume()
 					}
 				}
 				{
-					p.SetState(238)
-					p.expression(11)
+					p.SetState(259)
+					p.exp(11)
 				}
 
 			case 3:
-				localctx = NewExpressionSumSubContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(239)
+				localctx = NewExpSumSubContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(260)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 9)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 9)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(240)
+					p.SetState(261)
 
 					var _lt = p.GetTokenStream().LT(1)
 
-					localctx.(*ExpressionSumSubContext).op = _lt
+					localctx.(*ExpSumSubContext).op = _lt
 
 					_la = p.GetTokenStream().LA(1)
 
 					if !(_la == MlanParserAdd || _la == MlanParserSubtract) {
 						var _ri = p.GetErrorHandler().RecoverInline(p)
 
-						localctx.(*ExpressionSumSubContext).op = _ri
+						localctx.(*ExpSumSubContext).op = _ri
 					} else {
 						p.GetErrorHandler().ReportMatch(p)
 						p.Consume()
 					}
 				}
 				{
-					p.SetState(241)
-					p.expression(10)
+					p.SetState(262)
+					p.exp(10)
 				}
 
 			case 4:
-				localctx = NewExpressionComparisonContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(242)
+				localctx = NewExpComparisonContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(263)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 8)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 8)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(243)
+					p.SetState(264)
 
 					var _lt = p.GetTokenStream().LT(1)
 
-					localctx.(*ExpressionComparisonContext).op = _lt
+					localctx.(*ExpComparisonContext).op = _lt
 
 					_la = p.GetTokenStream().LA(1)
 
-					if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&115964116992) != 0) {
+					if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&206963736576) != 0) {
 						var _ri = p.GetErrorHandler().RecoverInline(p)
 
-						localctx.(*ExpressionComparisonContext).op = _ri
+						localctx.(*ExpComparisonContext).op = _ri
 					} else {
 						p.GetErrorHandler().ReportMatch(p)
 						p.Consume()
 					}
 				}
 				{
-					p.SetState(244)
-					p.expression(9)
+					p.SetState(265)
+					p.exp(9)
 				}
 
 			case 5:
-				localctx = NewExpressionEqualContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(245)
+				localctx = NewExpEqualContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(266)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 7)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 7)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(246)
+					p.SetState(267)
 
 					var _lt = p.GetTokenStream().LT(1)
 
-					localctx.(*ExpressionEqualContext).op = _lt
+					localctx.(*ExpEqualContext).op = _lt
 
 					_la = p.GetTokenStream().LA(1)
 
 					if !(_la == MlanParserEq || _la == MlanParserNeq) {
 						var _ri = p.GetErrorHandler().RecoverInline(p)
 
-						localctx.(*ExpressionEqualContext).op = _ri
+						localctx.(*ExpEqualContext).op = _ri
 					} else {
 						p.GetErrorHandler().ReportMatch(p)
 						p.Consume()
 					}
 				}
 				{
-					p.SetState(247)
-					p.expression(8)
+					p.SetState(268)
+					p.exp(8)
 				}
 
 			case 6:
-				localctx = NewExpressionXorContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(248)
+				localctx = NewExpXorContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(269)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 6)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(249)
+					p.SetState(270)
 					p.Match(MlanParserXor)
 					if p.HasError() {
 						// Recognition error - abort rule
@@ -6017,21 +6289,21 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 					}
 				}
 				{
-					p.SetState(250)
-					p.expression(7)
+					p.SetState(271)
+					p.exp(7)
 				}
 
 			case 7:
-				localctx = NewExpressionLogicalAndContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(251)
+				localctx = NewExpLogicalAndContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(272)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 5)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(252)
+					p.SetState(273)
 					p.Match(MlanParserAnd)
 					if p.HasError() {
 						// Recognition error - abort rule
@@ -6039,21 +6311,21 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 					}
 				}
 				{
-					p.SetState(253)
-					p.expression(6)
+					p.SetState(274)
+					p.exp(6)
 				}
 
 			case 8:
-				localctx = NewExpressionLogicalOrContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(254)
+				localctx = NewExpLogicalOrContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(275)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 4)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 4)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(255)
+					p.SetState(276)
 					p.Match(MlanParserOr)
 					if p.HasError() {
 						// Recognition error - abort rule
@@ -6061,22 +6333,22 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 					}
 				}
 				{
-					p.SetState(256)
-					p.expression(5)
+					p.SetState(277)
+					p.exp(5)
 				}
 
 			case 9:
-				localctx = NewExpressionIndexContext(p, NewExpressionContext(p, _parentctx, _parentState))
-				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_expression)
-				p.SetState(257)
+				localctx = NewExpIdxContext(p, NewExpContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, MlanParserRULE_exp)
+				p.SetState(278)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 14)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 14)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(258)
-					p.Index()
+					p.SetState(279)
+					p.Idx()
 				}
 
 			case antlr.ATNInvalidAltNumber:
@@ -6084,12 +6356,12 @@ func (p *MlanParser) expression(_p int) (localctx IExpressionContext) {
 			}
 
 		}
-		p.SetState(263)
+		p.SetState(284)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 17, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 19, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
@@ -6162,12 +6434,12 @@ func (s *IfBlockContext) ToStringTree(ruleNames []string, recog antlr.Recognizer
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-type IfBlockStatementContext struct {
+type IfBlockStmtContext struct {
 	IfBlockContext
 }
 
-func NewIfBlockStatementContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IfBlockStatementContext {
-	var p = new(IfBlockStatementContext)
+func NewIfBlockStmtContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IfBlockStmtContext {
+	var p = new(IfBlockStmtContext)
 
 	InitEmptyIfBlockContext(&p.IfBlockContext)
 	p.parser = parser
@@ -6176,14 +6448,14 @@ func NewIfBlockStatementContext(parser antlr.Parser, ctx antlr.ParserRuleContext
 	return p
 }
 
-func (s *IfBlockStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *IfBlockStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *IfBlockStatementContext) Expression() IExpressionContext {
+func (s *IfBlockStmtContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -6193,23 +6465,23 @@ func (s *IfBlockStatementContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *IfBlockStatementContext) AllStatement() []IStatementContext {
+func (s *IfBlockStmtContext) AllStmt() []IStmtContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IStatementContext, len)
+	tst := make([]IStmtContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
+		if t, ok := ctx.(IStmtContext); ok {
+			tst[i] = t.(IStmtContext)
 			i++
 		}
 	}
@@ -6217,11 +6489,11 @@ func (s *IfBlockStatementContext) AllStatement() []IStatementContext {
 	return tst
 }
 
-func (s *IfBlockStatementContext) Statement(i int) IStatementContext {
+func (s *IfBlockStmtContext) Stmt(i int) IStmtContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -6234,25 +6506,25 @@ func (s *IfBlockStatementContext) Statement(i int) IStatementContext {
 		return nil
 	}
 
-	return t.(IStatementContext)
+	return t.(IStmtContext)
 }
 
-func (s *IfBlockStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *IfBlockStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterIfBlockStatement(s)
+		listenerT.EnterIfBlockStmt(s)
 	}
 }
 
-func (s *IfBlockStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *IfBlockStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitIfBlockStatement(s)
+		listenerT.ExitIfBlockStmt(s)
 	}
 }
 
-func (s *IfBlockStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *IfBlockStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitIfBlockStatement(s)
+		return t.VisitIfBlockStmt(s)
 
 	default:
 		return t.VisitChildren(s)
@@ -6264,42 +6536,42 @@ func (p *MlanParser) IfBlock() (localctx IIfBlockContext) {
 	p.EnterRule(localctx, 32, MlanParserRULE_ifBlock)
 	var _la int
 
-	localctx = NewIfBlockStatementContext(p, localctx)
+	localctx = NewIfBlockStmtContext(p, localctx)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(264)
-		p.Match(MlanParserT__20)
+		p.SetState(285)
+		p.Match(MlanParserT__16)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
 	{
-		p.SetState(265)
-		p.expression(0)
+		p.SetState(286)
+		p.exp(0)
 	}
 	{
-		p.SetState(266)
+		p.SetState(287)
 		p.Match(MlanParserT__2)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(270)
+	p.SetState(291)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329676497380) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&316659348931044) != 0 {
 		{
-			p.SetState(267)
-			p.Statement()
+			p.SetState(288)
+			p.Stmt()
 		}
 
-		p.SetState(272)
+		p.SetState(293)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -6307,7 +6579,7 @@ func (p *MlanParser) IfBlock() (localctx IIfBlockContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(273)
+		p.SetState(294)
 		p.Match(MlanParserT__3)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -6382,12 +6654,12 @@ func (s *ElifBlockContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-type ElifBlockStatementContext struct {
+type ElifBlockStmtContext struct {
 	ElifBlockContext
 }
 
-func NewElifBlockStatementContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ElifBlockStatementContext {
-	var p = new(ElifBlockStatementContext)
+func NewElifBlockStmtContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ElifBlockStmtContext {
+	var p = new(ElifBlockStmtContext)
 
 	InitEmptyElifBlockContext(&p.ElifBlockContext)
 	p.parser = parser
@@ -6396,14 +6668,14 @@ func NewElifBlockStatementContext(parser antlr.Parser, ctx antlr.ParserRuleConte
 	return p
 }
 
-func (s *ElifBlockStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *ElifBlockStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ElifBlockStatementContext) Expression() IExpressionContext {
+func (s *ElifBlockStmtContext) Exp() IExpContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
+		if _, ok := ctx.(IExpContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -6413,23 +6685,23 @@ func (s *ElifBlockStatementContext) Expression() IExpressionContext {
 		return nil
 	}
 
-	return t.(IExpressionContext)
+	return t.(IExpContext)
 }
 
-func (s *ElifBlockStatementContext) AllStatement() []IStatementContext {
+func (s *ElifBlockStmtContext) AllStmt() []IStmtContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IStatementContext, len)
+	tst := make([]IStmtContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
+		if t, ok := ctx.(IStmtContext); ok {
+			tst[i] = t.(IStmtContext)
 			i++
 		}
 	}
@@ -6437,11 +6709,11 @@ func (s *ElifBlockStatementContext) AllStatement() []IStatementContext {
 	return tst
 }
 
-func (s *ElifBlockStatementContext) Statement(i int) IStatementContext {
+func (s *ElifBlockStmtContext) Stmt(i int) IStmtContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -6454,25 +6726,25 @@ func (s *ElifBlockStatementContext) Statement(i int) IStatementContext {
 		return nil
 	}
 
-	return t.(IStatementContext)
+	return t.(IStmtContext)
 }
 
-func (s *ElifBlockStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ElifBlockStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterElifBlockStatement(s)
+		listenerT.EnterElifBlockStmt(s)
 	}
 }
 
-func (s *ElifBlockStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ElifBlockStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitElifBlockStatement(s)
+		listenerT.ExitElifBlockStmt(s)
 	}
 }
 
-func (s *ElifBlockStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ElifBlockStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitElifBlockStatement(s)
+		return t.VisitElifBlockStmt(s)
 
 	default:
 		return t.VisitChildren(s)
@@ -6484,42 +6756,42 @@ func (p *MlanParser) ElifBlock() (localctx IElifBlockContext) {
 	p.EnterRule(localctx, 34, MlanParserRULE_elifBlock)
 	var _la int
 
-	localctx = NewElifBlockStatementContext(p, localctx)
+	localctx = NewElifBlockStmtContext(p, localctx)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(275)
-		p.Match(MlanParserT__21)
+		p.SetState(296)
+		p.Match(MlanParserT__17)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
 	{
-		p.SetState(276)
-		p.expression(0)
+		p.SetState(297)
+		p.exp(0)
 	}
 	{
-		p.SetState(277)
+		p.SetState(298)
 		p.Match(MlanParserT__2)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(281)
+	p.SetState(302)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329676497380) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&316659348931044) != 0 {
 		{
-			p.SetState(278)
-			p.Statement()
+			p.SetState(299)
+			p.Stmt()
 		}
 
-		p.SetState(283)
+		p.SetState(304)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -6527,7 +6799,7 @@ func (p *MlanParser) ElifBlock() (localctx IElifBlockContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(284)
+		p.SetState(305)
 		p.Match(MlanParserT__3)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -6602,12 +6874,12 @@ func (s *ElseBlockContext) ToStringTree(ruleNames []string, recog antlr.Recogniz
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-type ElseBlockStatementContext struct {
+type ElseBlockStmtContext struct {
 	ElseBlockContext
 }
 
-func NewElseBlockStatementContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ElseBlockStatementContext {
-	var p = new(ElseBlockStatementContext)
+func NewElseBlockStmtContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *ElseBlockStmtContext {
+	var p = new(ElseBlockStmtContext)
 
 	InitEmptyElseBlockContext(&p.ElseBlockContext)
 	p.parser = parser
@@ -6616,24 +6888,24 @@ func NewElseBlockStatementContext(parser antlr.Parser, ctx antlr.ParserRuleConte
 	return p
 }
 
-func (s *ElseBlockStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *ElseBlockStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ElseBlockStatementContext) AllStatement() []IStatementContext {
+func (s *ElseBlockStmtContext) AllStmt() []IStmtContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IStatementContext, len)
+	tst := make([]IStmtContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
+		if t, ok := ctx.(IStmtContext); ok {
+			tst[i] = t.(IStmtContext)
 			i++
 		}
 	}
@@ -6641,11 +6913,11 @@ func (s *ElseBlockStatementContext) AllStatement() []IStatementContext {
 	return tst
 }
 
-func (s *ElseBlockStatementContext) Statement(i int) IStatementContext {
+func (s *ElseBlockStmtContext) Stmt(i int) IStmtContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -6658,25 +6930,25 @@ func (s *ElseBlockStatementContext) Statement(i int) IStatementContext {
 		return nil
 	}
 
-	return t.(IStatementContext)
+	return t.(IStmtContext)
 }
 
-func (s *ElseBlockStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ElseBlockStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterElseBlockStatement(s)
+		listenerT.EnterElseBlockStmt(s)
 	}
 }
 
-func (s *ElseBlockStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ElseBlockStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitElseBlockStatement(s)
+		listenerT.ExitElseBlockStmt(s)
 	}
 }
 
-func (s *ElseBlockStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *ElseBlockStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitElseBlockStatement(s)
+		return t.VisitElseBlockStmt(s)
 
 	default:
 		return t.VisitChildren(s)
@@ -6688,38 +6960,38 @@ func (p *MlanParser) ElseBlock() (localctx IElseBlockContext) {
 	p.EnterRule(localctx, 36, MlanParserRULE_elseBlock)
 	var _la int
 
-	localctx = NewElseBlockStatementContext(p, localctx)
+	localctx = NewElseBlockStmtContext(p, localctx)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(286)
-		p.Match(MlanParserT__22)
+		p.SetState(307)
+		p.Match(MlanParserT__18)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
 	{
-		p.SetState(287)
+		p.SetState(308)
 		p.Match(MlanParserT__2)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(291)
+	p.SetState(312)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329676497380) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&316659348931044) != 0 {
 		{
-			p.SetState(288)
-			p.Statement()
+			p.SetState(309)
+			p.Stmt()
 		}
 
-		p.SetState(293)
+		p.SetState(314)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -6727,7 +6999,7 @@ func (p *MlanParser) ElseBlock() (localctx IElseBlockContext) {
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(294)
+		p.SetState(315)
 		p.Match(MlanParserT__3)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -6748,8 +7020,8 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IIfStatementContext is an interface to support dynamic dispatch.
-type IIfStatementContext interface {
+// IIfStmtContext is an interface to support dynamic dispatch.
+type IIfStmtContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
@@ -6761,43 +7033,43 @@ type IIfStatementContext interface {
 	ElifBlock(i int) IElifBlockContext
 	ElseBlock() IElseBlockContext
 
-	// IsIfStatementContext differentiates from other interfaces.
-	IsIfStatementContext()
+	// IsIfStmtContext differentiates from other interfaces.
+	IsIfStmtContext()
 }
 
-type IfStatementContext struct {
+type IfStmtContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyIfStatementContext() *IfStatementContext {
-	var p = new(IfStatementContext)
+func NewEmptyIfStmtContext() *IfStmtContext {
+	var p = new(IfStmtContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_ifStatement
+	p.RuleIndex = MlanParserRULE_ifStmt
 	return p
 }
 
-func InitEmptyIfStatementContext(p *IfStatementContext) {
+func InitEmptyIfStmtContext(p *IfStmtContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_ifStatement
+	p.RuleIndex = MlanParserRULE_ifStmt
 }
 
-func (*IfStatementContext) IsIfStatementContext() {}
+func (*IfStmtContext) IsIfStmtContext() {}
 
-func NewIfStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IfStatementContext {
-	var p = new(IfStatementContext)
+func NewIfStmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IfStmtContext {
+	var p = new(IfStmtContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_ifStatement
+	p.RuleIndex = MlanParserRULE_ifStmt
 
 	return p
 }
 
-func (s *IfStatementContext) GetParser() antlr.Parser { return s.parser }
+func (s *IfStmtContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *IfStatementContext) IfBlock() IIfBlockContext {
+func (s *IfStmtContext) IfBlock() IIfBlockContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
 		if _, ok := ctx.(IIfBlockContext); ok {
@@ -6813,7 +7085,7 @@ func (s *IfStatementContext) IfBlock() IIfBlockContext {
 	return t.(IIfBlockContext)
 }
 
-func (s *IfStatementContext) AllElifBlock() []IElifBlockContext {
+func (s *IfStmtContext) AllElifBlock() []IElifBlockContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
@@ -6834,7 +7106,7 @@ func (s *IfStatementContext) AllElifBlock() []IElifBlockContext {
 	return tst
 }
 
-func (s *IfStatementContext) ElifBlock(i int) IElifBlockContext {
+func (s *IfStmtContext) ElifBlock(i int) IElifBlockContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
@@ -6854,7 +7126,7 @@ func (s *IfStatementContext) ElifBlock(i int) IElifBlockContext {
 	return t.(IElifBlockContext)
 }
 
-func (s *IfStatementContext) ElseBlock() IElseBlockContext {
+func (s *IfStmtContext) ElseBlock() IElseBlockContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
 		if _, ok := ctx.(IElseBlockContext); ok {
@@ -6870,76 +7142,76 @@ func (s *IfStatementContext) ElseBlock() IElseBlockContext {
 	return t.(IElseBlockContext)
 }
 
-func (s *IfStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *IfStmtContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *IfStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *IfStmtContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *IfStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *IfStmtContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterIfStatement(s)
+		listenerT.EnterIfStmt(s)
 	}
 }
 
-func (s *IfStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *IfStmtContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitIfStatement(s)
+		listenerT.ExitIfStmt(s)
 	}
 }
 
-func (s *IfStatementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *IfStmtContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitIfStatement(s)
+		return t.VisitIfStmt(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) IfStatement() (localctx IIfStatementContext) {
-	localctx = NewIfStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 38, MlanParserRULE_ifStatement)
+func (p *MlanParser) IfStmt() (localctx IIfStmtContext) {
+	localctx = NewIfStmtContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 38, MlanParserRULE_ifStmt)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(296)
+		p.SetState(317)
 		p.IfBlock()
 	}
-	p.SetState(300)
+	p.SetState(321)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == MlanParserT__21 {
+	for _la == MlanParserT__17 {
 		{
-			p.SetState(297)
+			p.SetState(318)
 			p.ElifBlock()
 		}
 
-		p.SetState(302)
+		p.SetState(323)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
 		_la = p.GetTokenStream().LA(1)
 	}
-	p.SetState(304)
+	p.SetState(325)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	if _la == MlanParserT__22 {
+	if _la == MlanParserT__18 {
 		{
-			p.SetState(303)
+			p.SetState(324)
 			p.ElseBlock()
 		}
 
@@ -6958,8 +7230,8 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IFunctionParametersContext is an interface to support dynamic dispatch.
-type IFunctionParametersContext interface {
+// IFnParamsContext is an interface to support dynamic dispatch.
+type IFnParamsContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
@@ -6969,112 +7241,112 @@ type IFunctionParametersContext interface {
 	AllIdentifier() []antlr.TerminalNode
 	Identifier(i int) antlr.TerminalNode
 
-	// IsFunctionParametersContext differentiates from other interfaces.
-	IsFunctionParametersContext()
+	// IsFnParamsContext differentiates from other interfaces.
+	IsFnParamsContext()
 }
 
-type FunctionParametersContext struct {
+type FnParamsContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyFunctionParametersContext() *FunctionParametersContext {
-	var p = new(FunctionParametersContext)
+func NewEmptyFnParamsContext() *FnParamsContext {
+	var p = new(FnParamsContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_functionParameters
+	p.RuleIndex = MlanParserRULE_fnParams
 	return p
 }
 
-func InitEmptyFunctionParametersContext(p *FunctionParametersContext) {
+func InitEmptyFnParamsContext(p *FnParamsContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_functionParameters
+	p.RuleIndex = MlanParserRULE_fnParams
 }
 
-func (*FunctionParametersContext) IsFunctionParametersContext() {}
+func (*FnParamsContext) IsFnParamsContext() {}
 
-func NewFunctionParametersContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FunctionParametersContext {
-	var p = new(FunctionParametersContext)
+func NewFnParamsContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FnParamsContext {
+	var p = new(FnParamsContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_functionParameters
+	p.RuleIndex = MlanParserRULE_fnParams
 
 	return p
 }
 
-func (s *FunctionParametersContext) GetParser() antlr.Parser { return s.parser }
+func (s *FnParamsContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *FunctionParametersContext) AllIdentifier() []antlr.TerminalNode {
+func (s *FnParamsContext) AllIdentifier() []antlr.TerminalNode {
 	return s.GetTokens(MlanParserIdentifier)
 }
 
-func (s *FunctionParametersContext) Identifier(i int) antlr.TerminalNode {
+func (s *FnParamsContext) Identifier(i int) antlr.TerminalNode {
 	return s.GetToken(MlanParserIdentifier, i)
 }
 
-func (s *FunctionParametersContext) GetRuleContext() antlr.RuleContext {
+func (s *FnParamsContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *FunctionParametersContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *FnParamsContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *FunctionParametersContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *FnParamsContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterFunctionParameters(s)
+		listenerT.EnterFnParams(s)
 	}
 }
 
-func (s *FunctionParametersContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *FnParamsContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitFunctionParameters(s)
+		listenerT.ExitFnParams(s)
 	}
 }
 
-func (s *FunctionParametersContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *FnParamsContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitFunctionParameters(s)
+		return t.VisitFnParams(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) FunctionParameters() (localctx IFunctionParametersContext) {
-	localctx = NewFunctionParametersContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 40, MlanParserRULE_functionParameters)
+func (p *MlanParser) FnParams() (localctx IFnParamsContext) {
+	localctx = NewFnParamsContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 40, MlanParserRULE_fnParams)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(306)
+		p.SetState(327)
 		p.Match(MlanParserIdentifier)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(311)
+	p.SetState(332)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == MlanParserT__15 {
+	for _la == MlanParserT__10 {
 		{
-			p.SetState(307)
-			p.Match(MlanParserT__15)
+			p.SetState(328)
+			p.Match(MlanParserT__10)
 			if p.HasError() {
 				// Recognition error - abort rule
 				goto errorExit
 			}
 		}
 		{
-			p.SetState(308)
+			p.SetState(329)
 			p.Match(MlanParserIdentifier)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -7082,7 +7354,7 @@ func (p *MlanParser) FunctionParameters() (localctx IFunctionParametersContext) 
 			}
 		}
 
-		p.SetState(313)
+		p.SetState(334)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -7103,314 +7375,58 @@ errorExit:
 	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
-// IFunctionDefinitionContext is an interface to support dynamic dispatch.
-type IFunctionDefinitionContext interface {
-	antlr.ParserRuleContext
-
-	// GetParser returns the parser.
-	GetParser() antlr.Parser
-
-	// GetVarFunctionName returns the varFunctionName token.
-	GetVarFunctionName() antlr.Token
-
-	// SetVarFunctionName sets the varFunctionName token.
-	SetVarFunctionName(antlr.Token)
-
-	// Getter signatures
-	Identifier() antlr.TerminalNode
-	FunctionParameters() IFunctionParametersContext
-	AllStatement() []IStatementContext
-	Statement(i int) IStatementContext
-
-	// IsFunctionDefinitionContext differentiates from other interfaces.
-	IsFunctionDefinitionContext()
-}
-
-type FunctionDefinitionContext struct {
-	antlr.BaseParserRuleContext
-	parser          antlr.Parser
-	varFunctionName antlr.Token
-}
-
-func NewEmptyFunctionDefinitionContext() *FunctionDefinitionContext {
-	var p = new(FunctionDefinitionContext)
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_functionDefinition
-	return p
-}
-
-func InitEmptyFunctionDefinitionContext(p *FunctionDefinitionContext) {
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_functionDefinition
-}
-
-func (*FunctionDefinitionContext) IsFunctionDefinitionContext() {}
-
-func NewFunctionDefinitionContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FunctionDefinitionContext {
-	var p = new(FunctionDefinitionContext)
-
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
-
-	p.parser = parser
-	p.RuleIndex = MlanParserRULE_functionDefinition
-
-	return p
-}
-
-func (s *FunctionDefinitionContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *FunctionDefinitionContext) GetVarFunctionName() antlr.Token { return s.varFunctionName }
-
-func (s *FunctionDefinitionContext) SetVarFunctionName(v antlr.Token) { s.varFunctionName = v }
-
-func (s *FunctionDefinitionContext) Identifier() antlr.TerminalNode {
-	return s.GetToken(MlanParserIdentifier, 0)
-}
-
-func (s *FunctionDefinitionContext) FunctionParameters() IFunctionParametersContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IFunctionParametersContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IFunctionParametersContext)
-}
-
-func (s *FunctionDefinitionContext) AllStatement() []IStatementContext {
-	children := s.GetChildren()
-	len := 0
-	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
-			len++
-		}
-	}
-
-	tst := make([]IStatementContext, len)
-	i := 0
-	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
-			i++
-		}
-	}
-
-	return tst
-}
-
-func (s *FunctionDefinitionContext) Statement(i int) IStatementContext {
-	var t antlr.RuleContext
-	j := 0
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
-			if j == i {
-				t = ctx.(antlr.RuleContext)
-				break
-			}
-			j++
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IStatementContext)
-}
-
-func (s *FunctionDefinitionContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *FunctionDefinitionContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-func (s *FunctionDefinitionContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterFunctionDefinition(s)
-	}
-}
-
-func (s *FunctionDefinitionContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitFunctionDefinition(s)
-	}
-}
-
-func (s *FunctionDefinitionContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitFunctionDefinition(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-func (p *MlanParser) FunctionDefinition() (localctx IFunctionDefinitionContext) {
-	localctx = NewFunctionDefinitionContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 42, MlanParserRULE_functionDefinition)
-	var _la int
-
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(314)
-		p.Match(MlanParserT__23)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(315)
-
-		var _m = p.Match(MlanParserIdentifier)
-
-		localctx.(*FunctionDefinitionContext).varFunctionName = _m
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(316)
-		p.Match(MlanParserT__18)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(318)
-	p.GetErrorHandler().Sync(p)
-	if p.HasError() {
-		goto errorExit
-	}
-	_la = p.GetTokenStream().LA(1)
-
-	if _la == MlanParserIdentifier {
-		{
-			p.SetState(317)
-			p.FunctionParameters()
-		}
-
-	}
-	{
-		p.SetState(320)
-		p.Match(MlanParserT__19)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(321)
-		p.Match(MlanParserT__2)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(325)
-	p.GetErrorHandler().Sync(p)
-	if p.HasError() {
-		goto errorExit
-	}
-	_la = p.GetTokenStream().LA(1)
-
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329676497380) != 0 {
-		{
-			p.SetState(322)
-			p.Statement()
-		}
-
-		p.SetState(327)
-		p.GetErrorHandler().Sync(p)
-		if p.HasError() {
-			goto errorExit
-		}
-		_la = p.GetTokenStream().LA(1)
-	}
-	{
-		p.SetState(328)
-		p.Match(MlanParserT__3)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-
-errorExit:
-	if p.HasError() {
-		v := p.GetError()
-		localctx.SetException(v)
-		p.GetErrorHandler().ReportError(p, v)
-		p.GetErrorHandler().Recover(p, v)
-		p.SetError(nil)
-	}
-	p.ExitRule()
-	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
-}
-
-// IClosureDefinitionContext is an interface to support dynamic dispatch.
-type IClosureDefinitionContext interface {
+// IFnBodyContext is an interface to support dynamic dispatch.
+type IFnBodyContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	FunctionParameters() IFunctionParametersContext
-	AllStatement() []IStatementContext
-	Statement(i int) IStatementContext
+	FnParams() IFnParamsContext
+	AllStmt() []IStmtContext
+	Stmt(i int) IStmtContext
 
-	// IsClosureDefinitionContext differentiates from other interfaces.
-	IsClosureDefinitionContext()
+	// IsFnBodyContext differentiates from other interfaces.
+	IsFnBodyContext()
 }
 
-type ClosureDefinitionContext struct {
+type FnBodyContext struct {
 	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyClosureDefinitionContext() *ClosureDefinitionContext {
-	var p = new(ClosureDefinitionContext)
+func NewEmptyFnBodyContext() *FnBodyContext {
+	var p = new(FnBodyContext)
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_closureDefinition
+	p.RuleIndex = MlanParserRULE_fnBody
 	return p
 }
 
-func InitEmptyClosureDefinitionContext(p *ClosureDefinitionContext) {
+func InitEmptyFnBodyContext(p *FnBodyContext) {
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_closureDefinition
+	p.RuleIndex = MlanParserRULE_fnBody
 }
 
-func (*ClosureDefinitionContext) IsClosureDefinitionContext() {}
+func (*FnBodyContext) IsFnBodyContext() {}
 
-func NewClosureDefinitionContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ClosureDefinitionContext {
-	var p = new(ClosureDefinitionContext)
+func NewFnBodyContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FnBodyContext {
+	var p = new(FnBodyContext)
 
 	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = MlanParserRULE_closureDefinition
+	p.RuleIndex = MlanParserRULE_fnBody
 
 	return p
 }
 
-func (s *ClosureDefinitionContext) GetParser() antlr.Parser { return s.parser }
+func (s *FnBodyContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ClosureDefinitionContext) FunctionParameters() IFunctionParametersContext {
+func (s *FnBodyContext) FnParams() IFnParamsContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IFunctionParametersContext); ok {
+		if _, ok := ctx.(IFnParamsContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -7420,23 +7436,23 @@ func (s *ClosureDefinitionContext) FunctionParameters() IFunctionParametersConte
 		return nil
 	}
 
-	return t.(IFunctionParametersContext)
+	return t.(IFnParamsContext)
 }
 
-func (s *ClosureDefinitionContext) AllStatement() []IStatementContext {
+func (s *FnBodyContext) AllStmt() []IStmtContext {
 	children := s.GetChildren()
 	len := 0
 	for _, ctx := range children {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			len++
 		}
 	}
 
-	tst := make([]IStatementContext, len)
+	tst := make([]IStmtContext, len)
 	i := 0
 	for _, ctx := range children {
-		if t, ok := ctx.(IStatementContext); ok {
-			tst[i] = t.(IStatementContext)
+		if t, ok := ctx.(IStmtContext); ok {
+			tst[i] = t.(IStmtContext)
 			i++
 		}
 	}
@@ -7444,11 +7460,11 @@ func (s *ClosureDefinitionContext) AllStatement() []IStatementContext {
 	return tst
 }
 
-func (s *ClosureDefinitionContext) Statement(i int) IStatementContext {
+func (s *FnBodyContext) Stmt(i int) IStmtContext {
 	var t antlr.RuleContext
 	j := 0
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IStatementContext); ok {
+		if _, ok := ctx.(IStmtContext); ok {
 			if j == i {
 				t = ctx.(antlr.RuleContext)
 				break
@@ -7461,251 +7477,239 @@ func (s *ClosureDefinitionContext) Statement(i int) IStatementContext {
 		return nil
 	}
 
-	return t.(IStatementContext)
+	return t.(IStmtContext)
 }
 
-func (s *ClosureDefinitionContext) GetRuleContext() antlr.RuleContext {
+func (s *FnBodyContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *ClosureDefinitionContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *FnBodyContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *ClosureDefinitionContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *FnBodyContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterClosureDefinition(s)
+		listenerT.EnterFnBody(s)
 	}
 }
 
-func (s *ClosureDefinitionContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *FnBodyContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitClosureDefinition(s)
+		listenerT.ExitFnBody(s)
 	}
 }
 
-func (s *ClosureDefinitionContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *FnBodyContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case MlanVisitor:
-		return t.VisitClosureDefinition(s)
+		return t.VisitFnBody(s)
 
 	default:
 		return t.VisitChildren(s)
 	}
 }
 
-func (p *MlanParser) ClosureDefinition() (localctx IClosureDefinitionContext) {
-	localctx = NewClosureDefinitionContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 44, MlanParserRULE_closureDefinition)
+func (p *MlanParser) FnBody() (localctx IFnBodyContext) {
+	localctx = NewFnBodyContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 42, MlanParserRULE_fnBody)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(330)
-		p.Match(MlanParserT__23)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(331)
-		p.Match(MlanParserT__18)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(333)
-	p.GetErrorHandler().Sync(p)
-	if p.HasError() {
-		goto errorExit
-	}
-	_la = p.GetTokenStream().LA(1)
-
-	if _la == MlanParserIdentifier {
-		{
-			p.SetState(332)
-			p.FunctionParameters()
-		}
-
-	}
 	{
 		p.SetState(335)
-		p.Match(MlanParserT__19)
+		p.Match(MlanParserT__14)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	{
-		p.SetState(336)
-		p.Match(MlanParserT__2)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(340)
+	p.SetState(337)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&158329676497380) != 0 {
+	if _la == MlanParserIdentifier {
 		{
-			p.SetState(337)
-			p.Statement()
+			p.SetState(336)
+			p.FnParams()
 		}
 
-		p.SetState(342)
+	}
+	{
+		p.SetState(339)
+		p.Match(MlanParserT__15)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(340)
+		p.Match(MlanParserT__2)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	p.SetState(344)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&316659348931044) != 0 {
+		{
+			p.SetState(341)
+			p.Stmt()
+		}
+
+		p.SetState(346)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
 		_la = p.GetTokenStream().LA(1)
-	}
-	{
-		p.SetState(343)
-		p.Match(MlanParserT__3)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-
-errorExit:
-	if p.HasError() {
-		v := p.GetError()
-		localctx.SetException(v)
-		p.GetErrorHandler().ReportError(p, v)
-		p.GetErrorHandler().Recover(p, v)
-		p.SetError(nil)
-	}
-	p.ExitRule()
-	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
-}
-
-// IIncludeSubmoduleContext is an interface to support dynamic dispatch.
-type IIncludeSubmoduleContext interface {
-	antlr.ParserRuleContext
-
-	// GetParser returns the parser.
-	GetParser() antlr.Parser
-
-	// Getter signatures
-	Expression() IExpressionContext
-
-	// IsIncludeSubmoduleContext differentiates from other interfaces.
-	IsIncludeSubmoduleContext()
-}
-
-type IncludeSubmoduleContext struct {
-	antlr.BaseParserRuleContext
-	parser antlr.Parser
-}
-
-func NewEmptyIncludeSubmoduleContext() *IncludeSubmoduleContext {
-	var p = new(IncludeSubmoduleContext)
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_includeSubmodule
-	return p
-}
-
-func InitEmptyIncludeSubmoduleContext(p *IncludeSubmoduleContext) {
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
-	p.RuleIndex = MlanParserRULE_includeSubmodule
-}
-
-func (*IncludeSubmoduleContext) IsIncludeSubmoduleContext() {}
-
-func NewIncludeSubmoduleContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IncludeSubmoduleContext {
-	var p = new(IncludeSubmoduleContext)
-
-	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
-
-	p.parser = parser
-	p.RuleIndex = MlanParserRULE_includeSubmodule
-
-	return p
-}
-
-func (s *IncludeSubmoduleContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *IncludeSubmoduleContext) Expression() IExpressionContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
-}
-
-func (s *IncludeSubmoduleContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *IncludeSubmoduleContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-func (s *IncludeSubmoduleContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.EnterIncludeSubmodule(s)
-	}
-}
-
-func (s *IncludeSubmoduleContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(MlanListener); ok {
-		listenerT.ExitIncludeSubmodule(s)
-	}
-}
-
-func (s *IncludeSubmoduleContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
-	switch t := visitor.(type) {
-	case MlanVisitor:
-		return t.VisitIncludeSubmodule(s)
-
-	default:
-		return t.VisitChildren(s)
-	}
-}
-
-func (p *MlanParser) IncludeSubmodule() (localctx IIncludeSubmoduleContext) {
-	localctx = NewIncludeSubmoduleContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 46, MlanParserRULE_includeSubmodule)
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(345)
-		p.Match(MlanParserT__24)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(346)
-		p.Match(MlanParserT__18)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
 	}
 	{
 		p.SetState(347)
-		p.expression(0)
+		p.Match(MlanParserT__3)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IFnContext is an interface to support dynamic dispatch.
+type IFnContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// GetName returns the name token.
+	GetName() antlr.Token
+
+	// SetName sets the name token.
+	SetName(antlr.Token)
+
+	// Getter signatures
+	FnBody() IFnBodyContext
+	Identifier() antlr.TerminalNode
+
+	// IsFnContext differentiates from other interfaces.
+	IsFnContext()
+}
+
+type FnContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+	name   antlr.Token
+}
+
+func NewEmptyFnContext() *FnContext {
+	var p = new(FnContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_fn
+	return p
+}
+
+func InitEmptyFnContext(p *FnContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_fn
+}
+
+func (*FnContext) IsFnContext() {}
+
+func NewFnContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FnContext {
+	var p = new(FnContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = MlanParserRULE_fn
+
+	return p
+}
+
+func (s *FnContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *FnContext) GetName() antlr.Token { return s.name }
+
+func (s *FnContext) SetName(v antlr.Token) { s.name = v }
+
+func (s *FnContext) FnBody() IFnBodyContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFnBodyContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFnBodyContext)
+}
+
+func (s *FnContext) Identifier() antlr.TerminalNode {
+	return s.GetToken(MlanParserIdentifier, 0)
+}
+
+func (s *FnContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *FnContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *FnContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterFn(s)
+	}
+}
+
+func (s *FnContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitFn(s)
+	}
+}
+
+func (s *FnContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitFn(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *MlanParser) Fn() (localctx IFnContext) {
+	localctx = NewFnContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 44, MlanParserRULE_fn)
+	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(348)
+		p.SetState(349)
 		p.Match(MlanParserT__19)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -7713,7 +7717,282 @@ func (p *MlanParser) IncludeSubmodule() (localctx IIncludeSubmoduleContext) {
 		}
 	}
 	{
-		p.SetState(349)
+		p.SetState(350)
+
+		var _m = p.Match(MlanParserIdentifier)
+
+		localctx.(*FnContext).name = _m
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(351)
+		p.FnBody()
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IClosureContext is an interface to support dynamic dispatch.
+type IClosureContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	FnBody() IFnBodyContext
+
+	// IsClosureContext differentiates from other interfaces.
+	IsClosureContext()
+}
+
+type ClosureContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyClosureContext() *ClosureContext {
+	var p = new(ClosureContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_closure
+	return p
+}
+
+func InitEmptyClosureContext(p *ClosureContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_closure
+}
+
+func (*ClosureContext) IsClosureContext() {}
+
+func NewClosureContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ClosureContext {
+	var p = new(ClosureContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = MlanParserRULE_closure
+
+	return p
+}
+
+func (s *ClosureContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *ClosureContext) FnBody() IFnBodyContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFnBodyContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFnBodyContext)
+}
+
+func (s *ClosureContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ClosureContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *ClosureContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterClosure(s)
+	}
+}
+
+func (s *ClosureContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitClosure(s)
+	}
+}
+
+func (s *ClosureContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitClosure(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *MlanParser) Closure() (localctx IClosureContext) {
+	localctx = NewClosureContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 46, MlanParserRULE_closure)
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(353)
+		p.Match(MlanParserT__19)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(354)
+		p.FnBody()
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IIncludeContext is an interface to support dynamic dispatch.
+type IIncludeContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	Exp() IExpContext
+
+	// IsIncludeContext differentiates from other interfaces.
+	IsIncludeContext()
+}
+
+type IncludeContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyIncludeContext() *IncludeContext {
+	var p = new(IncludeContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_include
+	return p
+}
+
+func InitEmptyIncludeContext(p *IncludeContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = MlanParserRULE_include
+}
+
+func (*IncludeContext) IsIncludeContext() {}
+
+func NewIncludeContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IncludeContext {
+	var p = new(IncludeContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = MlanParserRULE_include
+
+	return p
+}
+
+func (s *IncludeContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *IncludeContext) Exp() IExpContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpContext)
+}
+
+func (s *IncludeContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *IncludeContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *IncludeContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.EnterInclude(s)
+	}
+}
+
+func (s *IncludeContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(MlanListener); ok {
+		listenerT.ExitInclude(s)
+	}
+}
+
+func (s *IncludeContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case MlanVisitor:
+		return t.VisitInclude(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *MlanParser) Include() (localctx IIncludeContext) {
+	localctx = NewIncludeContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 48, MlanParserRULE_include)
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(356)
+		p.Match(MlanParserT__20)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(357)
+		p.Match(MlanParserT__14)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(358)
+		p.exp(0)
+	}
+	{
+		p.SetState(359)
+		p.Match(MlanParserT__15)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(360)
 		p.Match(MlanParserT__0)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -7737,18 +8016,18 @@ errorExit:
 func (p *MlanParser) Sempred(localctx antlr.RuleContext, ruleIndex, predIndex int) bool {
 	switch ruleIndex {
 	case 15:
-		var t *ExpressionContext = nil
+		var t *ExpContext = nil
 		if localctx != nil {
-			t = localctx.(*ExpressionContext)
+			t = localctx.(*ExpContext)
 		}
-		return p.Expression_Sempred(t, predIndex)
+		return p.Exp_Sempred(t, predIndex)
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(ruleIndex))
 	}
 }
 
-func (p *MlanParser) Expression_Sempred(localctx antlr.RuleContext, predIndex int) bool {
+func (p *MlanParser) Exp_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 0:
 		return p.Precpred(p.GetParserRuleContext(), 11)

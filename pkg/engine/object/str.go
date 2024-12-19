@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/c2micro/mlan/pkg/parser"
 	"github.com/c2micro/mlan/pkg/engine/utils"
+	"github.com/c2micro/mlan/pkg/parser"
 )
 
 // Str тип с плавающей точкой
@@ -77,7 +77,7 @@ func (o *Str) BinaryOp(op int, rhs Object) (Object, error) {
 		return o.Lt(rhs)
 	case parser.MlanLexerAdd:
 		return o.Add(rhs)
-	case parser.MlanLexerAssignSum:
+	case parser.MlanLexerAssSum:
 		return o.Add(rhs)
 	case parser.MlanLexerMultiply:
 		return o.Mul(rhs)
@@ -206,7 +206,12 @@ func (o *Str) Mul(rs Object) (Object, error) {
 	case *Bool:
 		return NewStr(strings.Repeat(o.value, int(utils.BoolToInt(rs.(*Bool).value)))), nil
 	case *Int:
-		return NewStr(strings.Repeat(o.value, int(rs.(*Int).value))), nil
+		// in case of negative value
+		count := 0
+		if int(rs.(*Int).value) > 0 {
+			count = int(rs.(*Int).value)
+		}
+		return NewStr(strings.Repeat(o.value, count)), nil
 	}
 	return nil, ErrInvalidOp
 }

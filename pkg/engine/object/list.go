@@ -48,7 +48,7 @@ func (o *List) BinaryOp(op int, rhs Object) (Object, error) {
 		return o.NotEqual(rhs)
 	case parser.MlanLexerAdd:
 		return o.Add(rhs)
-	case parser.MlanLexerAssignSum:
+	case parser.MlanLexerAssSum:
 		return o.Add(rhs)
 	case parser.MlanLexerMultiply:
 		return o.Mul(rhs)
