@@ -53,6 +53,13 @@ MLAN offered with next data types, which implements object's interface:
 
 More info about [data types](docs/data_types.md) with examples.
 
+## References
+
+Here you can find some more information:
+- [Syntax](docs/syntax.md)
+- [Data types](docs/data_types.md)
+- [Builtin functions](docs/builtin_functions.md)
+
 ## What's next?
 
 - [ ] Improve quality of documentation

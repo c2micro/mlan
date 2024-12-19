@@ -4,8 +4,8 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/c2micro/mlan/pkg/parser"
 	"github.com/c2micro/mlan/pkg/engine/utils"
+	"github.com/c2micro/mlan/pkg/parser"
 )
 
 // Float тип с плавающей точкой
@@ -24,7 +24,7 @@ func (o *Float) TypeName() string {
 }
 
 func (o *Float) String() string {
-	return strconv.FormatFloat(o.value, 'g', -1, 64)
+	return strconv.FormatFloat(o.value, 'f', -1, 64)
 }
 
 func (o *Float) GetValue() any {
