@@ -84,11 +84,6 @@ func (v *BaseMlanVisitor) VisitIdentifierMethodInvoke(ctx *IdentifierMethodInvok
 func (v *BaseMlanVisitor) VisitExpCs(ctx *ExpCsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
-
-func (v *BaseMlanVisitor) VisitExpMethodInvoke(ctx *ExpMethodInvokeContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseMlanVisitor) VisitClosure(ctx *ClosureContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -198,6 +193,10 @@ func (v *Visitor) Visit(tree antlr.ParseTree) any {
 		return v.VisitAssignSum(val)
 	case *parser.AssignSubContext:
 		return v.VisitAssignSub(val)
+	case *parser.ExpMethodInvokeContext:
+		return v.VisitExpMethodInvoke(val)
+	case *parser.IdentifierMethodInvokeContext:
+		return v.VisitIdentifierMethodInvoke(val)
 	default:
 		v.SetError(fmt.Errorf("unknown context '%s' on visit", reflect.TypeOf(val).String()))
 		return types.Failure
@@ -307,6 +306,15 @@ func (v *Visitor) VisitStmt(ctx *parser.StmtContext) any {
 	// вызов кложура
 	if ctx.CsInvoke() != nil {
 		if res, ok := v.Visit(ctx.CsInvoke()).(types.VisitResultType); ok {
+			if !res {
+				return types.Failure
+			}
+		}
+	}
+
+	// вызов метода
+	if ctx.MethodInvoke() != nil {
+		if res, ok := v.Visit(ctx.MethodInvoke()).(types.VisitResultType); ok {
 			if !res {
 				return types.Failure
 			}
@@ -692,7 +700,11 @@ func (v *Visitor) VisitForStmt(ctx *parser.ForStmtContext) any {
 		// условие выхода из цикла
 		res, ok := v.Visit(ctx.Exp()).(object.Object)
 		if !ok {
-			v.SetError(fmt.Errorf("invalid expression for loop"))
+			if v.GetError() != nil {
+				v.SetError(fmt.Errorf("invalid expression for loop: %s", v.GetError()))
+			} else {
+				v.SetError(fmt.Errorf("invalid expression for loop"))
+			}
 			return types.Failure
 		}
 
@@ -1160,4 +1172,33 @@ func (v *Visitor) VisitAssignSub(ctx *parser.AssignSubContext) any {
 	scope.CurrentScope.Put(ctx.GetName().GetText(), res)
 
 	return types.Success
+}
+
+func (v *Visitor) VisitExpMethodInvoke(ctx *parser.ExpMethodInvokeContext) interface{} {
+	return v.Visit(ctx.MethodInvoke())
+}
+
+func (v *Visitor) VisitIdentifierMethodInvoke(ctx *parser.IdentifierMethodInvokeContext) interface{} {
+	// значение переменной из скоупа
+	val := scope.CurrentScope.Get(ctx.GetVar_().GetText(), true)
+	if val == nil {
+		v.SetError(fmt.Errorf("undefined variable '%s'", ctx.GetVar_().GetText()))
+		return types.Failure
+	}
+	// собираем аргументы для метода
+	var params []object.Object
+	for _, item := range ctx.AllExp() {
+		res, ok := v.Visit(item).(object.Object)
+		if !ok {
+			return types.Failure
+		}
+		params = append(params, res)
+	}
+	// вызываем метод
+	obj, err := val.MethodCall(ctx.GetName().GetText(), params...)
+	if err != nil {
+		v.err = err
+		return types.Failure
+	}
+	return obj
 }

@@ -5,19 +5,29 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/c2micro/mlan/pkg/parser"
 	"github.com/c2micro/mlan/pkg/engine/utils"
+	"github.com/c2micro/mlan/pkg/parser"
 )
 
-// List список, содержащий другие объекты
+// список, содержащий другие объекты
 type List struct {
 	Impl
 	Arithmetic
-	value []Object
+	value   []Object
+	methods map[string]*BuiltinFunc
 }
 
 func NewList(v []Object) *List {
-	return &List{value: v}
+	l := &List{
+		value: v,
+	}
+	l.fillListMethods()
+	return l
+}
+
+func (o *List) fillListMethods() {
+	o.methods = make(map[string]*BuiltinFunc)
+	o.methods["len"] = NewBuiltinFunc("len", o.ListLenMethod)
 }
 
 func (o *List) TypeName() string {
@@ -207,4 +217,11 @@ func (o *List) Mul(rs Object) (Object, error) {
 		return NewList(list), nil
 	}
 	return nil, ErrInvalidOp
+}
+
+func (o *List) ListLenMethod(args ...Object) (Object, error) {
+	if len(args) > 0 {
+		return nil, fmt.Errorf("expecting 0 arguments, got %d", len(args))
+	}
+	return NewInt(int64(len(o.value))), nil
 }

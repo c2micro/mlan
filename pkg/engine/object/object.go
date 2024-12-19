@@ -1,28 +1,30 @@
 package object
 
-// Object представляет собой элементарный объект для обработки
+// представляет собой элементарный объект для обработки
 type Object interface {
-	// TypeName возращение имени типа в виде строки
+	// возращение имени типа в виде строки
 	TypeName() string
-	// String возвращение строковое представление типа
+	// возвращение строковое представление типа
 	String() string
-	// BinaryOp выполнение бинарной операции
+	// выполнение бинарной операции
 	BinaryOp(int, Object) (Object, error)
-	// UnaryOp выполнение унарной операции
+	// выполнение унарной операции
 	UnaryOp(int) (Object, error)
-	// CanCall может ли данный объект быть вызван как функция
+	// может ли данный объект быть вызван как функция
 	CanCall() bool
-	// Call вызов объекта как функции с аргументами
+	// вызов объекта как функции с аргументами
 	Call(...Object) (Object, error)
-	// CanIterate может ли данный объект итерироваться
+	// call method of object
+	MethodCall(string, ...Object) (Object, error)
+	// может ли данный объект итерироваться
 	CanIterate() bool
-	// Iterate возвращает итератор для объекта
+	// возвращает итератор для объекта
 	Iterate() Iterator
-	// GetValue получение значения из объекта
+	// получение значения из объекта
 	GetValue() any
-	// IndexGet получение значения объекта по его индексу внутри
+	// получение значения объекта по его индексу внутри
 	IndexGet(Object) (Object, error)
-	// IndexSet установка значения объекта по индексу
+	// установка значения объекта по индексу
 	IndexSet(Object, Object) error
 }
 
@@ -71,4 +73,8 @@ func (o *Impl) IndexGet(Object) (Object, error) {
 
 func (o *Impl) IndexSet(Object, Object) error {
 	return ErrInvalidOp
+}
+
+func (o *Impl) MethodCall(string, ...Object) (Object, error) {
+	return nil, ErrUnknownMethod
 }
