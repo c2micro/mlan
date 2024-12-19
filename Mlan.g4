@@ -41,7 +41,6 @@ breakStmt
 
 assignment
     : name = Identifier '=' exp #assignRegular
-    | name = Identifier '=' closure #assignClosure
     | name = Identifier AssSum exp #assignSum
     | name = Identifier AssSub exp #assignSub
     | name = Identifier AssMul exp #assignMul

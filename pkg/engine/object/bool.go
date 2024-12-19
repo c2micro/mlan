@@ -11,7 +11,6 @@ import (
 // Bool булевый тип
 type Bool struct {
 	Impl
-	ArithmeticImpl
 	value bool
 }
 

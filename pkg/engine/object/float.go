@@ -11,7 +11,6 @@ import (
 // Float тип с плавающей точкой
 type Float struct {
 	Impl
-	Arithmetic
 	value float64
 }
 

@@ -68,12 +68,6 @@ func (s *BaseMlanListener) EnterAssignRegular(ctx *AssignRegularContext) {}
 // ExitAssignRegular is called when production assignRegular is exited.
 func (s *BaseMlanListener) ExitAssignRegular(ctx *AssignRegularContext) {}
 
-// EnterAssignClosure is called when production assignClosure is entered.
-func (s *BaseMlanListener) EnterAssignClosure(ctx *AssignClosureContext) {}
-
-// ExitAssignClosure is called when production assignClosure is exited.
-func (s *BaseMlanListener) ExitAssignClosure(ctx *AssignClosureContext) {}
-
 // EnterAssignSum is called when production assignSum is entered.
 func (s *BaseMlanListener) EnterAssignSum(ctx *AssignSumContext) {}
 

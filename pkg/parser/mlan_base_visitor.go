@@ -39,10 +39,6 @@ func (v *BaseMlanVisitor) VisitAssignRegular(ctx *AssignRegularContext) interfac
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseMlanVisitor) VisitAssignClosure(ctx *AssignClosureContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseMlanVisitor) VisitAssignSum(ctx *AssignSumContext) interface{} {
 	return v.VisitChildren(ctx)
 }

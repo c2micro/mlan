@@ -12,7 +12,6 @@ import (
 // Int целочисленный тип
 type Int struct {
 	Impl
-	Arithmetic
 	value int64
 }
 

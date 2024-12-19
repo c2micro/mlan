@@ -31,9 +31,6 @@ type MlanVisitor interface {
 	// Visit a parse tree produced by MlanParser#assignRegular.
 	VisitAssignRegular(ctx *AssignRegularContext) interface{}
 
-	// Visit a parse tree produced by MlanParser#assignClosure.
-	VisitAssignClosure(ctx *AssignClosureContext) interface{}
-
 	// Visit a parse tree produced by MlanParser#assignSum.
 	VisitAssignSum(ctx *AssignSumContext) interface{}
 

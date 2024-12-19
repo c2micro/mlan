@@ -45,10 +45,6 @@ func (v *Visitor) GetLine() int {
 }
 
 /*
-func (v *BaseMlanVisitor) VisitAssignClosure(ctx *AssignClosureContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseMlanVisitor) VisitAssignMul(ctx *AssignMulContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -65,28 +61,6 @@ func (v *BaseMlanVisitor) VisitAssignPow(ctx *AssignPowContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseMlanVisitor) VisitDictUnit(ctx *DictUnitContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseMlanVisitor) VisitDict(ctx *DictContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseMlanVisitor) VisitIdx(ctx *IdxContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseMlanVisitor) VisitIdentifierMethodInvoke(ctx *IdentifierMethodInvokeContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseMlanVisitor) VisitExpCs(ctx *ExpCsContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-func (v *BaseMlanVisitor) VisitClosure(ctx *ClosureContext) interface{} {
-	return v.VisitChildren(ctx)
-}
 */
 
 // loop entry-point for visitor
@@ -197,6 +171,14 @@ func (v *Visitor) Visit(tree antlr.ParseTree) any {
 		return v.VisitExpMethodInvoke(val)
 	case *parser.IdentifierMethodInvokeContext:
 		return v.VisitIdentifierMethodInvoke(val)
+	case *parser.ExpCsContext:
+		return v.VisitExpCs(val)
+	case *parser.ClosureContext:
+		return v.VisitClosure(val)
+	case *parser.IdxContext:
+		return v.VisitIdx(val)
+	case *parser.DictContext:
+		return v.VisitDict(val)
 	default:
 		v.SetError(fmt.Errorf("unknown context '%s' on visit", reflect.TypeOf(val).String()))
 		return types.Failure
@@ -451,9 +433,16 @@ func (v *Visitor) VisitList(ctx *parser.ListContext) any {
 }
 
 func (v *Visitor) VisitExpDict(ctx *parser.ExpDictContext) any {
-	dict := make(map[string]object.Object)
+	dict, ok := v.Visit(ctx.Dict()).(map[string]object.Object)
+	if !ok {
+		return types.Failure
+	}
+	return object.NewDict(dict)
+}
 
-	for _, item := range ctx.Dict().AllDictUnit() {
+func (v *Visitor) VisitDict(ctx *parser.DictContext) any {
+	dict := make(map[string]object.Object)
+	for _, item := range ctx.AllDictUnit() {
 		// получение ключа
 		key, ok := v.Visit(item.AllExp()[0]).(object.Object)
 		if !ok {
@@ -481,7 +470,7 @@ func (v *Visitor) VisitExpDict(ctx *parser.ExpDictContext) any {
 		}
 		dict[key.GetValue().(string)] = val
 	}
-	return object.NewDict(dict)
+	return dict
 }
 
 func (v *Visitor) VisitExpLogicalNot(ctx *parser.ExpLogicalNotContext) any {
@@ -980,7 +969,7 @@ func (v *Visitor) VisitExpIdx(ctx *parser.ExpIdxContext) any {
 	if !ok {
 		return types.Failure
 	}
-	idx, ok := v.Visit(ctx.Idx().Exp()).(object.Object)
+	idx, ok := v.Visit(ctx.Idx()).(object.Object)
 	if !ok {
 		return types.Failure
 	}
@@ -994,6 +983,10 @@ func (v *Visitor) VisitExpIdx(ctx *parser.ExpIdxContext) any {
 		return types.Failure
 	}
 	return res
+}
+
+func (v *Visitor) VisitIdx(ctx *parser.IdxContext) any {
+	return v.Visit(ctx.Exp())
 }
 
 func (v *Visitor) VisitAssignIdxRegular(ctx *parser.AssignIdxRegularContext) any {
@@ -1018,34 +1011,6 @@ func (v *Visitor) VisitAssignIdxRegular(ctx *parser.AssignIdxRegularContext) any
 		v.SetError(err)
 		return types.Failure
 	}
-	return types.Success
-}
-
-func (v *Visitor) VisitAssignClosure(ctx *parser.AssignClosureContext) any {
-	/*
-		// формируем объект функции
-		if ctx.Closure() == nil {
-			v.LineError(ctx.GetStart(), fmt.Errorf("no definition of closure"))
-			return types.Failure
-		}
-		// получаем аргументы
-		var args []string
-		if ctx.Closure().FunctionParameters() != nil {
-			for _, item := range ctx.ClosureDefinition().FunctionParameters().AllIdentifier() {
-				args = append(args, item.GetText())
-			}
-		}
-		// формируем объект функции
-		fn := object.NewNativeFunc(
-			ctx.GetVarScalarName().GetText(),
-			args,
-			len(args),
-			ctx.ClosureDefinition().AllStatement(),
-		)
-
-		// сохраняем в переменные
-		scope.CurrentScope.Put(ctx.GetVarScalarName().GetText(), fn)
-	*/
 	return types.Success
 }
 
@@ -1100,30 +1065,11 @@ func (v *Visitor) VisitInclude(ctx *parser.IncludeContext) any {
 }
 
 func (v *Visitor) VisitExpCs(ctx *parser.ExpCsContext) any {
-	/*
-		// формируем объект функции
-		if ctx.ClosureDefinition() == nil {
-			v.LineError(ctx.GetStart(), fmt.Errorf("no definition of closure"))
-			return types.Failure
-		}
-		// получаем аргументы
-		var args []string
-		if ctx.ClosureDefinition().FunctionParameters() != nil {
-			for _, item := range ctx.ClosureDefinition().FunctionParameters().AllIdentifier() {
-				args = append(args, item.GetText())
-			}
-		}
-		// формируем объект функции
-		fn := object.NewNativeFunc(
-			"unknown",
-			args,
-			len(args),
-			ctx.ClosureDefinition().AllStatement(),
-		)
+	return v.Visit(ctx.Closure())
+}
 
-		return fn
-	*/
-	return nil
+func (v *Visitor) VisitClosure(ctx *parser.ClosureContext) interface{} {
+	return v.Visit(ctx.FnBody())
 }
 
 func (v *Visitor) VisitAssignSum(ctx *parser.AssignSumContext) any {

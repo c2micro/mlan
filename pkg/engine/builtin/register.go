@@ -65,8 +65,6 @@ func Register() {
 	storage.BuiltinFunctions["str_chr_at"] = object.NewBuiltinFunc("str_chr_at", StrChrAt)
 	// list_pop_index: убираем из списка значение по индексу
 	storage.BuiltinFunctions["list_pop_index"] = object.NewBuiltinFunc("list_pop_index", ListPopIndex)
-	// dict_pop_key: убираем из списка значение по ключу
-	storage.BuiltinFunctions["dict_pop_key"] = object.NewBuiltinFunc("dict_pop_key", DictPopKey)
 	// base64_enc: кодирование строки в base64
 	storage.BuiltinFunctions["base64_enc"] = object.NewBuiltinFunc("base64_enc", Base64Enc)
 	// base64_dec: декодирование строки из base64
@@ -414,23 +412,6 @@ func ListPopIndex(args ...object.Object) (object.Object, error) {
 	l := list.GetValue().([]object.Object)
 	i := idx.GetValue().(int64)
 	return object.NewList(append(l[:i], l[i+1:]...)), nil
-}
-
-func DictPopKey(args ...object.Object) (object.Object, error) {
-	if len(args) != 2 {
-		return nil, fmt.Errorf("expecting 2 arguments, got %d", len(args))
-	}
-	dict, ok := args[0].(*object.Dict)
-	if !ok {
-		return nil, fmt.Errorf("expecting dict as 1st argument, got '%s'", args[0].TypeName())
-	}
-	key, ok := args[1].(*object.Str)
-	if !ok {
-		return nil, fmt.Errorf("expecting str as 2nd argument, got '%s'", args[1].TypeName())
-	}
-	d := dict.GetValue().(map[string]object.Object)
-	delete(d, key.GetValue().(string))
-	return object.NewDict(d), nil
 }
 
 func Base64Enc(args ...object.Object) (object.Object, error) {

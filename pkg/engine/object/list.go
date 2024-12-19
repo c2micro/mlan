@@ -2,7 +2,6 @@ package object
 
 import (
 	"fmt"
-	"reflect"
 	"strings"
 
 	"github.com/c2micro/mlan/pkg/engine/utils"
@@ -12,7 +11,6 @@ import (
 // список, содержащий другие объекты
 type List struct {
 	Impl
-	Arithmetic
 	value   []Object
 	methods map[string]*BuiltinFunc
 }
@@ -21,13 +19,15 @@ func NewList(v []Object) *List {
 	l := &List{
 		value: v,
 	}
-	l.fillListMethods()
+	l.fillMethods()
 	return l
 }
 
-func (o *List) fillListMethods() {
+func (o *List) fillMethods() {
 	o.methods = make(map[string]*BuiltinFunc)
-	o.methods["len"] = NewBuiltinFunc("len", o.ListLenMethod)
+	o.methods["len"] = NewBuiltinFunc("len", o.MethodLen)
+	o.methods["reverse"] = NewBuiltinFunc("reverse", o.MethodReverse)
+	o.methods["pop"] = NewBuiltinFunc("pop", o.MethodPop)
 }
 
 func (o *List) TypeName() string {
@@ -143,7 +143,19 @@ func (o *List) Equal(rs Object) (Object, error) {
 	case *Int:
 		return NewBool(false), nil
 	case *List:
-		return NewBool(reflect.DeepEqual(o.value, rs.(*List).value)), nil
+		if len(o.value) != len(rs.(*List).value) {
+			return NewBool(false), nil
+		}
+		for i, v := range o.value {
+			val, err := v.Equal(rs.(*List).value[i])
+			if err != nil {
+				return nil, err
+			}
+			if !val.GetValue().(bool) {
+				return NewBool(false), nil
+			}
+		}
+		return NewBool(true), nil
 	case *Null:
 		return NewBool(false), nil
 	case *Str:
@@ -163,7 +175,19 @@ func (o *List) NotEqual(rs Object) (Object, error) {
 	case *Int:
 		return NewBool(true), nil
 	case *List:
-		return NewBool(!reflect.DeepEqual(o.value, rs.(*List).value)), nil
+		if len(o.value) != len(rs.(*List).value) {
+			return NewBool(true), nil
+		}
+		for i, v := range o.value {
+			val, err := v.Equal(rs.(*List).value[i])
+			if err != nil {
+				return nil, err
+			}
+			if !val.GetValue().(bool) {
+				return NewBool(true), nil
+			}
+		}
+		return NewBool(false), nil
 	case *Null:
 		return NewBool(true), nil
 	case *Str:
@@ -219,9 +243,44 @@ func (o *List) Mul(rs Object) (Object, error) {
 	return nil, ErrInvalidOp
 }
 
-func (o *List) ListLenMethod(args ...Object) (Object, error) {
+func (o *List) MethodCall(name string, args ...Object) (Object, error) {
+	m := o.methods[name]
+	if m == nil {
+		return nil, ErrUnknownMethod
+	}
+	return m.Call(args...)
+}
+
+func (o *List) MethodLen(args ...Object) (Object, error) {
 	if len(args) > 0 {
 		return nil, fmt.Errorf("expecting 0 arguments, got %d", len(args))
 	}
 	return NewInt(int64(len(o.value))), nil
+}
+
+func (o *List) MethodReverse(args ...Object) (Object, error) {
+	if len(args) > 0 {
+		return nil, fmt.Errorf("expecting 0 arguments, got %d", len(args))
+	}
+	var temp []Object
+	for i := len(o.value) - 1; i >= 0; i-- {
+		temp = append(temp, o.value[i])
+	}
+	o.value = temp
+	return NewNull(), nil
+}
+
+func (o *List) MethodPop(args ...Object) (Object, error) {
+	if len(args) != 1 {
+		return nil, fmt.Errorf("expecting 1 arguments, got %d", len(args))
+	}
+	idx, ok := args[0].(*Int)
+	if !ok {
+		return nil, fmt.Errorf("expecting int as 1st argument, got '%s'", args[1].TypeName())
+	}
+	if idx.GetValue().(int64) < 0 || int(idx.GetValue().(int64)) >= len(o.value) {
+		return nil, ErrIndexOutOfRange
+	}
+	o.value = append(o.value[:idx.GetValue().(int64)], o.value[idx.GetValue().(int64)+1:]...)
+	return NewNull(), nil
 }

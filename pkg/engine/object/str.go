@@ -3,6 +3,7 @@ package object
 import (
 	"fmt"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/c2micro/mlan/pkg/engine/utils"
 	"github.com/c2micro/mlan/pkg/parser"
@@ -11,12 +12,22 @@ import (
 // Str тип с плавающей точкой
 type Str struct {
 	Impl
-	Arithmetic
-	value string
+	value   string
+	methods map[string]*BuiltinFunc
 }
 
 func NewStr(v string) *Str {
-	return &Str{value: v}
+	s := &Str{
+		value: v,
+	}
+	s.fillMethods()
+	return s
+}
+
+func (o *Str) fillMethods() {
+	o.methods = make(map[string]*BuiltinFunc)
+	o.methods["len"] = NewBuiltinFunc("len", o.MethodLen)
+	o.methods["reverse"] = NewBuiltinFunc("reverse", o.MethodReverse)
 }
 
 func (o *Str) TypeName() string {
@@ -32,12 +43,25 @@ func (o *Str) IndexGet(rs Object) (Object, error) {
 	if !ok {
 		return nil, ErrInvalidIndexType
 	}
-	if idx.value < 0 || idx.value >= int64(len(o.value)) {
+	if idx.value < 0 || idx.value >= int64(utf8.RuneCountInString(o.value)) {
 		return nil, ErrIndexOutOfRange
+	}
+	// ширина руны (в количестве байт)
+	w := 0
+	// количество рун
+	c := 0
+	for i := 0; i < len(o.value); i += w {
+		var r rune
+		r, w = utf8.DecodeRuneInString(o.value[i:])
+		if c == int(idx.value) {
+			return NewStr(string(r)), nil
+		}
+		c++
 	}
 	return NewStr(string(o.value[idx.value])), nil
 }
 
+// TODO
 func (o *Str) IndexSet(idx Object, rs Object) error {
 	idxInt, ok := idx.(*Int)
 	if !ok {
@@ -214,4 +238,34 @@ func (o *Str) Mul(rs Object) (Object, error) {
 		return NewStr(strings.Repeat(o.value, count)), nil
 	}
 	return nil, ErrInvalidOp
+}
+
+func (o *Str) MethodCall(name string, args ...Object) (Object, error) {
+	m := o.methods[name]
+	if m == nil {
+		return nil, ErrUnknownMethod
+	}
+	return m.Call(args...)
+}
+
+func (o *Str) MethodLen(args ...Object) (Object, error) {
+	if len(args) > 0 {
+		return nil, fmt.Errorf("expecting 0 arguments, got %d", len(args))
+	}
+	return NewInt(int64(utf8.RuneCountInString(o.value))), nil
+}
+
+func (o *Str) MethodReverse(args ...Object) (Object, error) {
+	if len(args) > 0 {
+		return nil, fmt.Errorf("expecting 0 arguments, got %d", len(args))
+	}
+	size := len(o.value)
+	buf := make([]byte, size)
+	for start := 0; start < size; {
+		r, n := utf8.DecodeRuneInString(o.value[start:])
+		start += n
+		utf8.EncodeRune(buf[size-start:], r)
+	}
+	o.value = string(buf)
+	return NewNull(), nil
 }

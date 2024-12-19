@@ -31,9 +31,6 @@ type MlanListener interface {
 	// EnterAssignRegular is called when entering the assignRegular production.
 	EnterAssignRegular(c *AssignRegularContext)
 
-	// EnterAssignClosure is called when entering the assignClosure production.
-	EnterAssignClosure(c *AssignClosureContext)
-
 	// EnterAssignSum is called when entering the assignSum production.
 	EnterAssignSum(c *AssignSumContext)
 
@@ -201,9 +198,6 @@ type MlanListener interface {
 
 	// ExitAssignRegular is called when exiting the assignRegular production.
 	ExitAssignRegular(c *AssignRegularContext)
-
-	// ExitAssignClosure is called when exiting the assignClosure production.
-	ExitAssignClosure(c *AssignClosureContext)
 
 	// ExitAssignSum is called when exiting the assignSum production.
 	ExitAssignSum(c *AssignSumContext)
