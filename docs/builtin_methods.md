@@ -96,3 +96,21 @@ b.reverse();
 println(a); // тевирп
 println(b); // olleh
 ```
+
+## str.split
+
+Signature: `str.split(arg0)`
+
+Arguments:
+- `arg0`: `str`
+
+Split `str` by delimeter (underhood will split by rune). Result will be `list`.
+```
+a = "hello world";
+b = a.split(" ");
+println(b); // [hello, world]
+
+a = "привет мир";
+b = a.split("и");
+println(b); // [пр, вет м, р]
+```
