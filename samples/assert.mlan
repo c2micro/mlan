@@ -283,6 +283,14 @@ for i = 0; i < ascii_str.len(); i += 1 {
   assert(ascii_str[i] == chr(ascii_codes[i]));
 }
 
+// split
+abc = "a b c d";
+x = abc.split(" ");
+assert(x[1] == "b");
+abc = "привет мир";
+x = abc.split("и");
+assert(x == ["пр", "вет м", "р"]);
+
 // utf string
 utf_str = "привет";
 utf_codes = [1087,1088,1080,1074,1077,1090];
