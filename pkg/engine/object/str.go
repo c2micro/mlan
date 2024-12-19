@@ -28,6 +28,7 @@ func (o *Str) fillMethods() {
 	o.methods = make(map[string]*BuiltinFunc)
 	o.methods["len"] = NewBuiltinFunc("len", o.MethodLen)
 	o.methods["reverse"] = NewBuiltinFunc("reverse", o.MethodReverse)
+	o.methods["split"] = NewBuiltinFunc("split", o.MethodSplit)
 }
 
 func (o *Str) TypeName() string {
@@ -282,4 +283,20 @@ func (o *Str) MethodReverse(args ...Object) (Object, error) {
 	}
 	o.value = string(buf)
 	return NewNull(), nil
+}
+
+func (o *Str) MethodSplit(args ...Object) (Object, error) {
+	if len(args) != 1 {
+		return nil, fmt.Errorf("expecting 1 arguments, got %d", len(args))
+	}
+	key, ok := args[0].(*Str)
+	if !ok {
+		return nil, fmt.Errorf("expecting str as 1st argument, got '%s'", args[1].TypeName())
+	}
+	temp := strings.Split(o.value, key.value)
+	result := make([]Object, 0)
+	for _, v := range temp {
+		result = append(result, NewStr(v))
+	}
+	return NewList(result), nil
 }
