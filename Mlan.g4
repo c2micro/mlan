@@ -2,139 +2,144 @@ grammar Mlan;
 
 WS : [ \t\r\n] -> channel(HIDDEN) ;
 
-program
-    : block EOF
+prog
+    : (stmt | fn | include)* EOF
     ;
 
-block
-    : (statement | functionDefinition | includeSubmodule)*
-    ;
-
-statement
+stmt
     : assignment ';'
-    | closureInvoke ';'
-    | functionInvoke ';'
-    | whileStatement
-    | forStatement
-    | ifStatement
-    | breakStatement ';'
-    | continueStatement ';'
-    | returnStatement ';'
+    | methodInvoke ';'
+    | csInvoke ';'
+    | fnInvoke ';'
+    | whileStmt
+    | forStmt
+    | ifStmt
+    | breakStmt ';'
+    | continueStmt ';'
+    | returnStmt ';'
     ;
 
-whileStatement
-    : 'while' expression '{' statement* '}'
+whileStmt
+    : 'while' exp '{' stmt* '}'
     ;
 
-forStatement
-    : 'for' assignment ';' expression ';' assignment '{' statement* '}'
+forStmt
+    : 'for' assignment ';' exp ';' assignment '{' stmt* '}'
     ;
 
-returnStatement
-    : 'return' expression?
+returnStmt
+    : 'return' exp?
     ;
 
-continueStatement
+continueStmt
     : 'continue'
     ;
 
-breakStatement
+breakStmt
     : 'break'
     ;
 
 assignment
-    : varScalarName = Identifier '=' expression #assignmentRegular
-    | varScalarName = Identifier '=' closureDefinition #assignmentClosure
-    | varScalarName = Identifier AssignSum expression #assignmentSum
-    | varScalarName = Identifier '-=' expression #assignmentSub
-    | varScalarName = Identifier '*=' expression #assignmentMul
-    | varScalarName = Identifier '/=' expression #assignmentDiv
-    | varScalarName = Identifier '%=' expression #assignmentMod
-    | varScalarName = Identifier '**=' expression #assignmentPow
-    | varScalarName = Identifier index '=' expression #assignmentIndexRegular
+    : name = Identifier '=' exp #assignRegular
+    | name = Identifier AssSum exp #assignSum
+    | name = Identifier AssSub exp #assignSub
+    | name = Identifier AssMul exp #assignMul
+    | name = Identifier AssDiv exp #assignDiv
+    | name = Identifier AssMod exp #assignMod
+    | name = Identifier AssPow exp #assignPow
+    | name = Identifier idx '=' exp #assignIdxRegular
     ;
 
 list
-    : '[' (expression (',' expression)*)? ']'
+    : '[' (exp (',' exp)*)? ']'
     ;
 
 dictUnit
-    : expression ':' expression
+    : exp ':' exp
     ;
 
 dict
     : '{' (dictUnit (',' dictUnit)*)? '}'
     ;
 
-index
-    : '[' expression ']'
+idx
+    : '[' exp ']'
     ;
 
-functionInvoke
-    : varFunctionName = Identifier '(' (expression (',' expression)*)? ')' #identifierFunctionInvoke
+methodInvoke
+    : var = Identifier '.' name = Identifier '(' (exp (',' exp)*)? ')' #identifierMethodInvoke
     ;
 
-closureInvoke
-    : Closure varClosureName = Identifier '(' (expression (',' expression)*)? ')' #identifierClosureInvoke
+fnInvoke
+    : name = Identifier '(' (exp (',' exp)*)? ')' #identifierFnInvoke
     ;
 
-expression
-    : Integer #expressionInteger
-    | IntegerHex #expressionIntegerHex
-    | Null #expressionNull
-    | Bool #expressionBool
-    | Identifier #expressionIdentifier
-    | Float #expressionFloat
-    | String #expressionString
-    | closureDefinition #expressionClosure
-    | functionInvoke #expressionFunctionInvoke
-    | closureInvoke #expressionClosureInvoke
-    | expression index #expressionIndex
-    | Subtract expression #expressionUnaryNegation
-    | Not expression #expressionLogicalNot
-    | <assoc=right> expression Pow expression #expressionPow
-    | expression op=(Multiply|Division|Modulus) expression #expressionMulDivMod
-    | expression op=(Add|Subtract) expression #expressionSumSub
-    | expression op=(GtEq|LtEq|Gt|Lt) expression #expressionComparison
-    | expression op=(Eq|Neq) expression #expressionEqual
-    | expression Xor expression #expressionXor
-    | expression And expression #expressionLogicalAnd
-    | expression Or expression #expressionLogicalOr
-    | '(' expression ')' #expressionParentheses
-    | list #expressionList
-    | dict #expressionDict
+csInvoke
+    : Closure name = Identifier '(' (exp (',' exp)*)? ')' #identifierCsInvoke
+    ;
+
+exp
+    : Integer #expInteger
+    | IntegerHex #expIntegerHex
+    | Null #expNull
+    | Bool #expBool
+    | Identifier #expIdentifier
+    | Float #expFloat
+    | String #expString
+    | closure #expCs
+    | methodInvoke #expMethodInvoke
+    | fnInvoke #expFnInvoke
+    | csInvoke #expCsInvoke
+    | exp idx #expIdx
+    | Subtract exp #expNeg
+    | Not exp #expLogicalNot
+    | <assoc=right> exp Pow exp #expPow
+    | exp op=(Multiply|Division|Modulus) exp #expMulDivMod
+    | exp op=(Add|Subtract) exp #expSumSub
+    | exp op=(GtEq|LtEq|Gt|Lt) exp #expComparison
+    | exp op=(Eq|Neq) exp #expEqual
+    | exp Xor exp #expXor
+    | exp And exp #expLogicalAnd
+    | exp Or exp #expLogicalOr
+    | '(' exp ')' #expParentheses
+    | list #expList
+    | dict #expDict
     ;
 
 ifBlock
-    : 'if' expression '{' statement* '}' #ifBlockStatement
+    : 'if' exp '{' stmt* '}' #ifBlockStmt
     ;
 
 elifBlock
-    : 'elif' expression '{' statement* '}' #elifBlockStatement
+    : 'elif' exp '{' stmt* '}' #elifBlockStmt
     ;
 
 elseBlock
-    : 'else' '{' statement* '}' #elseBlockStatement
+    : 'else' '{' stmt* '}' #elseBlockStmt
     ;
 
-ifStatement
+ifStmt
     : ifBlock elifBlock* elseBlock?
     ;
 
-functionParameters
+fnParams
     : Identifier (',' Identifier)*
     ;
 
-functionDefinition
-    : 'fn' varFunctionName = Identifier '(' functionParameters? ')' '{' statement* '}'
+fnBody
+    : '(' fnParams? ')' '{' stmt* '}'
     ;
 
-closureDefinition
-    : 'fn' '(' functionParameters? ')' '{' statement* '}'
+fn
+    : 'fn' name = Identifier fnBody
     ;
 
-includeSubmodule
-    : 'include' '(' expression ')' ';'
+closure
+    : 'fn' fnBody
+    ;
+
+include
+    : 'include' '(' exp ')' ';'
     ;
 
 Eq : '==' ;
@@ -143,8 +148,13 @@ Or : '||' ;
 And : '&&' ;
 Pow : '**' ;
 GtEq : '>=' ;
-LtEq : '<= ';
-AssignSum : '+=' ;
+LtEq : '<=';
+AssSum : '+=';
+AssSub : '-=';
+AssMul : '*=';
+AssDiv : '/=';
+AssMod : '%=';
+AssPow : '**=';
 Gt : '>' ;
 Lt : '<' ;
 Multiply : '*' ;
@@ -183,6 +193,7 @@ Float
 
 String
     : ["] ( ~["\r\n\\] | '\\' ~[\r\n] )* ["]
+    | ['] ( ~['\r\n\\] | '\\' ~[\r\n] )* [']
     ;
 
 Comment

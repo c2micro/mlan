@@ -48,15 +48,23 @@ MLAN offered with next data types, which implements object's interface:
 - `int` (int64 in Golang)
 - `list` (list of objects)
 - `null` (just empty object)
-- `str` (string in Golang)
+- `str` (string in Golang, but operates using runes)
 - `closures` (special type of object, that can be called inline)
 
 More info about [data types](docs/data_types.md) with examples.
 
+## References
+
+Here you can find some more information:
+- [Syntax](docs/syntax.md)
+- [Data types](docs/data_types.md)
+- [Builtin functions](docs/builtin_functions.md)
+- [Builtin methods](docs/builtin_methods.md)
+
 ## What's next?
 
 - [ ] Improve quality of documentation
-- [ ] Builtin methods for data types
+- [x] Builtin methods for data types
 - [ ] Builtin functions to handle regexp
 - [ ] Builtin functions to handle network interaction
 - [ ] Extend builtin functions to handle FS interaction

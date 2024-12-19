@@ -97,6 +97,7 @@ assert("AbCd" <= "AbCd");
 assert("Привет" > "Привес");
 assert("м" + "и" + "р" == "мир");
 assert("abc" + "DEF" >= "abcDEE");
+assert("a" * -1 == "");
 assert("world" * 3 == "worldworldworld");
 assert("abc" * false == "");
 
@@ -170,8 +171,10 @@ assert(combiner(2) == 8);
 assert(new_list() == [1,2,3,4,5,6]);
 assert(new_list()[2] == 3);
 assert(new_dict()["key1"] == "val1");
-assert(len(new_list()) == 6);
-assert(len(new_dict()) == 2);
+x = new_list();
+assert(x.len() == 6);
+y = new_dict();
+assert(y.len() == 2);
 
 // nested dict in list
 list_double = [[1,{"a":"b"},3],[4,5,6]];
@@ -179,8 +182,8 @@ assert(list_double[0][1]["a"] == "b");
 
 // bubble sort func
 fn bubble_sort(l) {
-  for i = 0; i < len(l) - 1; i += 1 {
-    for j = 0; j < len(l) - 1 - i; j += 1 {
+  for i = 0; i < l.len() - 1; i += 1 {
+    for j = 0; j < l.len() - 1 - i; j += 1 {
       if l[j] > l[j+1] {
         temp = l[j];
         l[j] = l[j+1];
@@ -243,31 +246,39 @@ clos_test(
 
 // reverse list
 list04 = [2,1,3,1,4,5];
-assert(reverse(list04) == [5,4,1,3,1,2]);
+list04.reverse();
+assert(list04 == [5,4,1,3,1,2]);
 
 // bytes (on strings)
-a = "\x35\x36\x37";
-b = "\x45\x46\x47";
+a = "\u0035\u0036\u0037";
+b = "\105\106\107";
 assert(a + b == "567EFG");
 
 // xor string
 str001 = "hello world";
 str002 = "";
-for i = 0; i < len(str001); i += 1 {
+for i = 0; i < str001.len(); i += 1 {
   str002 += chr(ord(str001[i]) ^ 0x30);
 }
-assert(str002 == "XU\\\\_\x10G_B\\T");
+assert(str002 == "XU\\\\_\u0010G_B\\T");
 
 // string index assignment
 str003 = "good";
 str003[3] = "t";
-str003[0] = "\x00";
+str003[0] = "\u0000";
+assert("\u0000oot" == str003);
 assert("\x00oot" == str003);
+
+// utf string assignment
+str003 = "пр\x00вет";
+assert(str003[2] == "\x00");
+str003[2] = "и";
+assert(str003 == "привет");
 
 // ascii string
 ascii_str = "abcdef";
 ascii_codes = [97, 98, 99, 100, 101, 102];
-for i = 0; i < len(ascii_str); i += 1 {
+for i = 0; i < ascii_str.len(); i += 1 {
   assert(ord(ascii_str[i]) == ascii_codes[i]);
   assert(ascii_str[i] == chr(ascii_codes[i]));
 }
@@ -275,21 +286,21 @@ for i = 0; i < len(ascii_str); i += 1 {
 // utf string
 utf_str = "привет";
 utf_codes = [1087,1088,1080,1074,1077,1090];
-for i = 0; i < str_len(utf_str); i += 1 {
-  assert(ord(str_chr_at(utf_str, i)) == utf_codes[i]);
-  assert(str_chr_at(utf_str, i) == chr(utf_codes[i]));
+for i = 0; i < utf_str.len(); i += 1 {
+  assert(ord(utf_str[i]) == utf_codes[i]);
+  assert(utf_str[i] == chr(utf_codes[i]));
 }
 
 // pop values from list
 list005 = [1,2,3,4,5,6];
-list005 = list_pop_index(list005, 0);
-list005 = list_pop_index(list005, len(list005) - 1);
+list005.pop(0);
+list005.pop(list005.len() - 1);
 assert(list005 == [2,3,4,5]);
 
 // pop value from dict
 dict002 = {"a":"b", "c":"d"};
-dict002 = dict_pop_key(dict002, "a");
-dict002 = dict_pop_key(dict002, "b");
+dict002.pop("a");
+dict002.pop("b");
 assert(dict002 == {"c":"d"});
 
 // includes
