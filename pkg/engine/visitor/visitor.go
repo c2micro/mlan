@@ -713,12 +713,12 @@ func (v *Visitor) VisitForStmt(ctx *parser.ForStmtContext) any {
 		for _, item := range ctx.AllStmt() {
 			// обработка break
 			if scope.CurrentScope.IsBreak() {
-				scope.CurrentScope.SetLoopBreak(false)
+				scope.CurrentScope.UnsetLoopBreak()
 				return types.Success
 			}
 			// обработка continue
 			if scope.CurrentScope.IsContinue() {
-				scope.CurrentScope.SetLoopContinue(false)
+				scope.CurrentScope.UnsetLoopContinue()
 				break
 			}
 			if ok := v.Visit(item).(types.VisitResultType); !ok {
@@ -741,7 +741,7 @@ func (v *Visitor) VisitForStmt(ctx *parser.ForStmtContext) any {
 
 func (v *Visitor) VisitBreakStmt(ctx *parser.BreakStmtContext) any {
 	if scope.CurrentScope.IsInLoop() {
-		scope.CurrentScope.SetLoopBreak(true)
+		scope.CurrentScope.SetLoopBreak()
 		return types.Success
 	}
 	v.SetError(fmt.Errorf("break outside of loop"))
@@ -750,7 +750,7 @@ func (v *Visitor) VisitBreakStmt(ctx *parser.BreakStmtContext) any {
 
 func (v *Visitor) VisitContinueStmt(ctx *parser.ContinueStmtContext) any {
 	if scope.CurrentScope.IsInLoop() {
-		scope.CurrentScope.SetLoopContinue(true)
+		scope.CurrentScope.SetLoopContinue()
 		return types.Success
 	}
 	v.SetError(fmt.Errorf("continue outside of loop"))
@@ -778,18 +778,18 @@ func (v *Visitor) VisitWhileStmt(ctx *parser.WhileStmtContext) any {
 		}
 
 		for _, item := range ctx.AllStmt() {
+			if ok := v.Visit(item).(types.VisitResultType); !ok {
+				return types.Failure
+			}
 			// обработка break
 			if scope.CurrentScope.IsBreak() {
-				scope.CurrentScope.SetLoopBreak(false)
+				scope.CurrentScope.UnsetLoopBreak()
 				return types.Success
 			}
 			// обработка continue
 			if scope.CurrentScope.IsContinue() {
-				scope.CurrentScope.SetLoopContinue(false)
+				scope.CurrentScope.UnsetLoopContinue()
 				break
-			}
-			if ok := v.Visit(item).(types.VisitResultType); !ok {
-				return types.Failure
 			}
 			// обработка return
 			if retValue != nil {
